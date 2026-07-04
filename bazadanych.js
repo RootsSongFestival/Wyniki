@@ -121,7 +121,7 @@ const db = {
     preselections: {
         1: {
             "Japonia": {
-                manager: "Shigas",
+                manager: "Shigaś",
                 name: "NipponFes 01",
                 stages: [
                     { name: "NipponFes 01 - Pierwszy półfinał", items: [
