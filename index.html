@@ -1129,8 +1129,13 @@
             document.getElementById("info-debut").innerHTML = `<a href="#" class="sel-link" style="margin:0;">${firstEd} edycja, ${city}</a>`;
             document.getElementById("info-apps").innerText = `${participatedEds.length}`;
             
-            let hostedText = hostedCount > 0 ? `${hostedCount} razy${hostedCount > 0 ? ', ' + hostedEditions.join(', ') + ' edycja' : ''}` : "0 razy";
-            document.getElementById("info-hosted").innerText = hostedText;
+            let hostedcounts = hostedCount === 1 ? "raz" : "razy";
+
+			let hostedText = hostedCount > 0 
+   			 ? `${hostedCount} ${hostedcounts}, ${hostedEditions.join(', ')} edycja` 
+   			 : "0 razy";
+
+			document.getElementById("info-hosted").innerText = hostedText;
 
             let internalEds = [];
             let selectionsMap = {};
@@ -1207,7 +1212,7 @@
 
             combinedRows.forEach(row => {
                 if (row.type === 'missing') {
-                    let text = row.edition === row.end ? `Nie brał udziału w edycji ${row.edition}` : `Nie brał udziału w edycjach ${row.edition} - ${row.end}`;
+                    let text = row.edition === row.end ? `Państwo nie brało udziału w edycji ${row.edition}` : `Państwo nie brało udziału w edycjach ${row.edition} - ${row.end}`;
                     tbody.innerHTML += `<tr><td colspan="7" style="color:var(--text-muted); font-style:italic; font-weight:normal;">${text}</td></tr>`;
                 } else {
                     let r = row.data;
