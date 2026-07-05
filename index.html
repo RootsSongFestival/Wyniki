@@ -1581,6 +1581,7 @@
                     localStorage.removeItem(`sorter_basic_${sorterEdition}_ranked`);
                 } else if (currentSorterMode === 'tier') {
                     localStorage.removeItem(`sorter_tier_${sorterEdition}`);
+                    localStorage.removeItem(`sorter_tier_size_${sorterEdition}`); // Czyści zapisany rozmiar
                 }
                 buildSorterWorkspace();
             }
@@ -1763,6 +1764,7 @@
 
         function renderTierList(container, items) {
             let savedData = localStorage.getItem(`sorter_tier_${sorterEdition}`);
+            let savedSize = localStorage.getItem(`sorter_tier_size_${sorterEdition}`) || "18px";
             let tiersData = defaultTiers.map(t => ({...t, items: []}));
             let bankData = items.map(i => i.countryId);
 
@@ -1790,10 +1792,18 @@
             container.innerHTML = `
                 <div id="tier-export-area" style="background:var(--bg-color); padding:10px;">
                     <div id="tier-rows-container">
-                    ${tiersData.map(t => createTierRowHtml(t.label, t.color, t.items.map(getItemHtml).join(''))).join('')}
+                    ${tiersData.map(t => createTierRowHtml(t.label, t.color, t.items.map(getItemHtml).join(''), savedSize)).join('')}
                     </div>
                     <div style="text-align:center; margin-top:15px;" data-html2canvas-ignore="true">
-                        <button class="picker-btn" style="margin: 0 auto; display:inline-flex;" onclick="addTierRow()">+ Dodaj Kategorię</button>
+                        <button class="picker-btn" style="margin: 0 5px; display:inline-flex;" onclick="addTierRow()">+ Dodaj Kategorię</button>
+                        <select class="picker-btn" style="margin: 0 5px; padding: 7px 15px; cursor: pointer; outline: none; appearance: auto;" onchange="changeTierFontSize(this.value)">
+                            <option value="8px" ${savedSize === '8px' ? 'selected' : ''}>Rozmiar tekstu: 8px</option>
+                            <option value="10px" ${savedSize === '10px' ? 'selected' : ''}>Rozmiar tekstu: 10px</option>
+                            <option value="12px" ${savedSize === '12px' ? 'selected' : ''}>Rozmiar tekstu: 12px</option>
+                            <option value="14px" ${savedSize === '14px' ? 'selected' : ''}>Rozmiar tekstu: 14px</option>
+                            <option value="16px" ${savedSize === '16px' ? 'selected' : ''}>Rozmiar tekstu: 16px</option>
+                            <option value="18px" ${savedSize === '18px' ? 'selected' : ''}>Rozmiar tekstu: 18px (Domyślny)</option>
+                        </select>
                     </div>
                 </div>
                 <div class="tier-bank sortable-tier" id="tier-bank">
@@ -1805,10 +1815,11 @@
             document.querySelectorAll('.sortable-tier').forEach(el => new Sortable(el, { group: 'shared', animation: 150, onEnd: saveTierList }));
         }
 
-        function createTierRowHtml(label, color, itemsHtml = "") {
+
+        function createTierRowHtml(label, color, itemsHtml = "", fontSize = "18px") {
             return `
                 <div class="tier-row">
-                    <div class="tier-label" style="background:${color}" contenteditable="true">${label}</div>
+                    <div class="tier-label" style="background:${color}; font-size:${fontSize};" contenteditable="true">${label}</div>
                     <div class="tier-items sortable-tier">${itemsHtml}</div>
                     <div class="tier-settings" data-html2canvas-ignore="true">
                         <input type="color" onchange="this.closest('.tier-row').querySelector('.tier-label').style.background = this.value; saveTierList();" value="${color}">
@@ -1816,10 +1827,18 @@
                     </div>
                 </div>`;
         }
+
+	function changeTierFontSize(size) {
+            document.querySelectorAll('.tier-label').forEach(el => {
+                el.style.fontSize = size;
+            });
+            localStorage.setItem(`sorter_tier_size_${sorterEdition}`, size);
+        }
         
         function addTierRow() {
             const container = document.getElementById('tier-rows-container');
-            container.insertAdjacentHTML('beforeend', createTierRowHtml('Nowa', '#cccccc'));
+            let currentSize = localStorage.getItem(`sorter_tier_size_${sorterEdition}`) || "18px";
+            container.insertAdjacentHTML('beforeend', createTierRowHtml('Nowa', '#cccccc', "", currentSize));
             const newRow = container.lastElementChild;
             newRow.querySelector('.tier-label').addEventListener('blur', saveTierList);
             const sortableDiv = newRow.querySelector('.sortable-tier');
