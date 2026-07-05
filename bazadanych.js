@@ -27,7 +27,7 @@ const db = {
         { edition: 1, ro: "-", countryId: "UA", artist: "Strxw", song: "Infected", manager: "Lynn", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=tV2V-81L1HM", spotify: "https://open.spotify.com/track/6K2nYhuSDuJawpEBuIbVPT?si=b671f65640704f5d", mp3: "edycja1/ukraina1.mp3", artistLink: "-" },
         { edition: 1, ro: "-", countryId: "LT", artist: "Free Finga", song: "Liūdna", manager: "Kornik", place: "-", points: "-", youtube: "https://youtu.be/ToS3A1rJ4TE?si=3JRwyU8MHeeuuKC2", spotify: "https://open.spotify.com/track/65YpznM0TjseCOC9zJyLc2?si=f7a2649dffd04b9d", mp3: "edycja1/litwa1.mp3", artistLink: "-" },
         { edition: 1, ro: "-", countryId: "MT", artist: "Martina Cutajar", song: "Crying on the Dancefloor", manager: "Fox", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=QYfW1SkF_Ys", spotify: "https://open.spotify.com/track/2Lf5NCXoKvu4Tic6MfUsI4?si=b2f4454c91524e1a", mp3: "edycja1/malta1.mp3", artistLink: "-" },
-        { edition: 1, ro: "-", countryId: "SK", artist: "Mark Dann i Giovanni Ricci", song: "Let Me Die", manager: "Vroblo", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=Nvr43yC0MJo", spotify: "https://open.spotify.com/track/5u4uE1cuvoieudzvQmprdb?si=9724e46f60a44518", mp3: "edycja1/slowacja1.mp3", artistLink: "-" },
+        { edition: 1, ro: "-", countryId: "SK", artist: "Mark Dann, Giovanni Ricci", song: "Let Me Die", manager: "Vroblo", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=Nvr43yC0MJo", spotify: "https://open.spotify.com/track/5u4uE1cuvoieudzvQmprdb?si=9724e46f60a44518", mp3: "edycja1/slowacja1.mp3", artistLink: "-" },
         { edition: 1, ro: "-", countryId: "MK", artist: "Lune i Morpheuz", song: "Wegen dir", manager: "Jaruś", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=JhtvUSv_bLM", spotify: "https://open.spotify.com/track/49xD1utJYBqOFuGwyfWYDy?si=f622787e79fb4e61", mp3: "edycja1/macedonia1.mp3", artistLink: "-" },
         { edition: 1, ro: "-", countryId: "RU", artist: "Bearwolf", song: "Feniks", manager: "Pablitek", place: "-", points: "-", youtube: "https://youtu.be/eV7Spwn37Vc", spotify: "https://open.spotify.com/track/6mDSdHphOriAwkIZy8q9Oz?si=7c96f420f1ea484f", mp3: "edycja1/rosja1.mp3", artistLink: "-" },
         { edition: 1, ro: "-", countryId: "NG", artist: "Kemi Amos", song: "Run", manager: "Ziemniorek", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=40pQil7QQL4", spotify: "https://open.spotify.com/track/4tXf75rj58dE6VfeQmtFVf?si=014037f33fed4444", mp3: "edycja1/nigeria1.mp3", artistLink: "-" },
@@ -126,51 +126,51 @@ const db = {
                 stages: [
                     { name: "NipponFes 01 - Pierwszy półfinał", items: [
                         { a: "Mili", t: "world.execute(me);", res: "161 pkt", place: 1 },
-                        { a: "Phantom Siita", t: "HANABAMI", res: "156 pkt", place: 2 },
-                        { a: "MARiMARi", t: "POP SHUVIT!", res: "147 pkt", place: 3 },
-                        { a: "TAKU INOUE & ☆Taku Takahashi", t: "Unstoppable Generation", res: "134 pkt", place: 4 },
-                        { a: "Vaundy", t: "CHAINSAW BLOOD", res: "131 pkt", place: "last" },
-                        { a: "Polkadot Stingray", t: "SAKASAMA", res: "116 pkt", place: "last" },
-                        { a: "HANABIE.", t: "Iconic", res: "86 pkt", place: "last" },
-                        { a: "sasalasa", t: "Nevermore", res: "58 pkt", place: "last" }
+                        { a: "Phantom Siita", t: "Hanabami", res: "156 pkt", place: 2 },
+                        { a: "MariMari", t: "Pop Shuvit!", res: "147 pkt", place: 3 },
+                        { a: "Taku Inoue, Taku Takahashi", t: "Unstoppable Generation", res: "134 pkt", place: 4 },
+                        { a: "Vaundy", t: "Chainsaw Blood", res: "131 pkt", place: "last" },
+                        { a: "Polkadot Stingray", t: "Sakasama", res: "116 pkt", place: "last" },
+                        { a: "Hanabie.", t: "Iconic", res: "86 pkt", place: "last" },
+                        { a: "Sasalasa", t: "Nevermore", res: "58 pkt", place: "last" }
                     ]},
                     { name: "NipponFes 01 - Drugi półfinał", items: [
-                        { a: "MYERA", t: "Upboomboom", res: "87 pkt", place: 1 },
-                        { a: "ATARASHII GAKKO!", t: "Tokyo Calling", res: "76 pkt", place: 2 },
-                        { a: "tokyo babel", t: "Faust", res: "73 pkt", place: 3 },
-                        { a: "avantgardey", t: "OKP Cipher", res: "72 pkt", place: 4 },
+                        { a: "Myera", t: "UpBoomBoom", res: "87 pkt", place: 1 },
+                        { a: "Atarashii Gakko!", t: "Tokyo Calling", res: "76 pkt", place: 2 },
+                        { a: "Tokyo Babel", t: "Faust", res: "73 pkt", place: 3 },
+                        { a: "Avantgardey", t: "OKP Cipher", res: "72 pkt", place: 4 },
                         { a: "Creepy Nuts", t: "Chxxai", res: "69 pkt", place: "last"},
-                        { a: "CHANMINA", t: "FLIP FLAP", res: "55 pkt", place: "last" },
-                        { a: "QUEEN BEE", t: "Headless Angel", res: "53 pkt", place: "last" },
-                        { a: "Reol feat. LiSA", t: "DEAD CENTER", res: "31 pkt", place: "last"  }
+                        { a: "Chanmina", t: "Flip Flap", res: "55 pkt", place: "last" },
+                        { a: "Queen Bee", t: "Headless Angel", res: "53 pkt", place: "last" },
+                        { a: "Reol, Lisa", t: "Dead Center", res: "31 pkt", place: "last"  }
                     ]},
                     { name: "NipponFes 01 - Finałowy Duel 01", items: [
-                        { a: "MARiMARi", t: "POP SHUVIT!", res: "7 głosów (54%)" },
-                        { a: "TAKU INOUE & ☆Taku Takahashi", t: "Unstoppable Generation", res: "6 głosów (46%)" }
+                        { a: "MariMari", t: "Pop Shuvit!", res: "7 głosów (54%)" },
+                        { a: "Taku Inoue, Taku Takahashi", t: "Unstoppable Generation", res: "6 głosów (46%)" }
                     ]},
                     { name: "NipponFes 01 - Finałowy Duel 02", items: [
                         { a: "Mili", t: "world.execute(me);", res: "10 głosów (71%)" },
-                        { a: "avantgardey", t: "OKP Cipher", res: "4 głosy (29%)" }
+                        { a: "Avantgardey", t: "OKP Cipher", res: "4 głosy (29%)" }
                     ]},
                     { name: "NipponFes 01 - Finałowy Duel 03", items: [
-                        { a: "Phantom Siita", t: "HANABAMI", res: "8 głosów (89%)" },
-                        { a: "tokyo babel", t: "Faust", res: "1 głos (11%)" }
+                        { a: "Phantom Siita", t: "Hanabami", res: "8 głosów (89%)" },
+                        { a: "Tokyo Babel", t: "Faust", res: "1 głos (11%)" }
                     ]},
                     { name: "NipponFes 01 - Finałowy Duel 04", items: [
-                        { a: "MYERA", t: "Upboomboom", res: "6 głosów (75%)" },
-                        { a: "ATARASHII GAKKO!", t: "Tokyo Calling", res: "2 głosy (25%)" }
+                        { a: "Myera", t: "UpBoomBoom", res: "6 głosów (75%)" },
+                        { a: "Atarashii Gakko!", t: "Tokyo Calling", res: "2 głosy (25%)" }
                     ]},
                     { name: "NipponFes 01 - Finałowy Duel 05", items: [
-                        { a: "MARiMARi", t: "POP SHUVIT!", res: "9 głosów (69%)" },
-                        { a: "Phantom Siita", t: "HANABAMI", res: "4 głosy (31%)" }
+                        { a: "MariMari", t: "Pop Shuvit!", res: "9 głosów (69%)" },
+                        { a: "Phantom Siita", t: "Hanabami", res: "4 głosy (31%)" }
                     ]},
                     { name: "NipponFes 01 - Finałowy Duel 06", items: [
                         { a: "Mili", t: "world.execute(me);", res: "7 głosów (54%)" },
-                        { a: "MYERA", t: "Upboomboom", res: "6 głosów (46%)" }
+                        { a: "Myera", t: "UpBoomBoom", res: "6 głosów (46%)" }
                     ]},
                     { name: "NipponFes 01 - Finałowy Duel 07", items: [
                         { a: "Mili", t: "world.execute(me);", res: "10 głosów (53%)" },
-                        { a: "MARiMARi", t: "POP SHUVIT!", res: "9 głosów (47%)" }
+                        { a: "MariMari", t: "Pop Shuvit!", res: "9 głosów (47%)" }
                     ]}
                 ]
             },
@@ -179,11 +179,11 @@ const db = {
                 name: "Veľký Vlnový Festival na Liptovskej Mare",
                 stages: [
                     { name: "Finał", items: [
-                        { a: "Mark Dann • Giovanni Ricci", t: "Let me Die", res: "36 pkt", place: 1 },
+                        { a: "Mark Dann, Giovanni Ricci", t: "Let Me Die", res: "36 pkt", place: 1 },
                         { a: "LUVVER", t: "LULLABIES", res: "24 pkt", place: 2 },
-                        { a: "Lina Mayer", t: "ONA", res: "22 pkt", place: 3 },
-                        { a: "Whithe • Blanch", t: "On the Edge", res: "21 pkt", place: 4 },
-                        { a: "Petrofski • Mishino", t: "Vlak", res: "9 pkt", place: "last" }
+                        { a: "Lina Mayer", t: "Ona", res: "22 pkt", place: 3 },
+                        { a: "Whithe, Blanch", t: "On the Edge", res: "21 pkt", place: 4 },
+                        { a: "Petrofski, Mishino", t: "Vlak", res: "9 pkt", place: "last" }
                     ]}
                 ]
             },
