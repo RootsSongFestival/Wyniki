@@ -614,7 +614,7 @@
         let activeCountryId = null;
         let managerMapInstance;
         let editionViewCols = 1;
-        let editionSortState = { key: 'place', isAsc: true };
+        let editionSortState = { key: 'auto', isAsc: true };
 
         function getEmojiFlag(countryCode) {
             if (!countryCode) return "";
@@ -798,18 +798,47 @@
                 return;
             }
 
+            // Automatyczne wykrywanie: czy edycja ma już uzupełnione miejsca (różne od "-")
+            let hasResults = editionData.some(r => r.place && r.place !== "-");
+
             editionData.sort((a, b) => {
                 let valA, valB;
-                switch(editionSortState.key) {
-                    case 'ro': valA = a.ro ?? 999; valB = b.ro ?? 999; break;
-                    case 'country': valA = db.countries[a.countryId]?.name || ""; valB = db.countries[b.countryId]?.name || ""; break;
-                    case 'artist': valA = a.artist || ""; valB = b.artist || ""; break;
-                    case 'manager': valA = a.manager || ""; valB = b.manager || ""; break;
-                    case 'place': valA = a.place ?? 999; valB = b.place ?? 999; break;
-                    case 'points': valA = a.points ?? -1; valB = b.points ?? -1; break;
+                let currentKey = editionSortState.key;
+                
+                // Jeśli klucz to 'auto', wybieramy 'place' (gdy są wyniki) lub 'ro' (gdy wyników brak)
+                if (currentKey === 'auto') {
+                    currentKey = hasResults ? 'place' : 'ro';
                 }
 
-                let isNum = ['ro', 'place', 'points'].includes(editionSortState.key);
+                switch(currentKey) {
+                    case 'ro': 
+                        valA = (a.ro === "-" || a.ro === undefined) ? 999 : parseFloat(a.ro); 
+                        valB = (b.ro === "-" || b.ro === undefined) ? 999 : parseFloat(b.ro); 
+                        break;
+                    case 'country': 
+                        valA = db.countries[a.countryId]?.name || ""; 
+                        valB = db.countries[b.countryId]?.name || ""; 
+                        break;
+                    case 'artist': 
+                        valA = a.artist || ""; 
+                        valB = b.artist || ""; 
+                        break;
+                    case 'manager': 
+                        valA = a.manager || ""; 
+                        valB = b.manager || ""; 
+                        break;
+                    case 'place': 
+                        valA = (a.place === "-" || a.place === undefined) ? 999 : parseFloat(a.place); 
+                        valB = (b.place === "-" || b.place === undefined) ? 999 : parseFloat(b.place); 
+                        break;
+                    case 'points': 
+                        valA = (a.points === "-" || a.points === undefined) ? -1 : parseFloat(a.points); 
+                        valB = (b.points === "-" || b.points === undefined) ? -1 : parseFloat(b.points); 
+                        break;
+                }
+
+                // Sprawdzamy czy sortujemy numerycznie, uwzględniając dynamiczną zmianę klucza z 'auto'
+                let isNum = ['ro', 'place', 'points'].includes(currentKey);
                 if (isNum) {
                     return editionSortState.isAsc ? valA - valB : valB - valA;
                 } else {
@@ -817,7 +846,9 @@
                 }
             });
 
-            const maxPlace = Math.max(...editionData.map(r => r.place));
+            // Logika wyliczania maksymalnego miejsca do kolorowania czerwonego tła (ignoruje "-")
+            const validPlaces = editionData.map(r => parseFloat(r.place)).filter(p => !isNaN(p));
+            const maxPlace = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
 
             let chunks = [];
             let chunkSize = Math.ceil(editionData.length / editionViewCols);
@@ -836,7 +867,8 @@
 
                 chunk.forEach(row => {
                     const cData = db.countries[row.countryId];
-                    let rowClass = row.place === 1 ? "row-1st" : row.place === 2 ? "row-2nd" : row.place === 3 ? "row-3rd" : (row.place === maxPlace && maxPlace > 3 ? "row-last" : "");
+                    let numericPlace = parseFloat(row.place);
+                    let rowClass = numericPlace === 1 ? "row-1st" : numericPlace === 2 ? "row-2nd" : numericPlace === 3 ? "row-3rd" : (numericPlace === maxPlace && maxPlace > 3 ? "row-last" : "");
                     
                     let hasSong = row.song && row.song.trim() !== "-";
                     let audioPlayBtn = hasSong && row.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${row.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
