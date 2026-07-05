@@ -67,12 +67,26 @@
         .nav-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
         .nav-btn.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
 
+        /* STRONA GŁÓWNA */
+        .home-layout { display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap; }
+        .home-main { flex: 2; min-width: 400px; display: flex; flex-direction: column; gap: 25px; }
+        .home-sidebar { flex: 1; min-width: 300px; position: sticky; top: 80px; }
+        .home-card { background: var(--table-row-odd); padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); }
+        .home-logo { max-width: 250px; display: block; margin: 0 auto 20px auto; }
+        .home-desc { font-size: 15px; line-height: 1.6; text-align: center; color: var(--text-muted); }
+        .rules-title { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .rules-list { margin: 0; padding-left: 20px; line-height: 1.6; color: var(--text-main); font-size: 14px; }
+        .rules-list li { margin-bottom: 12px; }
+
         @media (max-width: 768px) {
             .navbar { flex-direction: column; padding: 10px 0 0 0; }
             .nav-brand { flex: none; margin-bottom: 5px; }
             .nav-spacer { display: none; }
             .nav-links { width: 100%; justify-content: space-around; }
             .nav-btn { padding: 12px 5px; font-size: 11px; flex: 1; }
+            .home-layout { flex-direction: column; }
+            .home-main, .home-sidebar { width: 100%; min-width: unset; }
+            .home-sidebar { position: static; }
         }
 
         .map-container { position: relative; width: 100%; margin-bottom: 25px; }
@@ -230,6 +244,8 @@
         .sorter-item.is-ranked.rank-top10 { border-left-color: #8b5cf6; background-color: rgba(139, 92, 246, 0.1); }
         .sorter-item.is-ranked.rank-top10 .sorter-points { display: block; background: #8b5cf6; color: #fff; }
         .sorter-item.is-ranked.rank-other { border-left-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
+	.sorter-item.is-excluded { 
+            background-color: rgba(128, 128, 128, 0.1); border-left-color: #808080; cursor: default; }
 
         .tier-row { display: flex; margin-bottom: 5px; min-height: 80px; background: var(--table-row-odd); border-radius: 6px; overflow: hidden; position: relative; }
         .tier-label { width: 100px; min-width: 100px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; color: #000; text-transform: uppercase; border-right: 2px solid var(--bg-color); flex-shrink: 0; outline: none; text-align: center; }
@@ -254,7 +270,6 @@
         .editions-layout-wrapper.cols-1 { grid-template-columns: 1fr; }
         .editions-layout-wrapper.cols-2 { grid-template-columns: 1fr 1fr; }
 
-        /* WIKIPEDIA-STYLE INFOBOX - DOSTOSOWANY DO APLIKACJI */
         .countries-layout { display: flex; gap: 25px; flex-wrap: wrap; align-items: flex-start; }
         .countries-left { flex: 2; min-width: 400px; display: flex; flex-direction: column; gap: 20px; }
         .countries-right { flex: 1; min-width: 300px; position: sticky; top: 80px; }
@@ -361,7 +376,8 @@
             <img src="logo.webp" alt="Roots Song Festival Logo" class="navbar-logo" onerror="this.style.display='none'">
         </div>
         <div class="nav-links">
-            <button class="nav-btn active" onclick="openTab('editions', this)">Edycje</button>
+            <button class="nav-btn active" onclick="openTab('home', this)">Strona Główna</button>
+            <button class="nav-btn" onclick="openTab('editions', this)">Edycje</button>
             <button class="nav-btn" onclick="openTab('countries', this)">Państwa</button>
             <button class="nav-btn" onclick="openTab('preselections', this)">Preselekcje</button>
             <button class="nav-btn" onclick="openTab('managers', this)">Menadżerowie</button>
@@ -372,7 +388,64 @@
 
     <div class="container">
         
-        <div id="editions" class="tab-content" style="display: block;">
+        <div id="home" class="tab-content" style="display: block;">
+            <div class="home-layout">
+                <div class="home-main">
+                    <div class="home-card">
+                        <img src="logo.webp" alt="RSF Logo" class="home-logo" onerror="this.style.display='none'">
+                        <p class="home-desc">
+                            <strong>Roots Song Festival</strong>, w skrócie <strong>RSF</strong> jest to nowy Polski fanowski konkurs piosenki założony w czerwcu 2026 roku. 
+                            Pomysłodawcami konkursu byli alfabetycznie: Ant, Micheł, Oscypciek oraz Sajmonn. 
+                            Ideą konkursu jest poznawanie nowej muzyki z całego świata i świetna zabawa!
+                        </p>
+                    </div>
+
+                    <div class="home-card">
+                        <h2 class="rules-title">Zasady Konkursu</h2>
+                        <ul class="rules-list">
+                            <li>W tym konkursie borrowingi nie istnieją.</li>
+                            <li>Piosenka wysłana na konkurs nie może przekraczać 30 milionów wyświetleń na platformie YouTube, oraz nie może być wydana przed dniem 31 grudnia 2014 (wyjątek - edycje tematyczne).</li>
+                            <li>Artysta wysłany na konkurs może mieć korzenie maksymalnie do rodziców.</li>
+                            <li>Zakazane są tzw. ruchańce (piosenki pojawiające się na każdym możliwym fanconteście). Zakazane jest też wysyłanie tzw. worldchart artists, artystów z Eurowizji, Junior Eurowizji, oraz overused artists. Utwór nie może brać udziału w max. 3 lub więcej contestach.</li>
+                            <li>Zakazane jest wysyłanie piosenek wygenerowanych przez AI, coverów, troll songów, utworów o charakterze rasistowskim, ksenofobicznym, seksistowskim, homofobicznym. Ponadto zakazane jest wysyłanie piosenek które uczestniczyły w Eurowizji, Junior Eurowizji oraz w ich preselekcjach.</li>
+                            <li>Piosenka może trwać maksymalnie 6 minut.</li>
+                            <li>Menadżer jest zobligowany do wysłania piosenki w wyznaczonym terminie, oraz zagłosowania. Brak głosu jest równoznaczny z warnem oraz każdorazowym odjęciem -50% punktów z televotingu. Po trzecim warnie, menadżer zostaje zbanowany z udziału w konkursie.</li>
+                            <li>Menadżer nie może zająć tego samego kraju dwa razy z rzędu (wyjątek - zwycięzca konkursu).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="home-sidebar">
+                    <div class="infobox" style="margin-bottom: 25px;">
+                        <div class="infobox-header">Aktualna Edycja</div>
+                        <div class="infobox-flag-container">
+
+                            <img src="https://media.discordapp.net/attachments/1512924016938188891/1523019037930684476/R_TS_2.png?ex=6a4a9582&is=6a494402&hm=a6382cd7a36a409cb78f661cdeba9755aa836dbb4ad453123073d4c5dc824a69&=&format=webp&quality=lossless" alt="Logo Edycji" style="max-width: 100%; max-height: 120px; object-fit: contain; margin: 0 auto 15px auto; display: block;">
+
+                            <img class="infobox-flag" id="home-edition-flag" src="" alt="Flaga" style="max-height: 80px;">
+                        </div>
+                        <table class="infobox-table">
+                            <tr><th>Numer edycji</th><td id="home-edition-num">...</td></tr>
+                            <tr><th>Gospodarz</th><td id="home-edition-host">...</td></tr>
+                            <tr><th>Miasto</th><td id="home-edition-city">...</td></tr>
+                            <tr><th>Liczba uczestników</th><td id="home-edition-count">...</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="home-card" style="max-width: 320px; margin-left: auto; box-sizing: border-box; padding: 15px; text-align: center;">
+                        <h3 class="rules-title" style="font-size: 15px; margin-bottom: 15px;">Obejrzyj najnowszy recap</h3>
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                            <iframe src="https://www.youtube.com/embed/N3f4v3UZ9b0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <a href="https://open.spotify.com/playlist/4I6IlBBB8X6HG5UhxpWC54?si=fPlLdPzvSaioP2DVSiiDUA" target="_blank" class="picker-btn" style="width: 100%; margin-top: 15px; background-color: #1DB954; color: #fff; border-color: #1DB954; display: flex; justify-content: center; gap: 10px; font-weight: bold; box-sizing: border-box; text-decoration: none;">
+                            <i class="fa-brands fa-spotify" style="font-size: 18px;"></i> Playlista obecnej edycji
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="editions" class="tab-content">
             <div class="picker-container">
                 <h3 class="picker-title">Wybierz Edycję</h3>
                 <select id="edition-select" class="picker-select" onchange="changeEdition(this)"></select>
@@ -498,8 +571,11 @@
 
         <div id="sorter" class="tab-content">
             <div class="picker-container" data-html2canvas-ignore="true">
-                <h3 class="picker-title">Wybierz Edycję i Tryb</h3>
-                <select id="sorter-edition-select" class="picker-select" onchange="changeSorterEdition(this)"></select>
+                <h3 class="picker-title">Wybierz Edycję i Tryb </h3>
+                <div style="display:flex; gap:15px; flex-wrap:wrap; justify-content:center; max-width:600px; margin:0 auto;">
+                    <select id="sorter-edition-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeSorterEdition(this)"></select>
+                    <select id="sorter-exclude-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeExcludedCountry(this)"></select>
+                </div>
                 <div class="sorter-controls" style="margin-top: 15px;">
                     <button class="picker-btn active" onclick="setSorterMode('basic', this)">Topka</button>
                     <button class="picker-btn" onclick="setSorterMode('tier', this)">Tierlista</button>
@@ -518,10 +594,16 @@
     <script>
         function playAudio(url) {
             let player = document.getElementById('global-audio-player');
-            if (player.src === url && !player.paused) {
-                player.pause();
+            
+            if (player.getAttribute('src') === url) {
+                if (!player.paused) {
+                    player.pause();
+                    player.currentTime = 0; // Reset utworu do początku przy zatrzymaniu
+                } else {
+                    player.play();
+                }
             } else {
-                player.src = url;
+                player.setAttribute('src', url);
                 player.play();
             }
         }
@@ -579,7 +661,7 @@
 
         function updateContainerWidth() {
             const containerElem = document.querySelector('.container');
-            const activeTab = localStorage.getItem('activeTab') || 'editions';
+            const activeTab = localStorage.getItem('activeTab') || 'home';
             if (activeTab === 'editions' && editionViewCols === 2) {
                 containerElem.classList.add('wide-mode');
             } else {
@@ -603,11 +685,12 @@
             }
             
             renderEditionTable();
+            renderHomeWidget();
 
-            let savedTab = localStorage.getItem('activeTab') || 'editions';
+            let savedTab = localStorage.getItem('activeTab') || 'home';
             let btn = document.querySelector(`.nav-btn[onclick*="'${savedTab}'"]`);
             if (btn) openTab(savedTab, btn);
-            else openTab('editions', document.querySelector(".nav-btn"));
+            else openTab('home', document.querySelector(".nav-btn"));
         }
 
         function openTab(tabName, btn) {
@@ -623,6 +706,23 @@
             if (tabName === 'managers') initManagers();
             if (tabName === 'sorter') initSorter();
             if (tabName === 'preselections') initPreselections();
+        }
+
+        function renderHomeWidget() {
+            if (!db.editions || db.editions.length === 0) return;
+            let maxEdition = Math.max(...db.editions);
+            let hostId = db.hosts[maxEdition];
+            let hostCountry = db.countries[hostId];
+            let city = db.cities[maxEdition] || "Brak danych";
+            let participantsCount = db.results ? db.results.filter(r => r.edition === maxEdition).length : 0;
+
+            document.getElementById('home-edition-num').innerText = `#${maxEdition}`;
+            if (hostCountry) {
+                document.getElementById('home-edition-host').innerText = hostCountry.name;
+                document.getElementById('home-edition-flag').src = `https://flagcdn.com/w320/${hostCountry.code.toLowerCase()}.png`;
+            }
+            document.getElementById('home-edition-city').innerText = city;
+            document.getElementById('home-edition-count').innerText = participantsCount;
         }
 
         // ================= EDYCJE =================
@@ -758,7 +858,6 @@
                 container.innerHTML += tableHTML;
             });
 
-            // Wyrównywanie wysokości wierszy dla trybu dwóch kolumn
             if (editionViewCols === 2) {
                 setTimeout(() => {
                     let table1 = document.getElementById('edition-table-part-0');
@@ -898,19 +997,17 @@
                 stage.items.forEach(item => {
                     let bgStyle = "";
                     
-                    // Nowa logika dla konkretnych miejsc (1, 2, 3, 5):
                     if (item.place === 1) {
-                        bgStyle = "background-color: rgba(255, 215, 0, 0.15); border-left: 4px solid #ffd700;"; // Złoty
+                        bgStyle = "background-color: rgba(255, 215, 0, 0.15); border-left: 4px solid #ffd700;";
                     } else if (item.place === 2) {
-                        bgStyle = "background-color: rgba(192, 192, 192, 0.15); border-left: 4px solid #c0c0c0;"; // Srebrny
+                        bgStyle = "background-color: rgba(192, 192, 192, 0.15); border-left: 4px solid #c0c0c0;";
                     } else if (item.place === 3) {
-                        bgStyle = "background-color: rgba(205, 127, 50, 0.15); border-left: 4px solid #cd7f32;"; // Brązowy
+                        bgStyle = "background-color: rgba(205, 127, 50, 0.15); border-left: 4px solid #cd7f32;";
                     } else if (item.place === 4) { 
-			bgStyle = "background-color: rgba(96, 165, 250, 0.15); border-left: 4px solid #60a5fa;";
-		    } else if (item.place === "last") {
-                        bgStyle = "background-color: rgba(255, 60, 60, 0.15); border-left: 4px solid #ff3c3c;"; // Czerwony
+                        bgStyle = "background-color: rgba(96, 165, 250, 0.15); border-left: 4px solid #60a5fa;";
+                    } else if (item.place === "last") {
+                        bgStyle = "background-color: rgba(255, 60, 60, 0.15); border-left: 4px solid #ff3c3c;";
                     } 
-                    // Stara logika dla pojedynków (jeśli nie podano 'place'):
                     else if (item.res) {
                         let match = item.res.match(/(\d+)%/);
                         if (match) {
@@ -1130,12 +1227,10 @@
             document.getElementById("info-apps").innerText = `${participatedEds.length}`;
             
             let hostedcounts = hostedCount === 1 ? "raz" : "razy";
-
-			let hostedText = hostedCount > 0 
-   			 ? `${hostedCount} ${hostedcounts}, ${hostedEditions.join(', ')} edycja` 
-   			 : "0 razy";
-
-			document.getElementById("info-hosted").innerText = hostedText;
+            let hostedText = hostedCount > 0 
+                ? `${hostedCount} ${hostedcounts}, ${hostedEditions.join(', ')} edycja` 
+                : "0 razy";
+            document.getElementById("info-hosted").innerText = hostedText;
 
             let internalEds = [];
             let selectionsMap = {};
@@ -1335,7 +1430,32 @@
         // ================= SORTER =================
         let currentSorterMode = 'basic';
         let sorterEdition = null;
+        let sorterExcluded = null;
         let sorterObj = null;
+
+        function populateSorterExclude() {
+            const select = document.getElementById("sorter-exclude-select");
+            select.innerHTML = '<option value="">-- Brak wykluczenia --</option>';
+            
+            let items = db.results
+                .filter(r => r.edition === sorterEdition)
+                .sort((a, b) => {
+                    let nameA = db.countries[a.countryId].name;
+                    let nameB = db.countries[b.countryId].name;
+                    return nameA.localeCompare(nameB);
+                });
+            
+            let savedEx = localStorage.getItem(`sorterExcluded_${sorterEdition}`);
+            sorterExcluded = savedEx ? savedEx : "";
+
+            items.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.countryId;
+                opt.text = `Wyklucz: ${db.countries[item.countryId].name} (${item.manager||'?'})`;
+                if(item.countryId === sorterExcluded) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
 
         function initSorter() {
             const select = document.getElementById("sorter-edition-select");
@@ -1366,12 +1486,20 @@
                 currentSorterMode = savedMode;
             }
 
+            populateSorterExclude();
             buildSorterWorkspace();
         }
 
         function changeSorterEdition(selectElement) {
             sorterEdition = parseInt(selectElement.value);
             localStorage.setItem('sorterEdition', sorterEdition);
+            populateSorterExclude();
+            buildSorterWorkspace();
+        }
+
+        function changeExcludedCountry(selectElement) {
+            sorterExcluded = selectElement.value;
+            localStorage.setItem(`sorterExcluded_${sorterEdition}`, sorterExcluded);
             buildSorterWorkspace();
         }
 
@@ -1389,25 +1517,28 @@
             btnContainer.innerHTML = "";
             if (sorterObj) { sorterObj.destroy && sorterObj.destroy(); sorterObj = null; }
 
-            let items = db.results.filter(r => r.edition === sorterEdition).sort((a,b) => (a.ro || 99) - (b.ro || 99));
-            if(items.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej edycji.</p>"; return; }
+            let allItems = db.results.filter(r => r.edition === sorterEdition).sort((a,b) => (a.ro || 99) - (b.ro || 99));
+            if(allItems.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej edycji.</p>"; return; }
+
+            let activeItems = allItems.filter(r => r.countryId !== sorterExcluded);
+            let excludedItem = allItems.find(r => r.countryId === sorterExcluded);
 
             if (currentSorterMode === 'basic') {
                 btnContainer.innerHTML = `
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Top 10</button>
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Całość</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i> &nbsp;Resetuj</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
                 `;
-                renderBasicSorter(ws, items, false);
+                renderBasicSorter(ws, activeItems, false, excludedItem);
             } else if (currentSorterMode === 'tier') {
                 btnContainer.innerHTML = `
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotTier()"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz jako zdjęcie</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i> &nbsp;Resetuj</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotTier()"><i class="fa-solid fa-camera"></i>  Zapisz jako zdjęcie</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
                 `;
-                renderTierList(ws, items);
+                renderTierList(ws, activeItems);
             } else if (currentSorterMode === '1v1') {
                 btnContainer.innerHTML = "";
-                start1v1Battle(ws, items);
+                start1v1Battle(ws, activeItems);
             }
         }
 
@@ -1462,9 +1593,13 @@
             });
         }
 
-        function renderBasicSorter(container, items, isFrom1v1 = false) {
-            container.innerHTML = `<div id="sorter-export-area" class="sorter-list"></div>`;
+        function renderBasicSorter(container, items, isFrom1v1 = false, excludedItem = null) {
+            container.innerHTML = `
+                <div id="sorter-export-area" class="sorter-list"></div>
+                <div id="sorter-excluded-area" class="sorter-list" style="margin-top: 8px;"></div>
+            `;
             const list = document.getElementById('sorter-export-area');
+            const excludedList = document.getElementById('sorter-excluded-area');
             
             let savedOrder = localStorage.getItem(`sorter_basic_${sorterEdition}`);
             let savedRanked = localStorage.getItem(`sorter_basic_${sorterEdition}_ranked`);
@@ -1511,6 +1646,27 @@
                     </div>`;
             });
 
+            if (excludedItem) {
+                let hasSong = excludedItem.song && excludedItem.song.trim() !== "-";
+                let audioPlayBtn = hasSong && excludedItem.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${excludedItem.mp3}')" title="Odtwórz MP3"><i class="fa-solid fa-play"></i></span>` : "";
+                
+                excludedList.innerHTML = `
+                    <div class="sorter-item is-excluded" data-id="${excludedItem.countryId}">
+                        <div class="sorter-rank" style="color:var(--text-muted);">XX.</div>
+                        <div class="sorter-info">
+                            ${getFlag(db.countries[excludedItem.countryId].code, true, "margin:0;")} 
+                            <div class="sorter-text">
+                                <div class="sorter-artist-row">
+                                    <span class="sorter-artist-name" title="${excludedItem.artist||"?"}">${excludedItem.artist||"?"}</span>
+                                    ${audioPlayBtn}
+                                </div>
+                                <div class="sorter-song-name" title="${excludedItem.song||"?"}">${excludedItem.song||"?"}</div>
+                            </div>
+                        </div>
+                        <div class="sorter-points visible" style="background:var(--table-header); color:var(--text-muted);">-</div>
+                    </div>`;
+            }
+
             sorterObj = new Sortable(list, { 
                 animation: 250, 
                 ghostClass: 'sortable-ghost',
@@ -1531,7 +1687,7 @@
 
         const eurovisionPoints = [12, 10, 8, 7, 6, 5, 4, 3, 2, 1];
         function updateBasicRanks() {
-            const rows = document.querySelectorAll('.sorter-item');
+            const rows = document.querySelectorAll('#sorter-export-area .sorter-item');
             rows.forEach((row, index) => {
                 row.querySelector('.sorter-rank').innerText = `${index + 1}.`;
                 row.classList.remove("rank-1", "rank-2", "rank-3", "rank-top10", "rank-other");
@@ -1645,8 +1801,18 @@
             sortedBattle = [battleItems[0]];
             bIdx = 1; bLow = 0; bHigh = 0;
             container.innerHTML = `
+                <div style="background-color: var(--table-row-odd); border: 1px solid rgba(255,255,255,0.05); border-left: 4px solid var(--primary-color); padding: 20px; border-radius: 8px; margin-bottom: 25px; text-align: left; font-size: 13px; line-height: 1.5; color: var(--text-muted); max-width: 650px; margin-left: auto; margin-right: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <strong style="color: var(--text-main); font-size: 15px; display: block; margin-bottom: 8px; text-align: center;"> Jak działa ten algorytm?</strong>
+                    Zamiast zmuszać Cię do porównywania każdej piosenki z każdą, algorytm stosuje tzw. <strong>szukanie binarne</strong>:
+                    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                        <li style="margin-bottom: 6px;">Sorter bierze nową piosenkę i zestawia ją z utworem znajdującym się dokładnie w <strong>środku</strong> Twojego dotychczasowego rankingu. (Nie licząc początkowej bitwy)</li>
+                        <li style="margin-bottom: 6px;">Zależnie od wyboru, segregując nową piosenkę, algorytm wie, że kliknięta jest lepsza od drugiej, więc automatycznie odrzuca całą "gorszą" połowę stawki i szuka dla niej miejsca tylko w tej lepszej połowie.</li>
+                        <li style="margin-bottom: 6px;">Ucięcie jednej z połów odbywa się z każdą bitwą, dzięki temu z każdym Twoim kliknięciem liczba piosenek do sprawdzenia zmniejsza się o połowę. Stąd też może być przypadek że jedna piosenka znajdzie się w mniejszej lub większej ilości bitew ze względu na "bycie w środku".</li>
+                        <li><strong style="color: var(--text-main);">Algorytm się nie myli, ale jeśli uważasz, że coś powinieneś dać w topce wyżej/niżej - możesz edytować stworzoną topkę po zakończeniu rund 1v1.</strong></li>
+                    </ul>
+                </div>
                 <div class="battle-progress" id="battle-prog">Rozpoczynanie...</div>
-                <div class="battle-container">
+                <div class="battle-container" style="margin-top: 20px;">
                     <div class="battle-card" id="b-left" onclick="battleChoice('left')"></div>
                     <div class="battle-vs">VS</div>
                     <div class="battle-card" id="b-right" onclick="battleChoice('right')"></div>
@@ -1661,12 +1827,13 @@
                 
                 const btnContainer = document.getElementById('sorter-export-controls');
                 btnContainer.innerHTML = `
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Top 10</button>
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Całość</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i> &nbsp;Resetuj</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
                 `;
 
-                renderBasicSorter(document.getElementById('sorter-workspace'), sortedBattle, true);
+                let excludedItem = db.results.find(r => r.edition === sorterEdition && r.countryId === sorterExcluded);
+                renderBasicSorter(document.getElementById('sorter-workspace'), sortedBattle, true, excludedItem);
                 
                 document.querySelectorAll('.sorter-controls .picker-btn').forEach(b => b.classList.remove('active'));
                 document.querySelector(`.sorter-controls .picker-btn[onclick*="'basic'"]`).classList.add('active');
@@ -1693,7 +1860,7 @@
         }
 
         function takeScreenshotBasic(mode) {
-            const allRows = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item'));
+            const allRows = Array.from(document.querySelectorAll('#sorter-workspace .sorter-item'));
             if (allRows.length === 0) return;
 
             const tempWrapper = document.createElement('div');
@@ -1755,7 +1922,6 @@
                 link.click();
             }).catch(() => alert("Błąd zapisu zdjęcia."));
         }
-
         setTimeout(init, 200);
     </script>
 </body>
