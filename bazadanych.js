@@ -37,8 +37,8 @@ const db = {
         { edition: 1, ro: 11, countryId: "GB", artist: "Findlay", song: "Electric Bones", manager: "B00B", place: 24, points: 36, youtube: "https://youtu.be/caUDfimqRR8?si=-CMHN9Qhpynlbn1O", spotify: "https://open.spotify.com/track/2P7s3YjIeYTpzfFG5sZzFG?si=83f6908ee8bb43e3", mp3: "edycja1/brytania1.mp3", artistLink: "-" },
         { edition: 1, ro: 1, countryId: "DK", artist: "Alice Ai", song: "Loser", manager: "Dangap", place: 12, points: 82, youtube: "https://youtu.be/KOuduBgV56M?si=JayKQ5S974wNvKeM", spotify: "https://open.spotify.com/track/13DwYsbgcHUiElgaSppD5r?si=2bd4836dfb944958", mp3: "edycja1/dania1.mp3", artistLink: "-" },
     
-        { edition: 2, ro: 0, countryId: "RU", artist: "-", song: "-", manager: "Pablitek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: 0, countryId: "AU", artist: "-", song: "-", manager: "Miczel", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "RU", artist: "-", song: "-", manager: "Pablitek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "AU", artist: "-", song: "-", manager: "Miczel", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
     ],
     
     ///// 3. PAŃSTWA /////
