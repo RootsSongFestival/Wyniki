@@ -608,9 +608,11 @@
 
         let mapRoot;
         let editionMapInstance = null;
+		let editionPolySeries = null;
         let activeEdition = db.editions.length > 0 ? db.editions[0] : null;
         let activeCountryId = null;
         let managerMapInstance;
+		let managerPolySeries = null;
         let editionViewCols = 1;
         let editionSortState = { key: 'auto', isAsc: true };
 
@@ -1066,89 +1068,102 @@
 
         // ================= MAPA PAŃSTW =================
         function renderEditionMap() {
-            let currentEdition = activeEdition;
-            if (!currentEdition) return;
+    let currentEdition = activeEdition;
+    if (!currentEdition) return;
 
-            let editionsSorted = [...db.editions].sort((a,b)=>a-b);
-            let currentIndex = editionsSorted.indexOf(currentEdition);
-            let prevEdition = currentIndex > 0 ? editionsSorted[currentIndex - 1] : null;
+    let editionsSorted = [...db.editions].sort((a,b)=>a-b);
+    let currentIndex = editionsSorted.indexOf(currentEdition);
+    let prevEdition = currentIndex > 0 ? editionsSorted[currentIndex - 1] : null;
 
-            let currentParticipants = db.results.filter(r => r.edition === currentEdition).map(r => r.countryId);
-            let prevParticipants = prevEdition ? db.results.filter(r => r.edition === prevEdition).map(r => r.countryId) : [];
-            let pastParticipants = db.results.filter(r => r.edition < currentEdition).map(r => r.countryId);
+    let currentParticipants = db.results.filter(r => r.edition === currentEdition).map(r => r.countryId);
+    let prevParticipants = prevEdition ? db.results.filter(r => r.edition === prevEdition).map(r => r.countryId) : [];
+    let pastParticipants = db.results.filter(r => r.edition < currentEdition).map(r => r.countryId);
 
-            let statuses = {};
-            let lists = { debuts: [], returning: [], participating: [], withdrawing: [], absent: [] };
+    let statuses = {};
+    let lists = { debuts: [], returning: [], participating: [], withdrawing: [], absent: [] };
 
-            Object.keys(db.countries).forEach(cId => {
-                let isCurrent = currentParticipants.includes(cId);
-                let isPrev = prevParticipants.includes(cId);
-                let isPast = pastParticipants.includes(cId);
+    Object.keys(db.countries).forEach(cId => {
+        let isCurrent = currentParticipants.includes(cId);
+        let isPrev = prevParticipants.includes(cId);
+        let isPast = pastParticipants.includes(cId);
 
-                if (isCurrent) {
-                    if (!isPast) { statuses[cId] = 'debuts'; lists.debuts.push(cId); }
-                    else if (!isPrev) { statuses[cId] = 'returning'; lists.returning.push(cId); }
-                    else { statuses[cId] = 'participating'; lists.participating.push(cId); }
-                } else {
-                    if (isPrev) { statuses[cId] = 'withdrawing'; lists.withdrawing.push(cId); }
-                    else if (isPast) { statuses[cId] = 'absent'; lists.absent.push(cId); }
-                }
-            });
-
-            let legendHTML = "";
-            const buildSection = (title, ids, colorHex) => {
-                if (ids.length === 0) return "";
-                ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
-                let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
-                return `
-                    <div class="edition-legend-section">
-                        <div class="edition-legend-title">
-                            <div class="edition-legend-dot" style="background:${colorHex}"></div>
-                            ${title} (${ids.length})
-                        </div>
-                        <div class="edition-legend-items">${tags}</div>
-                    </div>
-                `;
-            };
-
-            legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
-            legendHTML += buildSection("Powroty", lists.returning, "#facc15");
-            legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
-            legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
-            legendHTML += buildSection("Brak udziału", lists.absent, "#64748b");
-
-            document.getElementById('edition-legend').innerHTML = legendHTML;
-            document.getElementById('edition-summary-container').style.display = "block";
-
-            if (editionMapInstance) editionMapInstance.dispose();
-            editionMapInstance = am5.Root.new("edition-map");
-            editionMapInstance.setThemes([am5themes_Animated.new(editionMapInstance)]);
-            let chart = editionMapInstance.container.children.push(am5map.MapChart.new(editionMapInstance, { 
-                panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
-            }));
-            let polySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
-                geoJSON: am5geodata_worldLow, 
-                include: Object.keys(db.countries) 
-            }));
-
-            polySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
-                let cId = target.dataItem && target.dataItem.get("id");
-                return cId && db.countries[cId] ? db.countries[cId].name : text;
-            });
-
-            polySeries.mapPolygons.template.setAll({ stroke: am5.color(0x24294a), strokeWidth: 1, fill: am5.color(0x1a1e36) });
-            polySeries.mapPolygons.template.adapters.add("fill", (fill, target) => {
-                let cId = target.dataItem && target.dataItem.get("id");
-                if (cId && statuses[cId]) {
-                    if (statuses[cId] === 'debuts') return am5.color(0x8b5cf6);
-                    if (statuses[cId] === 'returning') return am5.color(0xfacc15);
-                    if (statuses[cId] === 'participating') return am5.color(0x22c55e);
-                    if (statuses[cId] === 'withdrawing') return am5.color(0xef4444);
-                    if (statuses[cId] === 'absent') return am5.color(0x64748b);
-                }
-                return fill;
-            });
+        if (isCurrent) {
+            if (!isPast) { statuses[cId] = 'debuts'; lists.debuts.push(cId); }
+            else if (!isPrev) { statuses[cId] = 'returning'; lists.returning.push(cId); }
+            else { statuses[cId] = 'participating'; lists.participating.push(cId); }
+        } else {
+            if (isPrev) { statuses[cId] = 'withdrawing'; lists.withdrawing.push(cId); }
+            else if (isPast) { statuses[cId] = 'absent'; lists.absent.push(cId); }
         }
+    });
+
+    let legendHTML = "";
+    const buildSection = (title, ids, colorHex) => {
+        if (ids.length === 0) return "";
+        ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
+        let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
+        return `
+            <div class="edition-legend-section">
+                <div class="edition-legend-title">
+                    <div class="edition-legend-dot" style="background:${colorHex}"></div>
+                    ${title} (${ids.length})
+                </div>
+                <div class="edition-legend-items">${tags}</div>
+            </div>
+        `;
+    };
+
+    legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
+    legendHTML += buildSection("Powroty", lists.returning, "#facc15");
+    legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
+    legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
+    legendHTML += buildSection("Brak udziału", lists.absent, "#64748b");
+
+    document.getElementById('edition-legend').innerHTML = legendHTML;
+    document.getElementById('edition-summary-container').style.display = "block";
+
+    if (!editionMapInstance) {
+        editionMapInstance = am5.Root.new("edition-map");
+        editionMapInstance.setThemes([am5themes_Animated.new(editionMapInstance)]);
+        let chart = editionMapInstance.container.children.push(am5map.MapChart.new(editionMapInstance, { 
+            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+        }));
+        editionPolySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
+            geoJSON: am5geodata_worldLow, 
+            include: Object.keys(db.countries) 
+        }));
+
+        editionPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+            let cId = target.dataItem && target.dataItem.get("id");
+            return cId && db.countries[cId] ? db.countries[cId].name : text;
+        });
+
+        editionPolySeries.mapPolygons.template.setAll({ 
+            stroke: am5.color(0x24294a), 
+            strokeWidth: 1, 
+            templateField: "polygonSettings"
+        });
+    }
+
+    let mapData = [];
+    Object.keys(db.countries).forEach(cId => {
+        let polyColor = am5.color(0x1a1e36);
+        if (statuses[cId]) {
+            if (statuses[cId] === 'debuts') polyColor = am5.color(0x8b5cf6);
+            else if (statuses[cId] === 'returning') polyColor = am5.color(0xfacc15);
+            else if (statuses[cId] === 'participating') polyColor = am5.color(0x22c55e);
+            else if (statuses[cId] === 'withdrawing') polyColor = am5.color(0xef4444);
+            else if (statuses[cId] === 'absent') polyColor = am5.color(0x64748b);
+        }
+        
+        mapData.push({ 
+            id: cId, 
+            polygonSettings: { fill: polyColor } 
+        });
+    });
+    
+    editionPolySeries.data.setAll(mapData);
+}
 
         function initMap() {
             if (mapRoot) { mapRoot.dispose(); }
@@ -1435,42 +1450,50 @@
         const absolutePalette = ['#60a5fa', '#3b82f6', '#2563eb', '#4f46e5', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc', '#d946ef', '#ec4899', '#f43f5e', '#e11d48', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#facc15', '#fde047', '#fef08a'];
 
         function renderManagerMap(counts) {
-            const activeCounts = Object.values(counts).filter(c => c > 0);
-            const uniqueCounts = [...new Set(activeCounts)].sort((a, b) => a - b);
-            
-            let legendHTML = '';
-            uniqueCounts.forEach(val => {
-                let colorIdx = Math.min(val - 1, absolutePalette.length - 1);
-                legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${absolutePalette[colorIdx]}"></div>${val}</div>`;
-            });
-            document.getElementById('manager-map-legend').innerHTML = legendHTML;
+    const activeCounts = Object.values(counts).filter(c => c > 0);
+    const uniqueCounts = [...new Set(activeCounts)].sort((a, b) => a - b);
+    
+    let legendHTML = '';
+    uniqueCounts.forEach(val => {
+        let colorIdx = Math.min(val - 1, absolutePalette.length - 1);
+        legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${absolutePalette[colorIdx]}"></div>${val}</div>`;
+    });
+    document.getElementById('manager-map-legend').innerHTML = legendHTML;
 
-            if (managerMapInstance) managerMapInstance.dispose();
-            managerMapInstance = am5.Root.new("manager-map");
-            managerMapInstance.setThemes([am5themes_Animated.new(managerMapInstance)]);
-            let chart = managerMapInstance.container.children.push(am5map.MapChart.new(managerMapInstance, { 
-                panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
-            }));
-            let polySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
-                geoJSON: am5geodata_worldLow, 
-                include: Object.keys(db.countries) 
-            }));
+    if (!managerMapInstance) {
+        managerMapInstance = am5.Root.new("manager-map");
+        managerMapInstance.setThemes([am5themes_Animated.new(managerMapInstance)]);
+        let chart = managerMapInstance.container.children.push(am5map.MapChart.new(managerMapInstance, { 
+            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+        }));
+        managerPolySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
+            geoJSON: am5geodata_worldLow, 
+            include: Object.keys(db.countries) 
+        }));
 
-            polySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
-                let cId = target.dataItem && target.dataItem.get("id");
-                return cId && db.countries[cId] ? db.countries[cId].name : text;
-            });
+        managerPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+            let cId = target.dataItem && target.dataItem.get("id");
+            return cId && db.countries[cId] ? db.countries[cId].name : text;
+        });
 
-            polySeries.mapPolygons.template.setAll({ stroke: am5.color(0x24294a), strokeWidth: 1, fill: am5.color(0x1a1e36) });
-            polySeries.mapPolygons.template.adapters.add("fill", (fill, target) => {
-                let cId = target.dataItem && target.dataItem.get("id");
-                if (cId && counts[cId]) {
-                    let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
-                    return am5.color(absolutePalette[colorIdx]);
-                }
-                return fill;
-            });
+        managerPolySeries.mapPolygons.template.setAll({ 
+            stroke: am5.color(0x24294a), 
+            strokeWidth: 1, 
+            templateField: "polygonSettings"
+        });
+    }
+
+    let mapData = [];
+    Object.keys(db.countries).forEach(cId => {
+        let polyColor = am5.color(0x1a1e36);
+        if (counts[cId]) {
+            let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
+            polyColor = am5.color(absolutePalette[colorIdx]);
         }
+        mapData.push({ id: cId, polygonSettings: { fill: polyColor } });
+    });
+    managerPolySeries.data.setAll(mapData);
+}
 
         // ================= SORTER =================
         let currentSorterMode = 'basic';
