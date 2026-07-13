@@ -1341,13 +1341,28 @@
                     tbody.innerHTML += `<tr><td colspan="7" style="color:var(--text-muted); font-style:italic; font-weight:normal;">${text}</td></tr>`;
                 } else {
                     let r = row.data;
-                    let gfClass = r.place === 1 ? "bg-1st" : r.place === 2 ? "bg-2nd" : r.place === 3 ? "bg-3rd" : "";
-                    let hostFlag = db.hosts[r.edition] ? getFlag(db.countries[db.hosts[r.edition]].code) : "";
                     
+                    // Obliczanie max miejsca DLA DANEJ EDYCJI (żeby sprawdzić, czy państwo było ostatnie)
+                    let editionResults = db.results.filter(res => res.edition === r.edition && res.place !== "-" && res.place !== undefined);
+                    let validPlaces = editionResults.map(res => parseFloat(res.place)).filter(p => !isNaN(p));
+                    let maxPlaceForThisEdition = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
+                    
+                    let numericPlace = parseFloat(r.place);
+                    
+                    // Przydzielanie kolorów, w tym czerwonego (bg-last) dla ostatniego miejsca
+                    let gfClass = numericPlace === 1 ? "bg-1st" 
+                                : numericPlace === 2 ? "bg-2nd" 
+                                : numericPlace === 3 ? "bg-3rd" 
+                                : (numericPlace === maxPlaceForThisEdition && maxPlaceForThisEdition > 3 ? "bg-last" : "");
+                    
+                    let hostFlag = db.hosts[r.edition] ? getFlag(db.countries[db.hosts[r.edition]].code) : "";
                     let hasSong = r.song && r.song.trim() !== "-";
                     let audioPlayBtn = hasSong && r.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${r.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
                     let spotifyLink = hasSong && r.spotify ? `<a href="${r.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                     let youtubeLink = hasSong && r.youtube ? `<a href="${r.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
+
+                    // Naprawa błędu z wyświetlaniem punktów "0" (użycie r.points !== undefined)
+                    let pointsToDisplay = (r.points !== undefined && r.points !== "") ? r.points : "-";
 
                     tbody.innerHTML += `
                         <tr class="${gfClass}">
@@ -1356,7 +1371,7 @@
                             <td><em>${r.song||"-"}</em> ${audioPlayBtn}</td>
                             <td>${r.manager||"-"}</td>
                             <td style="font-weight: bold;">${r.place||"NQ"}</td>
-                            <td class="points-total">${r.points||"-"}</td>
+                            <td class="points-total">${pointsToDisplay}</td>
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                         </tr>`;
                 }
