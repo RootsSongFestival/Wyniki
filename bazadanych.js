@@ -1,8 +1,8 @@
 ///// 1. EDYCJE /////
 const db = {
-    editions: [1], 
+    editions: [1, 2], 
     hosts: { 1: "PL", 2: "RU"}, 
-    cities: { 1: "Gdańsk", 2: "?" }, 
+    cities: { 1: "Gdańsk", 2: "Jekatetynburg" }, 
     
     ///// 2. WYNIKI /////
     results: [
