@@ -66,6 +66,8 @@ const db = {
         { edition: 2, ro: "-", countryId: "CG", artist: "-", song: "-", manager: "Mort", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "SA", artist: "-", song: "-", manager: "Vroblo", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
          { edition: 2, ro: "-", countryId: "ET", artist: "-", song: "-", manager: "Toniak", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+         { edition: 2, ro: "-", countryId: "CY", artist: "-", song: "-", manager: "Native", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+         { edition: 2, ro: "-", countryId: "DK", artist: "-", song: "-", manager: "Dangap", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
     ],
     
     ///// 3. PAŃSTWA /////
