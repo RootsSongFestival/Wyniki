@@ -694,19 +694,29 @@
         }
 
         function openTab(tabName, btn) {
-            document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
-            document.querySelectorAll(".nav-btn").forEach(nav => nav.classList.remove("active"));
-            document.getElementById(tabName).style.display = "block";
-            if(btn) btn.classList.add("active");
-            
-            localStorage.setItem('activeTab', tabName);
-            updateContainerWidth();
-            
-            if (tabName === 'countries' && !mapRoot) initMap();
-            if (tabName === 'managers') initManagers();
-            if (tabName === 'sorter') initSorter();
-            if (tabName === 'preselections') initPreselections();
-        }
+    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+    document.querySelectorAll(".nav-btn").forEach(nav => nav.classList.remove("active"));
+    document.getElementById(tabName).style.display = "block";
+    if(btn) btn.classList.add("active");
+    
+    localStorage.setItem('activeTab', tabName);
+    updateContainerWidth();
+    
+    if (tabName === 'countries' && !mapRoot) initMap();
+    if (tabName === 'managers') initManagers();
+    if (tabName === 'sorter') initSorter();
+    if (tabName === 'preselections') initPreselections();
+
+    if (tabName === 'editions' && editionMapInstance) {
+        editionMapInstance.resize();
+    }
+    if (tabName === 'countries' && mapRoot) {
+        mapRoot.resize();
+    }
+    if (tabName === 'managers' && managerMapInstance) {
+        managerMapInstance.resize();
+    }
+}
 
         function renderHomeWidget() {
             if (!db.editions || db.editions.length === 0) return;
