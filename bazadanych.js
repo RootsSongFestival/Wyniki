@@ -59,6 +59,11 @@ const db = {
         { edition: 2, ro: "-", countryId: "PL", artist: "-", song: "-", manager: "Laxero", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "HU", artist: "-", song: "-", manager: "Modern", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "AR", artist: "-", song: "-", manager: "Max", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "NO", artist: "-", song: "-", manager: "Alaan", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "CA", artist: "-", song: "-", manager: "Alexis", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "IR", artist: "-", song: "-", manager: "Lynn", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "CV", artist: "-", song: "-", manager: "Hubert", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "CG", artist: "-", song: "-", manager: "Mort", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
     ],
     
     ///// 3. PAŃSTWA /////
