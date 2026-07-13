@@ -51,7 +51,7 @@ const db = {
         { edition: 2, ro: "-", countryId: "KR", artist: "-", song: "-", manager: "Urban", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
          { edition: 2, ro: "-", countryId: "KE", artist: "-", song: "-", manager: "Grzesia", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "PL", artist: "-", song: "-", manager: "Shigaś", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "TR", artist: "-", song: "-", manager: "Jarek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "TR", artist: "-", song: "-", manager: "Jaruś", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "CL", artist: "-", song: "-", manager: "Oscypek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "SK", artist: "-", song: "-", manager: "Ziemniorek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "BR", artist: "-", song: "-", manager: "Somebody", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
@@ -70,6 +70,7 @@ const db = {
          { edition: 2, ro: "-", countryId: "DK", artist: "-", song: "-", manager: "Dangap", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "BD", artist: "-", song: "-", manager: "Vacu", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "IE", artist: "-", song: "-", manager: "Kornik", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+         { edition: 2, ro: "-", countryId: "VN", artist: "-", song: "-", manager: "Slimitch", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
     ],
     
     ///// 3. PAŃSTWA /////
