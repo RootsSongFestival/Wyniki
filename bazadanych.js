@@ -1,10 +1,8 @@
-///// 1. EDYCJE /////
 const db = {
     editions: [1, 2], 
     hosts: { 1: "PL", 2: "RU"}, 
     cities: { 1: "Gdańsk", 2: "Jekatetynburg" }, 
     
-    ///// 2. WYNIKI /////
     results: [
         { edition: 1, ro: 7, countryId: "PL", artist: "Sobel", song: "Za kogo mnie masz?", manager: "Sajmonn", place: 13, points: 76, youtube: "https://www.youtube.com/watch?v=rPSXipbz1gI", spotify: "https://open.spotify.com/track/2uWl1FzqmmA3hGdjlHp8mR?si=61dc018f2d8d4031", mp3: "edycja1/polska1.mp3", artistLink: "-" },
         { edition: 1, ro: 10, countryId: "US", artist: "Haute & Freddy", song: "Femme Hysteria", manager: "Calypso", place: 2, points: 128, youtube: "https://youtu.be/ZA9FdL5PP-k?si=1vI6B2ztg33DP1Jh", spotify: "https://open.spotify.com/track/2g8y30PtQ3jO7fR4wKQaOU?si=621504fd632a44d7", mp3: "edycja1/Stany1.mp3", artistLink: "-" },
@@ -36,44 +34,46 @@ const db = {
         { edition: 1, ro: 9, countryId: "NZ", artist: "Balu Brigada", song: "Backseat", manager: "Slimitch", place: 21, points: 45, youtube: "https://youtu.be/Jvv3cC6CamE?si=tA1aijVlAJnROhxY", spotify: "https://open.spotify.com/track/7yT4NJt5rgmVoMJMGPULcj?si=de21cecab00d42c8", mp3: "edycja1/nowazelandia1.mp3", artistLink: "-" },
         { edition: 1, ro: 11, countryId: "GB", artist: "Findlay", song: "Electric Bones", manager: "B00B", place: 24, points: 36, youtube: "https://youtu.be/caUDfimqRR8?si=-CMHN9Qhpynlbn1O", spotify: "https://open.spotify.com/track/2P7s3YjIeYTpzfFG5sZzFG?si=83f6908ee8bb43e3", mp3: "edycja1/brytania1.mp3", artistLink: "-" },
         { edition: 1, ro: 1, countryId: "DK", artist: "Alice Ai", song: "Loser", manager: "Dangap", place: 12, points: 82, youtube: "https://youtu.be/KOuduBgV56M?si=JayKQ5S974wNvKeM", spotify: "https://open.spotify.com/track/13DwYsbgcHUiElgaSppD5r?si=2bd4836dfb944958", mp3: "edycja1/dania1.mp3", artistLink: "-" },
-    
+        
         { edition: 2, ro: "-", countryId: "RU", artist: "-", song: "-", manager: "Pablitek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "AU", artist: "-", song: "-", manager: "Miczel", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "AL", artist: "-", song: "-", manager: "Solarkis", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "UZ", artist: "-", song: "-", manager: "Micheł", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "UZ", artist: "Girl Scout", song: "Crumbs", manager: "Micheł", place: "-", points: "-", youtube: "https://youtu.be/tNSXjlTsOPE?si=YqD_gm9x4oZjunXz", spotify: "https://open.spotify.com/track/1Mw9VXiZUa0WfbJyc8tKae?si=08f6d6e1b3b44929", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "LU", artist: "-", song: "-", manager: "Fox", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "ZA", artist: "-", song: "-", manager: "Dravee", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "US", artist: "-", song: "-", manager: "Calypso", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "PS", artist: "-", song: "-", manager: "Calypso", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "UA", artist: "-", song: "-", manager: "Sajmonn", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "IT", artist: "-", song: "-", manager: "Heks", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-         { edition: 2, ro: "-", countryId: "GB", artist: "-", song: "-", manager: "B00B", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "JO", artist: "-", song: "-", manager: "Riku", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "GB", artist: "-", song: "-", manager: "B00B", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "JO", artist: "Ziyad Al-Samman", song: "My Sweet", manager: "Riku", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=oez-77Tq1js", spotify: "https://open.spotify.com/track/2SFUdPztbGEEfPNQpVcYSz?si=03549760038d4624", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "KR", artist: "-", song: "-", manager: "Urban", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-         { edition: 2, ro: "-", countryId: "KE", artist: "-", song: "-", manager: "Grzesia", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "PL", artist: "-", song: "-", manager: "Shigaś", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "KE", artist: "-", song: "-", manager: "Grzesia", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "PL", artist: "Kasia Babis", song: "Love Witch", manager: "Shigaś", place: "-", points: "-", youtube: "https://youtu.be/3yvpf6lMRYM", spotify: "https://open.spotify.com/track/3khAJu84JG3Rn3XnWUs8H9", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "TR", artist: "-", song: "-", manager: "Jaruś", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "CL", artist: "-", song: "-", manager: "Oscypek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "SK", artist: "-", song: "-", manager: "Ziemniorek", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "SK", artist: "Meowlau", song: "Duša v koši", manager: "Ziemniorek", place: "-", points: "-", youtube: "https://youtu.be/0HZmHSzE52E?is=je9eoUikItvkZdcJ", spotify: "https://open.spotify.com/track/307dgzOEKdi2YNwVW5xQX5?si=NFVgDAmERBGeaT_VGhILGA&utm_source=copy-link", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "BR", artist: "-", song: "-", manager: "Somebody", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "ES", artist: "-", song: "-", manager: "Ant", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "BZ", artist: "-", song: "-", manager: "Laxero", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "ES", artist: "LVL1", song: "Fvn!", manager: "Ant", place: "-", points: "-", youtube: "https://youtu.be/FWKoOiQ1NVM?is=PvLTmV_hxxZ53Cc4", spotify: "https://open.spotify.com/track/2irPnUxnpZdd1J0rurJgxW?si=ryt4OA-XS1y9LG8FRoGu3w&utm_source=copy-link", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "BZ", artist: "Maya J'an", song: "Cul-de-sac", manager: "Laxero", place: "-", points: "-", youtube: "https://youtu.be/ANSHFUkpY2k?si=PygrYo-cxQPR863c", spotify: "https://open.spotify.com/track/3oKp6fXFbkl9cySo4EGSc1?si=b65d7f689be64011", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "HU", artist: "-", song: "-", manager: "Modern", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "AR", artist: "-", song: "-", manager: "Max", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "AR", artist: "Karen Méndez, DJ Tronky", song: "Mi Rival", manager: "Max", place: "-", points: "-", youtube: "https://youtu.be/WVhPKujlFq0?is=-v3SX_prYYz4poH1", spotify: "https://open.spotify.com/track/0WBAURWkTHieS0qQkNQMrr?si=ea23c575e5b14f2f", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "NO", artist: "-", song: "-", manager: "Alaan", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "CA", artist: "-", song: "-", manager: "Alexis", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "IR", artist: "-", song: "-", manager: "Lynn", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "CV", artist: "-", song: "-", manager: "Hubert", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "CG", artist: "-", song: "-", manager: "Mort", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-        { edition: 2, ro: "-", countryId: "SA", artist: "-", song: "-", manager: "Vroblo", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-         { edition: 2, ro: "-", countryId: "ET", artist: "-", song: "-", manager: "Toniak", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-         { edition: 2, ro: "-", countryId: "CY", artist: "-", song: "-", manager: "Native", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-         { edition: 2, ro: "-", countryId: "DK", artist: "-", song: "-", manager: "Dangap", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "IR", artist: "No. Sygnl", song: "Your Turn", manager: "Lynn", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=ZiStAfOZOcw", spotify: "https://open.spotify.com/track/14rx03yHQzd9jnnzhzYQM0?si=12afa4fd405945ac", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "CV", artist: "Komsolu", song: "Tubaron Azul", manager: "Hubert", place: "-", points: "-", youtube: "https://youtu.be/YV5o4SouhLM?si=K4T4ZoyP1CkH-Z7f", spotify: "https://open.spotify.com/track/3P3CVE7cp7hIFTNFvrwghL?si=fa2df29742714124", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "CG", artist: "Zaho de Sagazan", song: "Aspiration", manager: "Mort", place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=t7o0yCOCSBU", spotify: "https://open.spotify.com/track/1blgJMWytwChDZK16qWCfl?si=c7291f4534ed4a28", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "SA", artist: "Shargeeya", song: "Shargeeya!", manager: "Vroblo", place: "-", points: "-", youtube: "https://youtu.be/aUn01A_DvBA?is=fsAZgydvJb3U-cT6", spotify: "https://open.spotify.com/track/2SRGSFyInuOAIdJmzGOlWp?si=cad60f9736bf4336", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "ET", artist: "-", song: "-", manager: "Toniak", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "CY", artist: "-", song: "-", manager: "Native", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "DK", artist: "Hugorm, Hampenberg", song: "Hold om mit hoved (Remix)", manager: "Dangap", place: "-", points: "-", youtube: "https://youtu.be/_Rxc8MPmvDw?si=ornV6jB3XeQe9YB8", spotify: "https://open.spotify.com/track/146R4DWHiFVFCiC7uLhRSB?si=10adc5d3d7524db0", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "BD", artist: "-", song: "-", manager: "Vacu", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
         { edition: 2, ro: "-", countryId: "IE", artist: "-", song: "-", manager: "Kornik", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
-         { edition: 2, ro: "-", countryId: "VN", artist: "-", song: "-", manager: "Slimitch", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "US", artist: "-", song: "-", manager: "Slimitch", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "FR", artist: "-", song: "-", manager: "Gilu", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "CH", artist: "-", song: "-", manager: "Misza", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" },
+        { edition: 2, ro: "-", countryId: "SO", artist: "-", song: "-", manager: "Jelegor", place: "-", points: "-", youtube: "", spotify: "", mp3: "edycja1/rosja2.mp3", artistLink: "-" }
     ],
     
-    ///// 3. PAŃSTWA /////
     countries: {
         "DZ": { name: "Algieria", code: "dz" }, "AO": { name: "Angola", code: "ao" }, "BJ": { name: "Benin", code: "bj" },
         "BW": { name: "Botswana", code: "bw" }, "BF": { name: "Burkina Faso", code: "bf" }, "BI": { name: "Burundi", code: "bi" },
@@ -152,7 +152,6 @@ const db = {
         "IT": { name: "Włochy", code: "it" }
     },
 
-    ///// 4. PRESELEKCJE /////
     preselections: {
         1: {
             "Japonia": {
@@ -242,6 +241,34 @@ const db = {
                         { a: "Rushi", t: "Valk", res: "9 głosów (60%)" },
                         { a: "Tsar Pluh", t: "Bog za den", res: "4 głosy (27%)" },
                         { a: "Rushi", t: "Bez bagazh", res: "2 głosy (13%)" }
+                    ]}
+                ]
+            }
+        },
+        2: {
+            "Luksemburg": {
+                manager: "Fox",
+                name: "Luxembourg Decides 1",
+                stages: [
+                    { name: "Finał", items: [
+                        { a: "Tuys", t: "Crystal Glass (Looking At Somebody)" },
+                        { a: "ÆM", t: "Written In The Stars" },
+                        { a: "Pleasing", t: "Bleak" },
+                        { a: "Ninon", t: "Porcelain Baby" },
+                        { a: "Marcy", t: "Until She Minds" },
+                        { a: "Ptolemea", t: "Kali" },
+                        { a: "Blame Emeraude", t: "Let Go" },
+                        { a: "Tyra", t: "You Don't Own Me" }
+                    ]}
+                ]
+            },
+            "Ukraina": {
+                manager: "Sajmonn",
+                name: "Vidlunnya Ukrayiny",
+                stages: [
+                    { name: "Duel 01", items: [
+                        { a: "Anna Nemchenko, Mikhail", t: "Cho s nami delayet lyubov'" },
+                        { a: "Electrobirds", t: "Lystivky" }
                     ]}
                 ]
             }
