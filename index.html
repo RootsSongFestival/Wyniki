@@ -67,26 +67,12 @@
         .nav-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
         .nav-btn.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
 
-        /* STRONA GŁÓWNA */
-        .home-layout { display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap; }
-        .home-main { flex: 2; min-width: 400px; display: flex; flex-direction: column; gap: 25px; }
-        .home-sidebar { flex: 1; min-width: 300px; position: sticky; top: 80px; }
-        .home-card { background: var(--table-row-odd); padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); }
-        .home-logo { max-width: 250px; display: block; margin: 0 auto 20px auto; }
-        .home-desc { font-size: 15px; line-height: 1.6; text-align: center; color: var(--text-muted); }
-        .rules-title { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .rules-list { margin: 0; padding-left: 20px; line-height: 1.6; color: var(--text-main); font-size: 14px; }
-        .rules-list li { margin-bottom: 12px; }
-
         @media (max-width: 768px) {
             .navbar { flex-direction: column; padding: 10px 0 0 0; }
             .nav-brand { flex: none; margin-bottom: 5px; }
             .nav-spacer { display: none; }
             .nav-links { width: 100%; justify-content: space-around; }
             .nav-btn { padding: 12px 5px; font-size: 11px; flex: 1; }
-            .home-layout { flex-direction: column; }
-            .home-main, .home-sidebar { width: 100%; min-width: unset; }
-            .home-sidebar { position: static; }
         }
 
         .map-container { position: relative; width: 100%; margin-bottom: 25px; }
@@ -244,8 +230,6 @@
         .sorter-item.is-ranked.rank-top10 { border-left-color: #8b5cf6; background-color: rgba(139, 92, 246, 0.1); }
         .sorter-item.is-ranked.rank-top10 .sorter-points { display: block; background: #8b5cf6; color: #fff; }
         .sorter-item.is-ranked.rank-other { border-left-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
-	.sorter-item.is-excluded { 
-            background-color: rgba(128, 128, 128, 0.1); border-left-color: #808080; cursor: default; }
 
         .tier-row { display: flex; margin-bottom: 5px; min-height: 80px; background: var(--table-row-odd); border-radius: 6px; overflow: hidden; position: relative; }
         .tier-label { width: 100px; min-width: 100px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; color: #000; text-transform: uppercase; border-right: 2px solid var(--bg-color); flex-shrink: 0; outline: none; text-align: center; }
@@ -270,55 +254,56 @@
         .editions-layout-wrapper.cols-1 { grid-template-columns: 1fr; }
         .editions-layout-wrapper.cols-2 { grid-template-columns: 1fr 1fr; }
 
+        /* MNIEJSZY INFOBOX W STYLU APLIKACJI */
         .countries-layout { display: flex; gap: 25px; flex-wrap: wrap; align-items: flex-start; }
         .countries-left { flex: 2; min-width: 400px; display: flex; flex-direction: column; gap: 20px; }
-        .countries-right { flex: 1; min-width: 300px; position: sticky; top: 80px; }
+        .countries-right { flex: 1; min-width: 250px; position: sticky; top: 80px; }
         
         .infobox {
             background-color: var(--table-row-even);
             color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            font-size: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            max-width: 320px;
+            font-size: 11px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            max-width: 260px;
             margin-left: auto;
         }
         .infobox-header {
             background-color: var(--primary-color);
             color: #ffffff;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .infobox-flag-container {
             background-color: var(--table-row-odd);
-            padding: 15px;
+            padding: 10px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .infobox-flag {
             max-width: 100%;
-            max-height: 120px;
+            max-height: 90px;
             object-fit: contain;
             border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
         .infobox-table {
             width: 100%;
             border-collapse: collapse;
         }
         .infobox-table th, .infobox-table td {
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             text-align: left;
             vertical-align: middle;
-            font-size: 12px;
+            font-size: 11px;
         }
         .infobox-table th { 
             width: 45%; 
@@ -337,9 +322,9 @@
             background-color: var(--table-header); 
             color: var(--text-main); 
             text-align: center; 
-            padding: 8px; 
+            padding: 6px; 
             text-transform: uppercase;
-            font-size: 11px;
+            font-size: 10px;
             cursor: default;
         }
         .infobox-subheader th:hover { color: var(--text-main); }
@@ -376,8 +361,7 @@
             <img src="logo.webp" alt="Roots Song Festival Logo" class="navbar-logo" onerror="this.style.display='none'">
         </div>
         <div class="nav-links">
-            <button class="nav-btn active" onclick="openTab('home', this)">Strona Główna</button>
-            <button class="nav-btn" onclick="openTab('editions', this)">Edycje</button>
+            <button class="nav-btn active" onclick="openTab('editions', this)">Edycje</button>
             <button class="nav-btn" onclick="openTab('countries', this)">Państwa</button>
             <button class="nav-btn" onclick="openTab('preselections', this)">Preselekcje</button>
             <button class="nav-btn" onclick="openTab('managers', this)">Menadżerowie</button>
@@ -388,60 +372,8 @@
 
     <div class="container">
         
-        <div id="home" class="tab-content" style="display: block;">
-            <div class="home-layout">
-                <div class="home-main">
-                    <div class="home-card">
-                        <img src="logo.webp" alt="RSF Logo" class="home-logo" onerror="this.style.display='none'">
-                        <p class="home-desc">
-                            <strong>Roots Song Festival</strong>, w skrócie <strong>RSF</strong> jest to nowy Polski fanowski konkurs piosenki założony w czerwcu 2026 roku. 
-                            Pomysłodawcami konkursu byli alfabetycznie: Ant, Micheł, Oscypciek oraz Sajmonn. 
-                            Ideą konkursu jest poznawanie nowej muzyki z całego świata i świetna zabawa!
-                        </p>
-                    </div>
-
-                    <div class="home-card">
-   					 <h2 class="rules-title">Zasady Konkursu</h2>
-   					 <ul class="rules-list">
-    				    <li>W tym konkursie borrowingi nie istnieją.</li>
-      				  <li>Piosenka wysłana na konkurs nie może przekraczać 30 milionów wyświetleń na platformie YouTube, oraz nie może być wydana przed dniem 31 grudnia 2014 (wyjątek - edycje tematyczne).</li>
-    				    <li>Artysta wysłany na konkurs może mieć korzenie maksymalnie do rodziców.</li>
-        				<li>Zakazane są tzw. ruchańce (piosenki pojawiające się na każdym możliwym fanconteście) - Zakazane jest też wysyłanie tzw. worldchart artists, artystów z Eurowizji, Junior Eurowizji, Interwizji, oraz overused artists. Utwór nie może brać udziału w max. 3 lub więcej contestach. Dopuszczone są także piosenki “odkryte” przez hoda/piosenki, których tzw. rv zostały stworzone przez hodów.</li>
-        				<li>Zakazane jest wysyłanie piosenek wygenerowanych przez AI, coverów, troll songów, utworów o charakterze rasistowskim, ksenofobicznym, seksistowskim, homofobicznym. Ponadto zakazane jest wysyłanie piosenek które uczestniczyły w Eurowizji, Junior Eurowizji, Interwizji oraz w ich preselekcjach oraz w preselekcjach do Roots Song Festival.</li>
-       					 <li>Menadżer jest zobligowany do wysłania piosenki w wyznaczonym terminie, oraz zagłosowania. Brak głosu jest równoznaczny z warnem oraz każdorazowym odjęciem -50% punktów z televotingu. Po trzecim warnie, menadżer zostaje zbanowany z udziału w konkursie.</li>
-    				</ul>
-				</div>
-                </div>
-
-                <div class="home-sidebar">
-                    <div class="infobox" style="margin-bottom: 25px;">
-                        <div class="infobox-header">Aktualna Edycja</div>
-                        <div class="infobox-flag-container">
-
-                            <img class="infobox-flag" id="home-edition-flag" src="" alt="Flaga" style="max-height: 80px;">
-                        </div>
-                        <table class="infobox-table">
-                            <tr><th>Numer edycji</th><td id="home-edition-num">...</td></tr>
-                            <tr><th>Gospodarz</th><td id="home-edition-host">...</td></tr>
-                            <tr><th>Miasto</th><td id="home-edition-city">...</td></tr>
-                            <tr><th>Liczba uczestników</th><td id="home-edition-count">...</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="home-card" style="max-width: 320px; margin-left: auto; box-sizing: border-box; padding: 15px; text-align: center;">
-                        <h3 class="rules-title" style="font-size: 15px; margin-bottom: 15px;">Obejrzyj najnowszy recap</h3>
-                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-                            <iframe src="https://www.youtube.com/embed/N3f4v3UZ9b0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <a href="https://open.spotify.com/playlist/4I6IlBBB8X6HG5UhxpWC54?si=fPlLdPzvSaioP2DVSiiDUA" target="_blank" class="picker-btn" style="width: 100%; margin-top: 15px; background-color: #1DB954; color: #fff; border-color: #1DB954; display: flex; justify-content: center; gap: 10px; font-weight: bold; box-sizing: border-box; text-decoration: none;">
-                            <i class="fa-brands fa-spotify" style="font-size: 18px;"></i> Playlista obecnej edycji
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="editions" class="tab-content">
+        <!-- EDYCJE -->
+        <div id="editions" class="tab-content" style="display: block;">
             <div class="picker-container">
                 <h3 class="picker-title">Wybierz Edycję</h3>
                 <select id="edition-select" class="picker-select" onchange="changeEdition(this)"></select>
@@ -464,6 +396,7 @@
             <div id="edition-tables-container" class="editions-layout-wrapper cols-1"></div>
         </div>
 
+        <!-- PAŃSTWA -->
         <div id="countries" class="tab-content">
             <div class="countries-layout">
                 <div class="countries-left">
@@ -473,6 +406,27 @@
                             <div id="mapdiv"></div>
                             <div id="country-map-legend" class="map-overlay-legend"></div>
                         </div>
+                    </div>
+                    
+                    <div id="selected-country-header" class="country-header-title" style="display: none; margin-top: 10px;"></div>
+                    
+                    <div class="table-wrapper">
+                        <table id="country-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortTable('country-table', 0, false)">Edycja</th>
+                                    <th class="sortable" onclick="sortTable('country-table', 1, false)">Wykonawca</th>
+                                    <th class="sortable" onclick="sortTable('country-table', 2, false)">Utwór</th>
+                                    <th class="sortable" onclick="sortTable('country-table', 3, false)">Menadżer</th>
+                                    <th class="sortable" onclick="sortTable('country-table', 4, true)">M-ce</th>
+                                    <th class="sortable" onclick="sortTable('country-table', 5, true)">Pkt</th>
+                                    <th>Linki</th>
+                                </tr>
+                            </thead>
+                            <tbody id="country-body">
+                                <tr><td colspan="7" style="color:var(--text-muted); font-style:italic;">Wybierz państwo z mapy powyżej, aby zobaczyć jego wyniki.</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 
@@ -493,29 +447,9 @@
                     </div>
                 </div>
             </div>
-
-            <div id="selected-country-header" class="country-header-title" style="display: none; margin-top: 30px;"></div>
-            
-            <div class="table-wrapper">
-                <table id="country-table">
-                    <thead>
-                        <tr>
-                            <th class="sortable" onclick="sortTable('country-table', 0, false)">Edycja</th>
-                            <th class="sortable" onclick="sortTable('country-table', 1, false)">Wykonawca</th>
-                            <th class="sortable" onclick="sortTable('country-table', 2, false)">Utwór</th>
-                            <th class="sortable" onclick="sortTable('country-table', 3, false)">Menadżer</th>
-                            <th class="sortable" onclick="sortTable('country-table', 4, true)">Miejsce</th>
-                            <th class="sortable" onclick="sortTable('country-table', 5, true)">Punkty</th>
-                            <th>Linki</th>
-                        </tr>
-                    </thead>
-                    <tbody id="country-body">
-                        <tr><td colspan="7" style="color:var(--text-muted); font-style:italic;">Wybierz państwo z mapy powyżej, aby zobaczyć jego wyniki.</td></tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
 
+        <!-- PRESELEKCJE -->
         <div id="preselections" class="tab-content">
             <div class="picker-container">
                 <h3 class="picker-title">Wybierz Edycję</h3>
@@ -528,6 +462,7 @@
             <div id="presel-content-area"></div>
         </div>
 
+        <!-- MENADŻEROWIE -->
         <div id="managers" class="tab-content">
             <h3 class="picker-title">Wybierz Menadżera</h3>
             <select id="manager-select" class="picker-select" style="margin-bottom:25px;" onchange="renderManagerData()"></select>
@@ -565,15 +500,19 @@
             </div>
         </div>
 
+        <!-- SORTER -->
         <div id="sorter" class="tab-content">
             <div class="picker-container" data-html2canvas-ignore="true">
-                <h3 class="picker-title">Wybierz Edycję i Tryb </h3>
-                <div style="display:flex; gap:15px; flex-wrap:wrap; justify-content:center; max-width:600px; margin:0 auto;">
-                    <select id="sorter-edition-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeSorterEdition(this)"></select>
-                    <select id="sorter-exclude-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeExcludedCountry(this)"></select>
-                </div>
+                <h3 class="picker-title">Wybierz Edycję i Faze</h3>
+                <select id="sorter-edition-select" class="picker-select" style="margin-bottom: 15px;" onchange="changeSorterEdition(this)"></select>
+                <select id="sorter-phase-select" class="picker-select" onchange="buildSorterWorkspace()">
+                    <option value="all">Całość</option>
+                    <option value="sf1">Tylko Półfinał 1</option>
+                    <option value="sf2">Tylko Półfinał 2</option>
+                    <option value="final">Tylko Finał</option>
+                </select>
                 <div class="sorter-controls" style="margin-top: 15px;">
-                    <button class="picker-btn active" onclick="setSorterMode('basic', this)">Topka</button>
+                    <button class="picker-btn active" onclick="setSorterMode('basic', this)">Podstawowa Topka</button>
                     <button class="picker-btn" onclick="setSorterMode('tier', this)">Tierlista</button>
                     <button class="picker-btn" onclick="setSorterMode('1v1', this)">Algorytm 1v1</button>
                 </div>
@@ -581,8 +520,7 @@
 
             <div id="sorter-workspace"></div>
             
-            <div id="sorter-export-controls" style="text-align: center; margin-top: 20px;" data-html2canvas-ignore="true">
-            </div>
+            <div id="sorter-export-controls" style="text-align: center; margin-top: 20px;" data-html2canvas-ignore="true"></div>
         </div>
 
     </div>
@@ -590,29 +528,21 @@
     <script>
         function playAudio(url) {
             let player = document.getElementById('global-audio-player');
-            
-            if (player.getAttribute('src') === url) {
-                if (!player.paused) {
-                    player.pause();
-                    player.currentTime = 0; // Reset utworu do początku przy zatrzymaniu
-                } else {
-                    player.play();
-                }
+            if (player.src === url && !player.paused) {
+                player.pause();
             } else {
-                player.setAttribute('src', url);
+                player.src = url;
                 player.play();
             }
         }
 
         let mapRoot;
         let editionMapInstance = null;
-		let editionPolySeries = null;
         let activeEdition = db.editions.length > 0 ? db.editions[0] : null;
         let activeCountryId = null;
         let managerMapInstance;
-		let managerPolySeries = null;
         let editionViewCols = 1;
-        let editionSortState = { key: 'auto', isAsc: true };
+        let editionSortState = { key: 'place', isAsc: true };
 
         function getEmojiFlag(countryCode) {
             if (!countryCode) return "";
@@ -659,7 +589,7 @@
 
         function updateContainerWidth() {
             const containerElem = document.querySelector('.container');
-            const activeTab = localStorage.getItem('activeTab') || 'home';
+            const activeTab = localStorage.getItem('activeTab') || 'editions';
             if (activeTab === 'editions' && editionViewCols === 2) {
                 containerElem.classList.add('wide-mode');
             } else {
@@ -683,54 +613,26 @@
             }
             
             renderEditionTable();
-            renderHomeWidget();
 
-            let savedTab = localStorage.getItem('activeTab') || 'home';
+            let savedTab = localStorage.getItem('activeTab') || 'editions';
             let btn = document.querySelector(`.nav-btn[onclick*="'${savedTab}'"]`);
             if (btn) openTab(savedTab, btn);
-            else openTab('home', document.querySelector(".nav-btn"));
+            else openTab('editions', document.querySelector(".nav-btn"));
         }
 
         function openTab(tabName, btn) {
-    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
-    document.querySelectorAll(".nav-btn").forEach(nav => nav.classList.remove("active"));
-    document.getElementById(tabName).style.display = "block";
-    if(btn) btn.classList.add("active");
-    
-    localStorage.setItem('activeTab', tabName);
-    updateContainerWidth();
-    
-    if (tabName === 'countries' && !mapRoot) initMap();
-    if (tabName === 'managers') initManagers();
-    if (tabName === 'sorter') initSorter();
-    if (tabName === 'preselections') initPreselections();
-
-    if (tabName === 'editions' && editionMapInstance) {
-        editionMapInstance.resize();
-    }
-    if (tabName === 'countries' && mapRoot) {
-        mapRoot.resize();
-    }
-    if (tabName === 'managers' && managerMapInstance) {
-        managerMapInstance.resize();
-    }
-}
-
-        function renderHomeWidget() {
-            if (!db.editions || db.editions.length === 0) return;
-            let maxEdition = Math.max(...db.editions);
-            let hostId = db.hosts[maxEdition];
-            let hostCountry = db.countries[hostId];
-            let city = db.cities[maxEdition] || "Brak danych";
-            let participantsCount = db.results ? db.results.filter(r => r.edition === maxEdition).length : 0;
-
-            document.getElementById('home-edition-num').innerText = `#${maxEdition}`;
-            if (hostCountry) {
-                document.getElementById('home-edition-host').innerText = hostCountry.name;
-                document.getElementById('home-edition-flag').src = `https://flagcdn.com/w320/${hostCountry.code.toLowerCase()}.png`;
-            }
-            document.getElementById('home-edition-city').innerText = city;
-            document.getElementById('home-edition-count').innerText = participantsCount;
+            document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+            document.querySelectorAll(".nav-btn").forEach(nav => nav.classList.remove("active"));
+            document.getElementById(tabName).style.display = "block";
+            if(btn) btn.classList.add("active");
+            
+            localStorage.setItem('activeTab', tabName);
+            updateContainerWidth();
+            
+            if (tabName === 'countries' && !mapRoot) initMap();
+            if (tabName === 'managers') initManagers();
+            if (tabName === 'sorter') initSorter();
+            if (tabName === 'preselections') initPreselections();
         }
 
         // ================= EDYCJE =================
@@ -806,47 +708,24 @@
                 return;
             }
 
-            // Automatyczne wykrywanie: czy edycja ma już uzupełnione miejsca (różne od "-")
-            let hasResults = editionData.some(r => r.place && r.place !== "-");
+            const hasSemi = editionData.some(r => r.semi !== undefined);
 
             editionData.sort((a, b) => {
                 let valA, valB;
-                let currentKey = editionSortState.key;
-                
-                // Jeśli klucz to 'auto', wybieramy 'place' (gdy są wyniki) lub 'ro' (gdy wyników brak)
-                if (currentKey === 'auto') {
-                    currentKey = hasResults ? 'place' : 'ro';
+                switch(editionSortState.key) {
+                    case 'ro': valA = a.ro ?? 999; valB = b.ro ?? 999; break;
+                    case 'country': valA = db.countries[a.countryId]?.name || ""; valB = db.countries[b.countryId]?.name || ""; break;
+                    case 'artist': valA = a.artist || ""; valB = b.artist || ""; break;
+                    case 'manager': valA = a.manager || ""; valB = b.manager || ""; break;
+                    case 'semi': 
+                        let sA = a.semi === 'AQ' ? 3 : (a.semi || 0); 
+                        let sB = b.semi === 'AQ' ? 3 : (b.semi || 0); 
+                        return editionSortState.isAsc ? sA - sB : sB - sA;
+                    case 'place': valA = a.place ?? 999; valB = b.place ?? 999; break;
+                    case 'points': valA = a.points ?? -1; valB = b.points ?? -1; break;
                 }
 
-                switch(currentKey) {
-                    case 'ro': 
-                        valA = (a.ro === "-" || a.ro === undefined) ? 999 : parseFloat(a.ro); 
-                        valB = (b.ro === "-" || b.ro === undefined) ? 999 : parseFloat(b.ro); 
-                        break;
-                    case 'country': 
-                        valA = db.countries[a.countryId]?.name || ""; 
-                        valB = db.countries[b.countryId]?.name || ""; 
-                        break;
-                    case 'artist': 
-                        valA = a.artist || ""; 
-                        valB = b.artist || ""; 
-                        break;
-                    case 'manager': 
-                        valA = a.manager || ""; 
-                        valB = b.manager || ""; 
-                        break;
-                    case 'place': 
-                        valA = (a.place === "-" || a.place === undefined) ? 999 : parseFloat(a.place); 
-                        valB = (b.place === "-" || b.place === undefined) ? 999 : parseFloat(b.place); 
-                        break;
-                    case 'points': 
-                        valA = (a.points === "-" || a.points === undefined) ? -1 : parseFloat(a.points); 
-                        valB = (b.points === "-" || b.points === undefined) ? -1 : parseFloat(b.points); 
-                        break;
-                }
-
-                // Sprawdzamy czy sortujemy numerycznie, uwzględniając dynamiczną zmianę klucza z 'auto'
-                let isNum = ['ro', 'place', 'points'].includes(currentKey);
+                let isNum = ['ro', 'place', 'points'].includes(editionSortState.key);
                 if (isNum) {
                     return editionSortState.isAsc ? valA - valB : valB - valA;
                 } else {
@@ -854,9 +733,7 @@
                 }
             });
 
-            // Logika wyliczania maksymalnego miejsca do kolorowania czerwonego tła (ignoruje "-")
-            const validPlaces = editionData.map(r => parseFloat(r.place)).filter(p => !isNaN(p));
-            const maxPlace = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
+            const maxPlace = Math.max(...editionData.map(r => r.place).filter(p => !isNaN(p)));
 
             let chunks = [];
             let chunkSize = Math.ceil(editionData.length / editionViewCols);
@@ -869,19 +746,34 @@
                     <th onclick="sortEditionGlobal('country')">Kraj${getSortIndicator('country')}</th>
                     <th onclick="sortEditionGlobal('artist')">Utwór/Wyk.${getSortIndicator('artist')}</th>
                     ${editionViewCols === 1 ? `<th onclick="sortEditionGlobal('manager')">Menadżer${getSortIndicator('manager')}</th>` : ''}
+                    ${hasSemi ? `<th onclick="sortEditionGlobal('semi')">Semi${getSortIndicator('semi')}</th>` : ''}
                     <th onclick="sortEditionGlobal('place')">Miejsce${getSortIndicator('place')}</th>
                     <th onclick="sortEditionGlobal('points')">Punkty${getSortIndicator('points')}</th>
                     <th>Linki</th></tr></thead><tbody>`;
 
                 chunk.forEach(row => {
                     const cData = db.countries[row.countryId];
-                    let numericPlace = parseFloat(row.place);
-                    let rowClass = numericPlace === 1 ? "row-1st" : numericPlace === 2 ? "row-2nd" : numericPlace === 3 ? "row-3rd" : (numericPlace === maxPlace && maxPlace > 3 ? "row-last" : "");
+                    let rowClass = row.place === 1 ? "row-1st" : row.place === 2 ? "row-2nd" : row.place === 3 ? "row-3rd" : (row.place === maxPlace && maxPlace > 3 ? "row-last" : "");
                     
                     let hasSong = row.song && row.song.trim() !== "-";
                     let audioPlayBtn = hasSong && row.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${row.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
                     let spotifyLink = hasSong && row.spotify ? `<a href="${row.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                     let youtubeLink = hasSong && row.youtube ? `<a href="${row.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
+
+                    let semiCell = "";
+                    if (hasSemi) {
+                        let sVal = row.semi === 'AQ' ? '<span style="color:gold;font-weight:bold;">AQ</span>' : (row.semi ? `SF${row.semi}` : "-");
+                        semiCell = `<td>${sVal}</td>`;
+                    }
+
+                    let pointsContent = row.points !== undefined ? row.points : "-";
+                    let placeContent = row.place !== undefined ? row.place : "-";
+
+                    // AQ podmienianie punktów na Automatyczny Finalista
+                    if (row.semi === 'AQ') {
+                        pointsContent = '<span style="color:gold; font-weight:bold; font-size:11px;">Automatyczny Finalista</span>';
+                        placeContent = "-";
+                    }
 
                     tableHTML += `
                         <tr class="${rowClass}">
@@ -889,42 +781,15 @@
                             <td class="country-cell">${getFlag(cData.code)} ${cData ? cData.name : row.countryId}</td>
                             <td style="text-align:left;"><strong>${row.artist||"-"}</strong><br><span style="font-size:11px"><em>${row.song||"-"}</em> ${audioPlayBtn}</span></td>
                             ${editionViewCols === 1 ? `<td>${row.manager||"-"}</td>` : ''}
-                            <td style="font-weight: bold;">${row.place}</td>
-                            <td class="points-total">${row.points !== undefined ? row.points : "-"}</td>
+                            ${semiCell}
+                            <td style="font-weight: bold;">${placeContent}</td>
+                            <td class="points-total">${pointsContent}</td>
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                         </tr>`;
                 });
                 tableHTML += `</tbody></table></div>`;
                 container.innerHTML += tableHTML;
             });
-
-            if (editionViewCols === 2) {
-                setTimeout(() => {
-                    let table1 = document.getElementById('edition-table-part-0');
-                    let table2 = document.getElementById('edition-table-part-1');
-                    
-                    if (table1 && table2) {
-                        let rows1 = table1.querySelectorAll('tbody tr');
-                        let rows2 = table2.querySelectorAll('tbody tr');
-                        let maxRows = Math.max(rows1.length, rows2.length);
-                        
-                        for (let i = 0; i < maxRows; i++) {
-                            let r1 = rows1[i];
-                            let r2 = rows2[i];
-                            
-                            if (r1 && r2) {
-                                r1.style.height = 'auto';
-                                r2.style.height = 'auto';
-                                
-                                let maxH = Math.max(r1.offsetHeight, r2.offsetHeight);
-                                
-                                r1.style.height = maxH + 'px';
-                                r2.style.height = maxH + 'px';
-                            }
-                        }
-                    }
-                }, 10);
-            }
 
             renderEditionMap();
         }
@@ -1036,19 +901,7 @@
                 
                 stage.items.forEach(item => {
                     let bgStyle = "";
-                    
-                    if (item.place === 1) {
-                        bgStyle = "background-color: rgba(255, 215, 0, 0.15); border-left: 4px solid #ffd700;";
-                    } else if (item.place === 2) {
-                        bgStyle = "background-color: rgba(192, 192, 192, 0.15); border-left: 4px solid #c0c0c0;";
-                    } else if (item.place === 3) {
-                        bgStyle = "background-color: rgba(205, 127, 50, 0.15); border-left: 4px solid #cd7f32;";
-                    } else if (item.place === 4) { 
-                        bgStyle = "background-color: rgba(96, 165, 250, 0.15); border-left: 4px solid #60a5fa;";
-                    } else if (item.place === "last") {
-                        bgStyle = "background-color: rgba(255, 60, 60, 0.15); border-left: 4px solid #ff3c3c;";
-                    } 
-                    else if (item.res) {
+                    if (item.res) {
                         let match = item.res.match(/(\d+)%/);
                         if (match) {
                             let pct = parseInt(match[1]);
@@ -1058,6 +911,9 @@
                                 bgStyle = "background-color: rgba(255, 60, 60, 0.15); border-left: 4px solid #ff3c3c;";
                             }
                         }
+                    }
+                    if (item.place === 1) {
+                        bgStyle = "background-color: rgba(255, 215, 0, 0.15); border-left: 4px solid #ffd700;";
                     }
 
                     html += `
@@ -1076,102 +932,89 @@
 
         // ================= MAPA PAŃSTW =================
         function renderEditionMap() {
-    let currentEdition = activeEdition;
-    if (!currentEdition) return;
+            let currentEdition = activeEdition;
+            if (!currentEdition) return;
 
-    let editionsSorted = [...db.editions].sort((a,b)=>a-b);
-    let currentIndex = editionsSorted.indexOf(currentEdition);
-    let prevEdition = currentIndex > 0 ? editionsSorted[currentIndex - 1] : null;
+            let editionsSorted = [...db.editions].sort((a,b)=>a-b);
+            let currentIndex = editionsSorted.indexOf(currentEdition);
+            let prevEdition = currentIndex > 0 ? editionsSorted[currentIndex - 1] : null;
 
-    let currentParticipants = db.results.filter(r => r.edition === currentEdition).map(r => r.countryId);
-    let prevParticipants = prevEdition ? db.results.filter(r => r.edition === prevEdition).map(r => r.countryId) : [];
-    let pastParticipants = db.results.filter(r => r.edition < currentEdition).map(r => r.countryId);
+            let currentParticipants = db.results.filter(r => r.edition === currentEdition).map(r => r.countryId);
+            let prevParticipants = prevEdition ? db.results.filter(r => r.edition === prevEdition).map(r => r.countryId) : [];
+            let pastParticipants = db.results.filter(r => r.edition < currentEdition).map(r => r.countryId);
 
-    let statuses = {};
-    let lists = { debuts: [], returning: [], participating: [], withdrawing: [], absent: [] };
+            let statuses = {};
+            let lists = { debuts: [], returning: [], participating: [], withdrawing: [], absent: [] };
 
-    Object.keys(db.countries).forEach(cId => {
-        let isCurrent = currentParticipants.includes(cId);
-        let isPrev = prevParticipants.includes(cId);
-        let isPast = pastParticipants.includes(cId);
+            Object.keys(db.countries).forEach(cId => {
+                let isCurrent = currentParticipants.includes(cId);
+                let isPrev = prevParticipants.includes(cId);
+                let isPast = pastParticipants.includes(cId);
 
-        if (isCurrent) {
-            if (!isPast) { statuses[cId] = 'debuts'; lists.debuts.push(cId); }
-            else if (!isPrev) { statuses[cId] = 'returning'; lists.returning.push(cId); }
-            else { statuses[cId] = 'participating'; lists.participating.push(cId); }
-        } else {
-            if (isPrev) { statuses[cId] = 'withdrawing'; lists.withdrawing.push(cId); }
-            else if (isPast) { statuses[cId] = 'absent'; lists.absent.push(cId); }
+                if (isCurrent) {
+                    if (!isPast) { statuses[cId] = 'debuts'; lists.debuts.push(cId); }
+                    else if (!isPrev) { statuses[cId] = 'returning'; lists.returning.push(cId); }
+                    else { statuses[cId] = 'participating'; lists.participating.push(cId); }
+                } else {
+                    if (isPrev) { statuses[cId] = 'withdrawing'; lists.withdrawing.push(cId); }
+                    else if (isPast) { statuses[cId] = 'absent'; lists.absent.push(cId); }
+                }
+            });
+
+            let legendHTML = "";
+            const buildSection = (title, ids, colorHex) => {
+                if (ids.length === 0) return "";
+                ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
+                let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
+                return `
+                    <div class="edition-legend-section">
+                        <div class="edition-legend-title">
+                            <div class="edition-legend-dot" style="background:${colorHex}"></div>
+                            ${title} (${ids.length})
+                        </div>
+                        <div class="edition-legend-items">${tags}</div>
+                    </div>
+                `;
+            };
+
+            legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
+            legendHTML += buildSection("Powroty", lists.returning, "#facc15");
+            legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
+            legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
+            legendHTML += buildSection("Brak udziału", lists.absent, "#64748b");
+
+            document.getElementById('edition-legend').innerHTML = legendHTML;
+            document.getElementById('edition-summary-container').style.display = "block";
+
+            if (editionMapInstance) editionMapInstance.dispose();
+            editionMapInstance = am5.Root.new("edition-map");
+            editionMapInstance.setThemes([am5themes_Animated.new(editionMapInstance)]);
+            let chart = editionMapInstance.container.children.push(am5map.MapChart.new(editionMapInstance, { 
+                panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+            }));
+            let polySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
+                geoJSON: am5geodata_worldLow, 
+                include: Object.keys(db.countries) 
+            }));
+
+            polySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+                let cId = target.dataItem && target.dataItem.get("id");
+                return cId && db.countries[cId] ? db.countries[cId].name : text;
+            });
+
+            polySeries.mapPolygons.template.setAll({ stroke: am5.color(0x24294a), strokeWidth: 1, fill: am5.color(0x1a1e36) });
+            polySeries.mapPolygons.template.adapters.add("fill", (fill, target) => {
+                let cId = target.dataItem && target.dataItem.get("id");
+                if (cId && statuses[cId]) {
+                    if (statuses[cId] === 'debuts') return am5.color(0x8b5cf6);
+                    if (statuses[cId] === 'returning') return am5.color(0xfacc15);
+                    if (statuses[cId] === 'participating') return am5.color(0x22c55e);
+                    if (statuses[cId] === 'withdrawing') return am5.color(0xef4444);
+                    if (statuses[cId] === 'absent') return am5.color(0x64748b);
+                }
+                return fill;
+            });
         }
-    });
-
-    let legendHTML = "";
-    const buildSection = (title, ids, colorHex) => {
-        if (ids.length === 0) return "";
-        ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
-        let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
-        return `
-            <div class="edition-legend-section">
-                <div class="edition-legend-title">
-                    <div class="edition-legend-dot" style="background:${colorHex}"></div>
-                    ${title} (${ids.length})
-                </div>
-                <div class="edition-legend-items">${tags}</div>
-            </div>
-        `;
-    };
-
-    legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
-    legendHTML += buildSection("Powroty", lists.returning, "#facc15");
-    legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
-    legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
-    legendHTML += buildSection("Brak udziału", lists.absent, "#64748b");
-
-    document.getElementById('edition-legend').innerHTML = legendHTML;
-    document.getElementById('edition-summary-container').style.display = "block";
-
-    if (!editionMapInstance) {
-        editionMapInstance = am5.Root.new("edition-map");
-        editionMapInstance.setThemes([am5themes_Animated.new(editionMapInstance)]);
-        let chart = editionMapInstance.container.children.push(am5map.MapChart.new(editionMapInstance, { 
-            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
-        }));
-        editionPolySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
-            geoJSON: am5geodata_worldLow, 
-            include: Object.keys(db.countries) 
-        }));
-
-        editionPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
-            let cId = target.dataItem && target.dataItem.get("id");
-            return cId && db.countries[cId] ? db.countries[cId].name : text;
-        });
-
-        editionPolySeries.mapPolygons.template.setAll({ 
-            stroke: am5.color(0x24294a), 
-            strokeWidth: 1, 
-            templateField: "polygonSettings"
-        });
-    }
-
-    let mapData = [];
-    Object.keys(db.countries).forEach(cId => {
-        let polyColor = am5.color(0x1a1e36);
-        if (statuses[cId]) {
-            if (statuses[cId] === 'debuts') polyColor = am5.color(0x8b5cf6);
-            else if (statuses[cId] === 'returning') polyColor = am5.color(0xfacc15);
-            else if (statuses[cId] === 'participating') polyColor = am5.color(0x22c55e);
-            else if (statuses[cId] === 'withdrawing') polyColor = am5.color(0xef4444);
-            else if (statuses[cId] === 'absent') polyColor = am5.color(0x64748b);
-        }
-        
-        mapData.push({ 
-            id: cId, 
-            polygonSettings: { fill: polyColor } 
-        });
-    });
-    
-    editionPolySeries.data.setAll(mapData);
-}
 
         function initMap() {
             if (mapRoot) { mapRoot.dispose(); }
@@ -1279,10 +1122,7 @@
             document.getElementById("info-debut").innerHTML = `<a href="#" class="sel-link" style="margin:0;">${firstEd} edycja, ${city}</a>`;
             document.getElementById("info-apps").innerText = `${participatedEds.length}`;
             
-            let hostedcounts = hostedCount === 1 ? "raz" : "razy";
-            let hostedText = hostedCount > 0 
-                ? `${hostedCount} ${hostedcounts}, ${hostedEditions.join(', ')} edycja` 
-                : "0 razy";
+            let hostedText = hostedCount > 0 ? `${hostedCount} razy${hostedCount > 0 ? ', ' + hostedEditions.join(', ') + ' edycja' : ''}` : "0 razy";
             document.getElementById("info-hosted").innerText = hostedText;
 
             let internalEds = [];
@@ -1360,32 +1200,17 @@
 
             combinedRows.forEach(row => {
                 if (row.type === 'missing') {
-                    let text = row.edition === row.end ? `Państwo nie brało udziału w edycji ${row.edition}` : `Państwo nie brało udziału w edycjach ${row.edition} - ${row.end}`;
+                    let text = row.edition === row.end ? `Nie brał udziału w edycji ${row.edition}` : `Nie brał udziału w edycjach ${row.edition} - ${row.end}`;
                     tbody.innerHTML += `<tr><td colspan="7" style="color:var(--text-muted); font-style:italic; font-weight:normal;">${text}</td></tr>`;
                 } else {
                     let r = row.data;
-                    
-                    // Obliczanie max miejsca DLA DANEJ EDYCJI (żeby sprawdzić, czy państwo było ostatnie)
-                    let editionResults = db.results.filter(res => res.edition === r.edition && res.place !== "-" && res.place !== undefined);
-                    let validPlaces = editionResults.map(res => parseFloat(res.place)).filter(p => !isNaN(p));
-                    let maxPlaceForThisEdition = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
-                    
-                    let numericPlace = parseFloat(r.place);
-                    
-                    // Przydzielanie kolorów, w tym czerwonego (bg-last) dla ostatniego miejsca
-                    let gfClass = numericPlace === 1 ? "bg-1st" 
-                                : numericPlace === 2 ? "bg-2nd" 
-                                : numericPlace === 3 ? "bg-3rd" 
-                                : (numericPlace === maxPlaceForThisEdition && maxPlaceForThisEdition > 3 ? "bg-last" : "");
-                    
+                    let gfClass = r.place === 1 ? "bg-1st" : r.place === 2 ? "bg-2nd" : r.place === 3 ? "bg-3rd" : "";
                     let hostFlag = db.hosts[r.edition] ? getFlag(db.countries[db.hosts[r.edition]].code) : "";
+                    
                     let hasSong = r.song && r.song.trim() !== "-";
                     let audioPlayBtn = hasSong && r.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${r.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
                     let spotifyLink = hasSong && r.spotify ? `<a href="${r.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                     let youtubeLink = hasSong && r.youtube ? `<a href="${r.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
-
-                    // Naprawa błędu z wyświetlaniem punktów "0" (użycie r.points !== undefined)
-                    let pointsToDisplay = (r.points !== undefined && r.points !== "") ? r.points : "-";
 
                     tbody.innerHTML += `
                         <tr class="${gfClass}">
@@ -1394,7 +1219,7 @@
                             <td><em>${r.song||"-"}</em> ${audioPlayBtn}</td>
                             <td>${r.manager||"-"}</td>
                             <td style="font-weight: bold;">${r.place||"NQ"}</td>
-                            <td class="points-total">${pointsToDisplay}</td>
+                            <td class="points-total">${r.points||"-"}</td>
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                         </tr>`;
                 }
@@ -1458,80 +1283,47 @@
         const absolutePalette = ['#60a5fa', '#3b82f6', '#2563eb', '#4f46e5', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc', '#d946ef', '#ec4899', '#f43f5e', '#e11d48', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#facc15', '#fde047', '#fef08a'];
 
         function renderManagerMap(counts) {
-    const activeCounts = Object.values(counts).filter(c => c > 0);
-    const uniqueCounts = [...new Set(activeCounts)].sort((a, b) => a - b);
-    
-    let legendHTML = '';
-    uniqueCounts.forEach(val => {
-        let colorIdx = Math.min(val - 1, absolutePalette.length - 1);
-        legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${absolutePalette[colorIdx]}"></div>${val}</div>`;
-    });
-    document.getElementById('manager-map-legend').innerHTML = legendHTML;
+            const activeCounts = Object.values(counts).filter(c => c > 0);
+            const uniqueCounts = [...new Set(activeCounts)].sort((a, b) => a - b);
+            
+            let legendHTML = '';
+            uniqueCounts.forEach(val => {
+                let colorIdx = Math.min(val - 1, absolutePalette.length - 1);
+                legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${absolutePalette[colorIdx]}"></div>${val}</div>`;
+            });
+            document.getElementById('manager-map-legend').innerHTML = legendHTML;
 
-    if (!managerMapInstance) {
-        managerMapInstance = am5.Root.new("manager-map");
-        managerMapInstance.setThemes([am5themes_Animated.new(managerMapInstance)]);
-        let chart = managerMapInstance.container.children.push(am5map.MapChart.new(managerMapInstance, { 
-            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
-        }));
-        managerPolySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
-            geoJSON: am5geodata_worldLow, 
-            include: Object.keys(db.countries) 
-        }));
+            if (managerMapInstance) managerMapInstance.dispose();
+            managerMapInstance = am5.Root.new("manager-map");
+            managerMapInstance.setThemes([am5themes_Animated.new(managerMapInstance)]);
+            let chart = managerMapInstance.container.children.push(am5map.MapChart.new(managerMapInstance, { 
+                panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+            }));
+            let polySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
+                geoJSON: am5geodata_worldLow, 
+                include: Object.keys(db.countries) 
+            }));
 
-        managerPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
-            let cId = target.dataItem && target.dataItem.get("id");
-            return cId && db.countries[cId] ? db.countries[cId].name : text;
-        });
+            polySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+                let cId = target.dataItem && target.dataItem.get("id");
+                return cId && db.countries[cId] ? db.countries[cId].name : text;
+            });
 
-        managerPolySeries.mapPolygons.template.setAll({ 
-            stroke: am5.color(0x24294a), 
-            strokeWidth: 1, 
-            templateField: "polygonSettings"
-        });
-    }
-
-    let mapData = [];
-    Object.keys(db.countries).forEach(cId => {
-        let polyColor = am5.color(0x1a1e36);
-        if (counts[cId]) {
-            let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
-            polyColor = am5.color(absolutePalette[colorIdx]);
+            polySeries.mapPolygons.template.setAll({ stroke: am5.color(0x24294a), strokeWidth: 1, fill: am5.color(0x1a1e36) });
+            polySeries.mapPolygons.template.adapters.add("fill", (fill, target) => {
+                let cId = target.dataItem && target.dataItem.get("id");
+                if (cId && counts[cId]) {
+                    let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
+                    return am5.color(absolutePalette[colorIdx]);
+                }
+                return fill;
+            });
         }
-        mapData.push({ id: cId, polygonSettings: { fill: polyColor } });
-    });
-    managerPolySeries.data.setAll(mapData);
-}
 
         // ================= SORTER =================
         let currentSorterMode = 'basic';
         let sorterEdition = null;
-        let sorterExcluded = null;
         let sorterObj = null;
-
-        function populateSorterExclude() {
-            const select = document.getElementById("sorter-exclude-select");
-            select.innerHTML = '<option value="">-- Brak wykluczenia --</option>';
-            
-            let items = db.results
-                .filter(r => r.edition === sorterEdition)
-                .sort((a, b) => {
-                    let nameA = db.countries[a.countryId].name;
-                    let nameB = db.countries[b.countryId].name;
-                    return nameA.localeCompare(nameB);
-                });
-            
-            let savedEx = localStorage.getItem(`sorterExcluded_${sorterEdition}`);
-            sorterExcluded = savedEx ? savedEx : "";
-
-            items.forEach(item => {
-                const opt = document.createElement("option");
-                opt.value = item.countryId;
-                opt.text = `Wyklucz: ${db.countries[item.countryId].name} (${item.manager||'?'})`;
-                if(item.countryId === sorterExcluded) opt.selected = true;
-                select.appendChild(opt);
-            });
-        }
 
         function initSorter() {
             const select = document.getElementById("sorter-edition-select");
@@ -1562,20 +1354,12 @@
                 currentSorterMode = savedMode;
             }
 
-            populateSorterExclude();
             buildSorterWorkspace();
         }
 
         function changeSorterEdition(selectElement) {
             sorterEdition = parseInt(selectElement.value);
             localStorage.setItem('sorterEdition', sorterEdition);
-            populateSorterExclude();
-            buildSorterWorkspace();
-        }
-
-        function changeExcludedCountry(selectElement) {
-            sorterExcluded = selectElement.value;
-            localStorage.setItem(`sorterExcluded_${sorterEdition}`, sorterExcluded);
             buildSorterWorkspace();
         }
 
@@ -1593,39 +1377,57 @@
             btnContainer.innerHTML = "";
             if (sorterObj) { sorterObj.destroy && sorterObj.destroy(); sorterObj = null; }
 
-            let allItems = db.results.filter(r => r.edition === sorterEdition).sort((a,b) => (a.ro || 99) - (b.ro || 99));
-            if(allItems.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej edycji.</p>"; return; }
+            // Zbieranie danych i odfiltrowywanie ich w zależności od wybranej Fazy
+            let phase = document.getElementById("sorter-phase-select").value;
+            let items = db.results.filter(r => r.edition === sorterEdition);
 
-            let activeItems = allItems.filter(r => r.countryId !== sorterExcluded);
-            let excludedItem = allItems.find(r => r.countryId === sorterExcluded);
+            if (phase === 'sf1') {
+                items = items.filter(i => i.semi === 1);
+            } else if (phase === 'sf2') {
+                items = items.filter(i => i.semi === 2);
+            } else if (phase === 'final') {
+                items = items.filter(i => i.semi === 'AQ' || (i.place && i.place !== '-' && i.place !== 'NQ'));
+            }
+
+            if(items.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej fazie.</p>"; return; }
+
+            // Domyślne wstępne sortowanie: Semi 1 -> Semi 2 -> AQ. W obrębie danego semi używany jest RO.
+            items.sort((a,b) => {
+                let sA = a.semi === 'AQ' ? 3 : (a.semi || 0);
+                let sB = b.semi === 'AQ' ? 3 : (b.semi || 0);
+                if (sA !== sB) return sA - sB;
+                let roA = parseInt(a.ro) || 999;
+                let roB = parseInt(b.ro) || 999;
+                return roA - roB;
+            });
 
             if (currentSorterMode === 'basic') {
                 btnContainer.innerHTML = `
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Top 10</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Całość</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i> &nbsp;Resetuj</button>
                 `;
-                renderBasicSorter(ws, activeItems, false, excludedItem);
+                renderBasicSorter(ws, items, false);
             } else if (currentSorterMode === 'tier') {
                 btnContainer.innerHTML = `
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotTier()"><i class="fa-solid fa-camera"></i>  Zapisz jako zdjęcie</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotTier()"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz jako zdjęcie</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i> &nbsp;Resetuj</button>
                 `;
-                renderTierList(ws, activeItems);
+                renderTierList(ws, items);
             } else if (currentSorterMode === '1v1') {
                 btnContainer.innerHTML = "";
-                start1v1Battle(ws, activeItems);
+                start1v1Battle(ws, items);
             }
         }
 
         function resetSorterData() {
             if (confirm("Czy na pewno chcesz zresetować swój układ dla tej edycji? Tej akcji nie można cofnąć.")) {
+                let phase = document.getElementById("sorter-phase-select").value;
                 if (currentSorterMode === 'basic') {
-                    localStorage.removeItem(`sorter_basic_${sorterEdition}`);
-                    localStorage.removeItem(`sorter_basic_${sorterEdition}_ranked`);
+                    localStorage.removeItem(`sorter_basic_${sorterEdition}_${phase}`);
+                    localStorage.removeItem(`sorter_basic_${sorterEdition}_${phase}_ranked`);
                 } else if (currentSorterMode === 'tier') {
-                    localStorage.removeItem(`sorter_tier_${sorterEdition}`);
-                    localStorage.removeItem(`sorter_tier_size_${sorterEdition}`); // Czyści zapisany rozmiar
+                    localStorage.removeItem(`sorter_tier_${sorterEdition}_${phase}`);
                 }
                 buildSorterWorkspace();
             }
@@ -1633,10 +1435,11 @@
 
         function saveBasicSorter() {
             if (currentSorterMode !== 'basic') return;
+            let phase = document.getElementById("sorter-phase-select").value;
             const itemIds = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item')).map(el => el.getAttribute('data-id'));
             const rankedIds = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item.is-ranked')).map(el => el.getAttribute('data-id'));
-            localStorage.setItem(`sorter_basic_${sorterEdition}`, JSON.stringify(itemIds));
-            localStorage.setItem(`sorter_basic_${sorterEdition}_ranked`, JSON.stringify(rankedIds));
+            localStorage.setItem(`sorter_basic_${sorterEdition}_${phase}`, JSON.stringify(itemIds));
+            localStorage.setItem(`sorter_basic_${sorterEdition}_${phase}_ranked`, JSON.stringify(rankedIds));
         }
 
         function autoShrinkText(container = document) {
@@ -1670,16 +1473,13 @@
             });
         }
 
-        function renderBasicSorter(container, items, isFrom1v1 = false, excludedItem = null) {
-            container.innerHTML = `
-                <div id="sorter-export-area" class="sorter-list"></div>
-                <div id="sorter-excluded-area" class="sorter-list" style="margin-top: 8px;"></div>
-            `;
+        function renderBasicSorter(container, items, isFrom1v1 = false) {
+            container.innerHTML = `<div id="sorter-export-area" class="sorter-list"></div>`;
             const list = document.getElementById('sorter-export-area');
-            const excludedList = document.getElementById('sorter-excluded-area');
+            let phase = document.getElementById("sorter-phase-select").value;
             
-            let savedOrder = localStorage.getItem(`sorter_basic_${sorterEdition}`);
-            let savedRanked = localStorage.getItem(`sorter_basic_${sorterEdition}_ranked`);
+            let savedOrder = localStorage.getItem(`sorter_basic_${sorterEdition}_${phase}`);
+            let savedRanked = localStorage.getItem(`sorter_basic_${sorterEdition}_${phase}_ranked`);
             let rankedSet = new Set();
 
             if (isFrom1v1) {
@@ -1723,27 +1523,6 @@
                     </div>`;
             });
 
-            if (excludedItem) {
-                let hasSong = excludedItem.song && excludedItem.song.trim() !== "-";
-                let audioPlayBtn = hasSong && excludedItem.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${excludedItem.mp3}')" title="Odtwórz MP3"><i class="fa-solid fa-play"></i></span>` : "";
-                
-                excludedList.innerHTML = `
-                    <div class="sorter-item is-excluded" data-id="${excludedItem.countryId}">
-                        <div class="sorter-rank" style="color:var(--text-muted);">XX.</div>
-                        <div class="sorter-info">
-                            ${getFlag(db.countries[excludedItem.countryId].code, true, "margin:0;")} 
-                            <div class="sorter-text">
-                                <div class="sorter-artist-row">
-                                    <span class="sorter-artist-name" title="${excludedItem.artist||"?"}">${excludedItem.artist||"?"}</span>
-                                    ${audioPlayBtn}
-                                </div>
-                                <div class="sorter-song-name" title="${excludedItem.song||"?"}">${excludedItem.song||"?"}</div>
-                            </div>
-                        </div>
-                        <div class="sorter-points visible" style="background:var(--table-header); color:var(--text-muted);">-</div>
-                    </div>`;
-            }
-
             sorterObj = new Sortable(list, { 
                 animation: 250, 
                 ghostClass: 'sortable-ghost',
@@ -1764,7 +1543,7 @@
 
         const eurovisionPoints = [12, 10, 8, 7, 6, 5, 4, 3, 2, 1];
         function updateBasicRanks() {
-            const rows = document.querySelectorAll('#sorter-export-area .sorter-item');
+            const rows = document.querySelectorAll('.sorter-item');
             rows.forEach((row, index) => {
                 row.querySelector('.sorter-rank').innerText = `${index + 1}.`;
                 row.classList.remove("rank-1", "rank-2", "rank-3", "rank-top10", "rank-other");
@@ -1793,6 +1572,7 @@
 
         function saveTierList() {
             if (currentSorterMode !== 'tier') return;
+            let phase = document.getElementById("sorter-phase-select").value;
             const tiers = [];
             document.querySelectorAll('.tier-row').forEach(row => {
                 tiers.push({
@@ -1803,12 +1583,12 @@
             });
             const bankItems = Array.from(document.querySelectorAll('#tier-bank .tier-flag')).map(el => el.getAttribute('data-id'));
             
-            localStorage.setItem(`sorter_tier_${sorterEdition}`, JSON.stringify({ tiers, bankItems }));
+            localStorage.setItem(`sorter_tier_${sorterEdition}_${phase}`, JSON.stringify({ tiers, bankItems }));
         }
 
         function renderTierList(container, items) {
-            let savedData = localStorage.getItem(`sorter_tier_${sorterEdition}`);
-            let savedSize = localStorage.getItem(`sorter_tier_size_${sorterEdition}`) || "18px";
+            let phase = document.getElementById("sorter-phase-select").value;
+            let savedData = localStorage.getItem(`sorter_tier_${sorterEdition}_${phase}`);
             let tiersData = defaultTiers.map(t => ({...t, items: []}));
             let bankData = items.map(i => i.countryId);
 
@@ -1836,18 +1616,10 @@
             container.innerHTML = `
                 <div id="tier-export-area" style="background:var(--bg-color); padding:10px;">
                     <div id="tier-rows-container">
-                    ${tiersData.map(t => createTierRowHtml(t.label, t.color, t.items.map(getItemHtml).join(''), savedSize)).join('')}
+                    ${tiersData.map(t => createTierRowHtml(t.label, t.color, t.items.map(getItemHtml).join(''))).join('')}
                     </div>
                     <div style="text-align:center; margin-top:15px;" data-html2canvas-ignore="true">
-                        <button class="picker-btn" style="margin: 0 5px; display:inline-flex;" onclick="addTierRow()">+ Dodaj Kategorię</button>
-                        <select class="picker-btn" style="margin: 0 5px; padding: 7px 15px; cursor: pointer; outline: none; appearance: auto;" onchange="changeTierFontSize(this.value)">
-                            <option value="8px" ${savedSize === '8px' ? 'selected' : ''}>Rozmiar tekstu: 8px</option>
-                            <option value="10px" ${savedSize === '10px' ? 'selected' : ''}>Rozmiar tekstu: 10px</option>
-                            <option value="12px" ${savedSize === '12px' ? 'selected' : ''}>Rozmiar tekstu: 12px</option>
-                            <option value="14px" ${savedSize === '14px' ? 'selected' : ''}>Rozmiar tekstu: 14px</option>
-                            <option value="16px" ${savedSize === '16px' ? 'selected' : ''}>Rozmiar tekstu: 16px</option>
-                            <option value="18px" ${savedSize === '18px' ? 'selected' : ''}>Rozmiar tekstu: 18px (Domyślny)</option>
-                        </select>
+                        <button class="picker-btn" style="margin: 0 auto; display:inline-flex;" onclick="addTierRow()">+ Dodaj Kategorię</button>
                     </div>
                 </div>
                 <div class="tier-bank sortable-tier" id="tier-bank">
@@ -1859,11 +1631,10 @@
             document.querySelectorAll('.sortable-tier').forEach(el => new Sortable(el, { group: 'shared', animation: 150, onEnd: saveTierList }));
         }
 
-
-        function createTierRowHtml(label, color, itemsHtml = "", fontSize = "18px") {
+        function createTierRowHtml(label, color, itemsHtml = "") {
             return `
                 <div class="tier-row">
-                    <div class="tier-label" style="background:${color}; font-size:${fontSize};" contenteditable="true">${label}</div>
+                    <div class="tier-label" style="background:${color}" contenteditable="true">${label}</div>
                     <div class="tier-items sortable-tier">${itemsHtml}</div>
                     <div class="tier-settings" data-html2canvas-ignore="true">
                         <input type="color" onchange="this.closest('.tier-row').querySelector('.tier-label').style.background = this.value; saveTierList();" value="${color}">
@@ -1871,18 +1642,10 @@
                     </div>
                 </div>`;
         }
-
-	function changeTierFontSize(size) {
-            document.querySelectorAll('.tier-label').forEach(el => {
-                el.style.fontSize = size;
-            });
-            localStorage.setItem(`sorter_tier_size_${sorterEdition}`, size);
-        }
         
         function addTierRow() {
             const container = document.getElementById('tier-rows-container');
-            let currentSize = localStorage.getItem(`sorter_tier_size_${sorterEdition}`) || "18px";
-            container.insertAdjacentHTML('beforeend', createTierRowHtml('Nowa', '#cccccc', "", currentSize));
+            container.insertAdjacentHTML('beforeend', createTierRowHtml('Nowa', '#cccccc'));
             const newRow = container.lastElementChild;
             newRow.querySelector('.tier-label').addEventListener('blur', saveTierList);
             const sortableDiv = newRow.querySelector('.sortable-tier');
@@ -1896,18 +1659,8 @@
             sortedBattle = [battleItems[0]];
             bIdx = 1; bLow = 0; bHigh = 0;
             container.innerHTML = `
-                <div style="background-color: var(--table-row-odd); border: 1px solid rgba(255,255,255,0.05); border-left: 4px solid var(--primary-color); padding: 20px; border-radius: 8px; margin-bottom: 25px; text-align: left; font-size: 13px; line-height: 1.5; color: var(--text-muted); max-width: 650px; margin-left: auto; margin-right: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                    <strong style="color: var(--text-main); font-size: 15px; display: block; margin-bottom: 8px; text-align: center;"> Jak działa ten algorytm?</strong>
-                    Zamiast zmuszać Cię do porównywania każdej piosenki z każdą, algorytm stosuje tzw. <strong>szukanie binarne</strong>:
-                    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-                        <li style="margin-bottom: 6px;">Sorter bierze nową piosenkę i zestawia ją z utworem znajdującym się dokładnie w <strong>środku</strong> Twojego dotychczasowego rankingu. (Nie licząc początkowej bitwy)</li>
-                        <li style="margin-bottom: 6px;">Zależnie od wyboru, segregując nową piosenkę, algorytm wie, że kliknięta jest lepsza od drugiej, więc automatycznie odrzuca całą "gorszą" połowę stawki i szuka dla niej miejsca tylko w tej lepszej połowie.</li>
-                        <li style="margin-bottom: 6px;">Ucięcie jednej z połów odbywa się z każdą bitwą, dzięki temu z każdym Twoim kliknięciem liczba piosenek do sprawdzenia zmniejsza się o połowę. Stąd też może być przypadek że jedna piosenka znajdzie się w mniejszej lub większej ilości bitew ze względu na "bycie w środku".</li>
-                        <li><strong style="color: var(--text-main);">Algorytm się nie myli, ale jeśli uważasz, że coś powinieneś dać w topce wyżej/niżej - możesz edytować stworzoną topkę po zakończeniu rund 1v1.</strong></li>
-                    </ul>
-                </div>
                 <div class="battle-progress" id="battle-prog">Rozpoczynanie...</div>
-                <div class="battle-container" style="margin-top: 20px;">
+                <div class="battle-container">
                     <div class="battle-card" id="b-left" onclick="battleChoice('left')"></div>
                     <div class="battle-vs">VS</div>
                     <div class="battle-card" id="b-right" onclick="battleChoice('right')"></div>
@@ -1922,13 +1675,12 @@
                 
                 const btnContainer = document.getElementById('sorter-export-controls');
                 btnContainer.innerHTML = `
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
-                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Top 10</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i> &nbsp;Zapisz Całość</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i> &nbsp;Resetuj</button>
                 `;
 
-                let excludedItem = db.results.find(r => r.edition === sorterEdition && r.countryId === sorterExcluded);
-                renderBasicSorter(document.getElementById('sorter-workspace'), sortedBattle, true, excludedItem);
+                renderBasicSorter(document.getElementById('sorter-workspace'), sortedBattle, true);
                 
                 document.querySelectorAll('.sorter-controls .picker-btn').forEach(b => b.classList.remove('active'));
                 document.querySelector(`.sorter-controls .picker-btn[onclick*="'basic'"]`).classList.add('active');
@@ -1955,7 +1707,7 @@
         }
 
         function takeScreenshotBasic(mode) {
-            const allRows = Array.from(document.querySelectorAll('#sorter-workspace .sorter-item'));
+            const allRows = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item'));
             if (allRows.length === 0) return;
 
             const tempWrapper = document.createElement('div');
@@ -1998,7 +1750,8 @@
 
             html2canvas(tempWrapper, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = mode === 'top10' ? `Wyniki_Top10_Edycja_${sorterEdition}.png` : `Wyniki_Calosc_Edycja_${sorterEdition}.png`;
+                let phase = document.getElementById("sorter-phase-select").value;
+                link.download = mode === 'top10' ? `Wyniki_Top10_Edycja_${sorterEdition}_${phase}.png` : `Wyniki_Calosc_Edycja_${sorterEdition}_${phase}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
                 tempWrapper.remove();
@@ -2012,11 +1765,13 @@
             const target = document.getElementById('tier-export-area');
             html2canvas(target, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = `Tierlista_Edycja_${sorterEdition}.png`;
+                let phase = document.getElementById("sorter-phase-select").value;
+                link.download = `Tierlista_Edycja_${sorterEdition}_${phase}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
             }).catch(() => alert("Błąd zapisu zdjęcia."));
         }
+
         setTimeout(init, 200);
     </script>
 </body>
