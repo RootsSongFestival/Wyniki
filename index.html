@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roots Song Festival</title>
+
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="bazadanych.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0b0d17;
+            --nav-bg: #1a1e36;
+            --primary-color: #ff2a5f;
+            --secondary-color: #4a5596;
+            --text-main: #ffffff;
+            --text-muted: #a0a5bc;
+            --table-header: #24294a;
+            --table-row-odd: #15182b;
+            --table-row-even: #1a1e36;
+            --table-hover: #2a2f55;
+            
+            --color-1st: rgba(255, 215, 0, 0.25);
+            --color-2nd: rgba(192, 192, 192, 0.25);
+            --color-3rd: rgba(205, 127, 50, 0.25);
+            --color-last: rgba(255, 60, 60, 0.3);
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; }
+
+        /* NAVBAR Z LOGO */
+        .navbar { 
+            background-color: var(--nav-bg); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            padding: 0 20px;
+        }
+
+        .nav-brand { flex: 1; display: flex; align-items: center; justify-content: flex-start; }
+        .nav-spacer { flex: 1; } 
+        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; flex: 3; }
+        
+        .navbar-logo { 
+            max-height: 35px; 
+            object-fit: contain; 
+            pointer-events: none; 
+            user-select: none;
+            transform: scale(3); 
+            transform-origin: left center; 
+        }
+
+        .nav-btn { background: none; border: none; color: var(--text-muted); padding: 15px 20px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; border-bottom: 3px solid transparent; }
+        .nav-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
+        .nav-btn.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
+
+        /* STRONA GŁÓWNA */
+        .home-layout { display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap; }
+        .home-main { flex: 2; min-width: 400px; display: flex; flex-direction: column; gap: 25px; }
+        .home-sidebar { flex: 1; min-width: 300px; position: sticky; top: 80px; }
+        .home-card { background: var(--table-row-odd); padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); }
+        .home-logo { max-width: 250px; display: block; margin: 0 auto 20px auto; }
+        .home-desc { font-size: 15px; line-height: 1.6; text-align: center; color: var(--text-muted); }
+        .rules-title { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .rules-list { margin: 0; padding-left: 20px; line-height: 1.6; color: var(--text-main); font-size: 14px; }
+        .rules-list li { margin-bottom: 12px; }
+
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; padding: 10px 0 0 0; }
+            .nav-brand { flex: none; margin-bottom: 5px; }
+            .nav-spacer { display: none; }
+            .nav-links { width: 100%; justify-content: space-around; }
+            .nav-btn { padding: 12px 5px; font-size: 11px; flex: 1; }
+            .home-layout { flex-direction: column; }
+            .home-main, .home-sidebar { width: 100%; min-width: unset; }
+            .home-sidebar { position: static; }
+        }
+
+        .map-container { position: relative; width: 100%; margin-bottom: 25px; }
+        #mapdiv, #manager-map, #edition-map {
+            width: 100%;
+            height: 450px;
+            background-color: var(--table-row-odd);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .map-overlay-legend {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            display: flex;
+            gap: 10px;
+            background: rgba(26, 30, 54, 0.85);
+            padding: 8px 12px;
+            border-radius: 6px;
+            flex-wrap: wrap;
+            max-width: 90%;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .map-overlay-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: bold; color: #fff; }
+        .map-overlay-color { width: 16px; height: 16px; border-radius: 3px; }
+        
+        .edition-legend-section { margin-bottom: 10px; }
+        .edition-legend-title { font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        .edition-legend-dot { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 3px rgba(0,0,0,0.5); }
+        .edition-legend-items { display: flex; flex-wrap: wrap; gap: 8px; }
+        .edition-legend-tag { background: var(--table-row-odd); border: 1px solid rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; display: flex; align-items: center; color: var(--text-main); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        .container { max-width: 1050px; margin: 20px auto; padding: 0 15px; padding-bottom: 50px; transition: max-width 0.3s ease; }
+        .container.wide-mode { max-width: 85%; }
+
+        .tab-content { display: none; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .picker-container { margin-bottom: 25px; background-color: var(--table-row-odd); padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .picker-title { font-size: 14px; color: var(--text-muted); margin-top: 0; margin-bottom: 15px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; text-align: center; }
+        
+        .picker-select {
+            width: 100%; max-width: 400px; padding: 10px 15px;
+            background-color: var(--table-header); color: white;
+            border: 1px solid var(--primary-color); border-radius: 5px;
+            font-size: 15px; font-weight: bold; margin: 0 auto; display: block; outline: none; cursor: pointer;
+        }
+
+        .picker-btn { 
+            background-color: var(--table-header); color: var(--text-muted); 
+            border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 16px; 
+            border-radius: 4px; font-size: 14px; font-family: inherit; 
+            cursor: pointer; transition: all 0.2s ease; user-select: none; 
+            display: inline-flex; align-items: center; justify-content: center; 
+        }
+        .picker-btn:hover { background-color: var(--table-hover); color: var(--text-main); border-color: var(--primary-color); }
+        .picker-btn.active { background-color: var(--primary-color); color: var(--text-main); border-color: var(--primary-color); font-weight: bold; }
+
+        img.fi { border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.5); margin-right: 8px; vertical-align: middle; height: 16px; width: 21px; object-fit: cover; }
+        img.fi-lg { height: 26px; width: 34px; margin-right: 12px; }
+        img.fi-battle { width: 120px; height: auto; margin: 0 auto 20px auto; display: block; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        
+        img.fi[alt="np"] { object-fit: contain !important; box-shadow: none !important; background-color: transparent !important; border-radius: 0 !important; }
+
+        .table-wrapper { overflow-x: auto; margin-bottom: 0; width: 100%; }
+        table { width: 100%; border-collapse: collapse; background-color: var(--table-row-even); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); min-width: 400px; }
+        
+        th, td { padding: 12px; text-align: center; border-bottom: none; font-size: 13px; vertical-align: middle; }
+        th { background-color: var(--table-header); color: var(--text-muted); text-transform: uppercase; font-size: 11px; cursor: pointer; user-select: none; white-space: nowrap; transition: color 0.2s; }
+        th:hover { color: var(--text-main); }
+        
+        tr:nth-child(odd) { background-color: var(--table-row-odd); }
+        tr:hover { background-color: var(--table-hover) !important; }
+
+        tr.row-1st, .bg-1st { background-color: var(--color-1st) !important; }
+        tr.row-2nd, .bg-2nd { background-color: var(--color-2nd) !important; }
+        tr.row-3rd, .bg-3rd { background-color: var(--color-3rd) !important; }
+        tr.row-last, .bg-last { background-color: var(--color-last) !important; }
+
+        .country-cell { text-align: left; font-weight: bold; white-space: nowrap; }
+        .points-total { font-weight: bold; color: var(--text-main); }
+        .edition-cell { display: inline-flex; align-items: center; justify-content: center; font-weight: bold; }
+        .country-header-title { display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--text-main); margin-bottom: 15px; }
+
+        .table-link { color: #ffffff; text-decoration: none; font-weight: bold; transition: color 0.2s, opacity 0.2s; cursor: pointer; }
+        .table-link:hover { color: var(--primary-color); text-decoration: none; opacity: 0.9; }
+
+        .social-links { display: flex; gap: 12px; justify-content: center; align-items: center; }
+        .social-icon { font-size: 18px; color: var(--text-muted); transition: color 0.2s, transform 0.2s; text-decoration: none; cursor: pointer;}
+        .social-icon:hover { transform: scale(1.1); }
+        .social-icon.spotify:hover { color: #1DB954; }
+        .social-icon.youtube:hover { color: #FF0000; }
+        .social-icon.audio-play { color: #facc15; font-size: 14px; margin-left: 6px; }
+        .social-icon.audio-play:hover { color: var(--primary-color); }
+
+        .manager-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 25px; background-color: var(--table-row-odd); padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .stat-box { flex: 1; min-width: 200px; text-align: center; background-color: var(--table-row-even); padding: 15px; border-radius: 6px; }
+        .stat-value { font-size: 24px; font-weight: bold; color: var(--primary-color); margin-top: 10px; }
+        #manager-select { width: 100%; padding: 10px; background-color: var(--table-header); color: white; border: 1px solid var(--secondary-color); border-radius: 5px; font-size: 16px; margin-bottom: 15px; outline: none; }
+        
+        .sorter-controls { display: flex; gap: 15px; margin: 15px auto 25px auto; width: 80%; flex-wrap: wrap; justify-content: center; }
+        .sorter-controls .picker-btn { flex: 1; min-width: 150px; }
+        
+        .sorter-list { display: flex; flex-direction: column; gap: 8px; background: var(--bg-color); padding: 15px; border-radius: 8px; }
+        
+        .sorter-item { 
+            display: flex; 
+            align-items: center; 
+            background-color: var(--table-row-even); 
+            padding: 10px 15px; 
+            border-radius: 6px; 
+            cursor: grab; 
+            transition: transform 0.25s ease, background-color 0.25s ease, border-left-color 0.25s ease; 
+            border-left: 4px solid transparent; 
+        }
+        .sorter-rank { font-weight: bold; width: 30px; color: var(--text-muted); flex-shrink: 0; }
+        .sorter-info { flex-grow: 1; display: flex; align-items: center; gap: 15px; min-width: 0; overflow: hidden; }
+        .sorter-info img { flex-shrink: 0; }
+        
+        .sorter-text { flex-grow: 1; min-width: 0; overflow: hidden; display: flex; flex-direction: column; }
+        .sorter-artist-row { display: flex; align-items: center; gap: 6px; width: 100%; }
+        
+        .sorter-artist-name { font-weight: bold; white-space: nowrap; overflow: hidden; display: inline-block; font-size: 14px; }
+        .sorter-song-name { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; display: inline-block; }
+        
+        .sorter-points { 
+            font-weight: bold; 
+            border-radius: 4px; 
+            background: rgba(255,255,255,0.1); 
+            display: inline-block;
+            text-align: center;
+            opacity: 0;
+            max-width: 0;
+            padding: 5px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: max-width 0.25s ease, opacity 0.25s ease, padding 0.25s ease; 
+        }
+        .sorter-points.visible { opacity: 1; max-width: 60px; padding: 5px 12px; margin-left: 10px; }
+        .sortable-ghost { opacity: 0.3; background-color: var(--table-hover) !important; border-left-color: transparent !important; }
+        .sortable-chosen { background-color: var(--table-hover) !important; }
+        
+        .sorter-item.is-ranked.rank-1 { border-left-color: #ffd700; background-color: rgba(255, 215, 0, 0.1); }
+        .sorter-item.is-ranked.rank-1 .sorter-points { display: block; background: #ffd700; color: #000; }
+        .sorter-item.is-ranked.rank-2 { border-left-color: #c0c0c0; background-color: rgba(192, 192, 192, 0.1); }
+        .sorter-item.is-ranked.rank-2 .sorter-points { display: block; background: #c0c0c0; color: #000; }
+        .sorter-item.is-ranked.rank-3 { border-left-color: #cd7f32; background-color: rgba(205, 127, 50, 0.1); }
+        .sorter-item.is-ranked.rank-3 .sorter-points { display: block; background: #cd7f32; color: #000; }
+        .sorter-item.is-ranked.rank-top10 { border-left-color: #8b5cf6; background-color: rgba(139, 92, 246, 0.1); }
+        .sorter-item.is-ranked.rank-top10 .sorter-points { display: block; background: #8b5cf6; color: #fff; }
+        .sorter-item.is-ranked.rank-other { border-left-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
+	.sorter-item.is-excluded { 
+            background-color: rgba(128, 128, 128, 0.1); border-left-color: #808080; cursor: default; }
+
+        .tier-row { display: flex; margin-bottom: 5px; min-height: 80px; background: var(--table-row-odd); border-radius: 6px; overflow: hidden; position: relative; }
+        .tier-label { width: 100px; min-width: 100px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; color: #000; text-transform: uppercase; border-right: 2px solid var(--bg-color); flex-shrink: 0; outline: none; text-align: center; }
+        .tier-items { flex-grow: 1; padding: 10px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; min-height: 60px; }
+        .tier-settings { display: flex; flex-direction: column; justify-content: space-around; padding: 5px; background: var(--table-header); width: 40px; flex-shrink: 0;}
+        .tier-settings input[type="color"] { width: 100%; height: 30px; border: none; padding: 0; background: none; cursor: pointer; }
+        .tier-settings button { background: var(--primary-color); border: none; color: white; cursor: pointer; border-radius: 3px; padding: 5px; font-weight: bold;}
+        .tier-settings button:hover { opacity: 0.8; }
+        
+        .tier-bank { background: var(--table-row-even); padding: 15px; border-radius: 8px; min-height: 100px; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .tier-flag { display: flex; align-items: center; justify-content: center; cursor: grab; padding: 6px 10px; background: rgba(0,0,0,0.4); border-radius: 6px; transition: transform 0.2s; border: 1px solid rgba(255,255,255,0.1);}
+        .tier-flag:hover { transform: scale(1.05); background: rgba(0,0,0,0.6); }
+        .tier-code { font-weight: bold; font-size: 18px; margin-left: 5px; color: #fff; }
+
+        .battle-container { display: flex; gap: 20px; justify-content: center; align-items: stretch; margin: 40px 0; min-height: 300px; }
+        .battle-card { flex: 1; max-width: 400px; background: var(--table-row-odd); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .battle-card:hover { transform: translateY(-5px); border-color: var(--primary-color); background: var(--table-hover); }
+        .battle-vs { display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: var(--text-muted); }
+        .battle-progress { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+
+        .editions-layout-wrapper { display: grid; gap: 20px; width: 100%; }
+        .editions-layout-wrapper.cols-1 { grid-template-columns: 1fr; }
+        .editions-layout-wrapper.cols-2 { grid-template-columns: 1fr 1fr; }
+
+        .countries-layout { display: flex; gap: 25px; flex-wrap: wrap; align-items: flex-start; }
+        .countries-left { flex: 2; min-width: 400px; display: flex; flex-direction: column; gap: 20px; }
+        .countries-right { flex: 1; min-width: 300px; position: sticky; top: 80px; }
+        
+        .infobox {
+            background-color: var(--table-row-even);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            max-width: 320px;
+            margin-left: auto;
+        }
+        .infobox-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .infobox-flag-container {
+            background-color: var(--table-row-odd);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .infobox-flag {
+            max-width: 100%;
+            max-height: 120px;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .infobox-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .infobox-table th, .infobox-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: left;
+            vertical-align: middle;
+            font-size: 12px;
+        }
+        .infobox-table th { 
+            width: 45%; 
+            font-weight: bold; 
+            color: var(--text-muted); 
+            background-color: transparent;
+            text-transform: none;
+        }
+        .infobox-table th:hover { color: var(--text-muted); }
+        .infobox-table td { 
+            width: 55%; 
+            color: var(--text-main); 
+        }
+        
+        .infobox-subheader th { 
+            background-color: var(--table-header); 
+            color: var(--text-main); 
+            text-align: center; 
+            padding: 8px; 
+            text-transform: uppercase;
+            font-size: 11px;
+            cursor: default;
+        }
+        .infobox-subheader th:hover { color: var(--text-main); }
+        
+        .infobox-table a, .sel-link {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .infobox-table a:hover, .sel-link:hover { text-decoration: underline; }
+        
+        .sel-name {
+            color: #60a5fa;
+            font-weight: bold;
+            display: block;
+            margin-top: 4px;
+            margin-bottom: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .countries-layout { flex-direction: column; }
+            .countries-left, .countries-right { width: 100%; min-width: unset; }
+            .countries-right { position: static; }
+            .infobox { margin: 0 auto; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="global-audio-player" style="display:none;" controls></audio>
+
+    <div class="navbar">
+        <div class="nav-brand">
+            <img src="logo.webp" alt="Roots Song Festival Logo" class="navbar-logo" onerror="this.style.display='none'">
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn active" onclick="openTab('home', this)">Strona Główna</button>
+            <button class="nav-btn" onclick="openTab('editions', this)">Edycje</button>
+            <button class="nav-btn" onclick="openTab('countries', this)">Państwa</button>
+            <button class="nav-btn" onclick="openTab('preselections', this)">Preselekcje</button>
+            <button class="nav-btn" onclick="openTab('managers', this)">Menadżerowie</button>
+            <button class="nav-btn" onclick="openTab('sorter', this)">Sorter</button>
+        </div>
+        <div class="nav-spacer"></div>
+    </div>
+
+    <div class="container">
+        
+        <div id="home" class="tab-content" style="display: block;">
+            <div class="home-layout">
+                <div class="home-main">
+                    <div class="home-card">
+                        <img src="logo.webp" alt="RSF Logo" class="home-logo" onerror="this.style.display='none'">
+                        <p class="home-desc">
+                            <strong>Roots Song Festival</strong>, w skrócie <strong>RSF</strong> jest to nowy Polski fanowski konkurs piosenki założony w czerwcu 2026 roku. 
+                            Pomysłodawcami konkursu byli alfabetycznie: Ant, Micheł, Oscypciek oraz Sajmonn. 
+                            Ideą konkursu jest poznawanie nowej muzyki z całego świata i świetna zabawa!
+                        </p>
+                    </div>
+
+                    <div class="home-card">
+   					 <h2 class="rules-title">Zasady Konkursu</h2>
+   					 <ul class="rules-list">
+    				    <li>W tym konkursie borrowingi nie istnieją.</li>
+      				  <li>Piosenka wysłana na konkurs nie może przekraczać 30 milionów wyświetleń na platformie YouTube, oraz nie może być wydana przed dniem 31 grudnia 2014 (wyjątek - edycje tematyczne).</li>
+    				    <li>Artysta wysłany na konkurs może mieć korzenie maksymalnie do rodziców.</li>
+        				<li>Zakazane są tzw. ruchańce (piosenki pojawiające się na każdym możliwym fanconteście) - Zakazane jest też wysyłanie tzw. worldchart artists, artystów z Eurowizji, Junior Eurowizji, Interwizji, oraz overused artists. Utwór nie może brać udziału w max. 3 lub więcej contestach. Dopuszczone są także piosenki “odkryte” przez hoda/piosenki, których tzw. rv zostały stworzone przez hodów.</li>
+        				<li>Zakazane jest wysyłanie piosenek wygenerowanych przez AI, coverów, troll songów, utworów o charakterze rasistowskim, ksenofobicznym, seksistowskim, homofobicznym. Ponadto zakazane jest wysyłanie piosenek które uczestniczyły w Eurowizji, Junior Eurowizji, Interwizji oraz w ich preselekcjach oraz w preselekcjach do Roots Song Festival.</li>
+       					 <li>Menadżer jest zobligowany do wysłania piosenki w wyznaczonym terminie, oraz zagłosowania. Brak głosu jest równoznaczny z warnem oraz każdorazowym odjęciem -50% punktów z televotingu. Po trzecim warnie, menadżer zostaje zbanowany z udziału w konkursie.</li>
+    				</ul>
+				</div>
+                </div>
+
+                <div class="home-sidebar">
+                    <div class="infobox" style="margin-bottom: 25px;">
+                        <div class="infobox-header">Aktualna Edycja</div>
+                        <div class="infobox-flag-container">
+
+                            <img class="infobox-flag" id="home-edition-flag" src="" alt="Flaga" style="max-height: 80px;">
+                        </div>
+                        <table class="infobox-table">
+                            <tr><th>Numer edycji</th><td id="home-edition-num">...</td></tr>
+                            <tr><th>Gospodarz</th><td id="home-edition-host">...</td></tr>
+                            <tr><th>Miasto</th><td id="home-edition-city">...</td></tr>
+                            <tr><th>Liczba uczestników</th><td id="home-edition-count">...</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="home-card" style="max-width: 320px; margin-left: auto; box-sizing: border-box; padding: 15px; text-align: center;">
+                        <h3 class="rules-title" style="font-size: 15px; margin-bottom: 15px;">Obejrzyj najnowszy recap</h3>
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                            <iframe src="https://www.youtube.com/embed/N3f4v3UZ9b0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <a href="https://open.spotify.com/playlist/4I6IlBBB8X6HG5UhxpWC54?si=fPlLdPzvSaioP2DVSiiDUA" target="_blank" class="picker-btn" style="width: 100%; margin-top: 15px; background-color: #1DB954; color: #fff; border-color: #1DB954; display: flex; justify-content: center; gap: 10px; font-weight: bold; box-sizing: border-box; text-decoration: none;">
+                            <i class="fa-brands fa-spotify" style="font-size: 18px;"></i> Playlista obecnej edycji
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="editions" class="tab-content">
+            <div class="picker-container">
+                <h3 class="picker-title">Wybierz Edycję</h3>
+                <select id="edition-select" class="picker-select" onchange="changeEdition(this)"></select>
+            </div>
+
+            <div class="picker-container" style="padding: 10px;">
+                <div class="sorter-controls" style="margin: 0; width: 100%; gap: 10px;">
+                    <button class="picker-btn active" id="btn-col-1" onclick="setEditionView(1, this)">1 Kolumna</button>
+                    <button class="picker-btn" id="btn-col-2" onclick="setEditionView(2, this)">2 Kolumny</button>
+                </div>
+            </div>
+            
+            <div id="edition-summary-container" class="picker-container" style="display:none; text-align:left;">
+                <div id="edition-legend" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;"></div>
+                <div class="map-container" style="margin-bottom: 0;">
+                    <div id="edition-map"></div>
+                </div>
+            </div>
+
+            <div id="edition-tables-container" class="editions-layout-wrapper cols-1"></div>
+        </div>
+
+        <div id="countries" class="tab-content">
+            <div class="countries-layout">
+                <div class="countries-left">
+                    <div class="picker-container" style="margin-bottom: 0;">
+                        <h3 class="picker-title">Wybierz państwo na mapie</h3>
+                        <div class="map-container" style="margin-bottom: 0;">
+                            <div id="mapdiv"></div>
+                            <div id="country-map-legend" class="map-overlay-legend"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="countries-right">
+                    <div class="infobox" id="country-infobox" style="display: none;">
+                        <div class="infobox-header" id="info-name">Polska</div>
+                        <div class="infobox-flag-container">
+                            <img class="infobox-flag" id="info-flag" src="" alt="Flaga">
+                        </div>
+                        <table class="infobox-table">
+                            <tr><th>Edycja i miejsce debiutu</th><td id="info-debut">...</td></tr>
+                            <tr><th>Liczba udziałów</th><td id="info-apps">...</td></tr>
+                            <tr><th>Organizacja konkursu</th><td id="info-hosted">...</td></tr>
+                            <tr class="infobox-subheader"><th colspan="2">Wybór reprezentanta</th></tr>
+                            <tr><th>Wewnętrzny</th><td id="info-internal">...</td></tr>
+                            <tr><th>Selekcje</th><td id="info-selections">...</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selected-country-header" class="country-header-title" style="display: none; margin-top: 30px;"></div>
+            
+            <div class="table-wrapper">
+                <table id="country-table">
+                    <thead>
+                        <tr>
+                            <th class="sortable" onclick="sortTable('country-table', 0, false)">Edycja</th>
+                            <th class="sortable" onclick="sortTable('country-table', 1, false)">Wykonawca</th>
+                            <th class="sortable" onclick="sortTable('country-table', 2, false)">Utwór</th>
+                            <th class="sortable" onclick="sortTable('country-table', 3, false)">Menadżer</th>
+                            <th class="sortable" onclick="sortTable('country-table', 4, true)">Miejsce</th>
+                            <th class="sortable" onclick="sortTable('country-table', 5, true)">Punkty</th>
+                            <th>Linki</th>
+                        </tr>
+                    </thead>
+                    <tbody id="country-body">
+                        <tr><td colspan="7" style="color:var(--text-muted); font-style:italic;">Wybierz państwo z mapy powyżej, aby zobaczyć jego wyniki.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="preselections" class="tab-content">
+            <div class="picker-container">
+                <h3 class="picker-title">Wybierz Edycję</h3>
+                <select id="presel-edition-select" class="picker-select" onchange="renderPreselCountries()"></select>
+            </div>
+            <div class="picker-container" id="presel-country-picker" style="display: none;">
+                <h3 class="picker-title">Wybierz Kraj</h3>
+                <select id="presel-country-select" class="picker-select" onchange="renderPreselContent()"></select>
+            </div>
+            <div id="presel-content-area"></div>
+        </div>
+
+        <div id="managers" class="tab-content">
+            <h3 class="picker-title">Wybierz Menadżera</h3>
+            <select id="manager-select" class="picker-select" style="margin-bottom:25px;" onchange="renderManagerData()"></select>
+
+            <div class="manager-stats" id="manager-stats">
+                <div class="stat-box">Złoto 🥇 <div class="stat-value" id="stat-gold">0</div></div>
+                <div class="stat-box">Srebro 🥈 <div class="stat-value" id="stat-silver">0</div></div>
+                <div class="stat-box">Brąz 🥉 <div class="stat-value" id="stat-bronze">0</div></div>
+                <div class="stat-box">Średnie miejsce <div class="stat-value" id="stat-avg">-</div></div>
+                <div class="stat-box">Top Państwa <div class="stat-value" id="stat-top-countries" style="font-size: 20px;">-</div></div>
+            </div>
+
+            <h3 class="picker-title">Mapa Rezerwowanych Państw</h3>
+            
+            <div class="map-container">
+                <div id="manager-map"></div>
+                <div id="manager-map-legend" class="map-overlay-legend"></div>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="manager-table">
+                    <thead>
+                        <tr>
+                            <th class="sortable" onclick="sortTable('manager-table', 0, true)">Edycja</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 1, false)">Kraj</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 2, false)">Wykonawca</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 3, false)">Utwór</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 4, true)">Miejsce</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 5, true)">Punkty</th>
+                            <th>Linki</th>
+                        </tr>
+                    </thead>
+                    <tbody id="manager-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="sorter" class="tab-content">
+            <div class="picker-container" data-html2canvas-ignore="true">
+                <h3 class="picker-title">Wybierz Edycję i Tryb </h3>
+                <div style="display:flex; gap:15px; flex-wrap:wrap; justify-content:center; max-width:600px; margin:0 auto;">
+                    <select id="sorter-edition-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeSorterEdition(this)"></select>
+                    <select id="sorter-exclude-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeExcludedCountry(this)"></select>
+                </div>
+                <div class="sorter-controls" style="margin-top: 15px;">
+                    <button class="picker-btn active" onclick="setSorterMode('basic', this)">Topka</button>
+                    <button class="picker-btn" onclick="setSorterMode('tier', this)">Tierlista</button>
+                    <button class="picker-btn" onclick="setSorterMode('1v1', this)">Algorytm 1v1</button>
+                </div>
+            </div>
+
+            <div id="sorter-workspace"></div>
+            
+            <div id="sorter-export-controls" style="text-align: center; margin-top: 20px;" data-html2canvas-ignore="true">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function playAudio(url) {
+            let player = document.getElementById('global-audio-player');
+            
+            if (player.getAttribute('src') === url) {
+                if (!player.paused) {
+                    player.pause();
+                    player.currentTime = 0; // Reset utworu do początku przy zatrzymaniu
+                } else {
+                    player.play();
+                }
+            } else {
+                player.setAttribute('src', url);
+                player.play();
+            }
+        }
+
+        let mapRoot;
+        let editionMapInstance = null;
+		let editionPolySeries = null;
+        let activeEdition = db.editions.length > 0 ? db.editions[0] : null;
+        let activeCountryId = null;
+        let managerMapInstance;
+		let managerPolySeries = null;
+        let editionViewCols = 1;
+        let editionSortState = { key: 'auto', isAsc: true };
+
+        function getEmojiFlag(countryCode) {
+            if (!countryCode) return "";
+            const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt(0));
+            return String.fromCodePoint(...codePoints);
+        }
+
+        function getFlag(code, lg = false, extraStyle = "", isBattle = false) {
+            if (!code) return "";
+            let size = isBattle ? "w320" : (lg ? "w160" : "w80");
+            let classes = `fi ${lg ? 'fi-lg' : ''} ${isBattle ? 'fi-battle' : ''}`;
+            return `<img src="https://flagcdn.com/${size}/${code.toLowerCase()}.png" crossorigin="anonymous" class="${classes}" style="${extraStyle}" alt="${code.toLowerCase()}">`;
+        }
+
+        let sortDirections = {};
+        function sortTable(tableId, colIndex, isNumeric) {
+            const table = document.getElementById(tableId);
+            if(!table) return;
+            const tbody = table.querySelector("tbody");
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            if (rows.length <= 1) return;
+
+            const key = `${tableId}-${colIndex}`;
+            sortDirections[key] = !sortDirections[key];
+            const isAscending = sortDirections[key];
+
+            rows.sort((a, b) => {
+                let valA = a.children[colIndex] ? a.children[colIndex].innerText.trim() : "";
+                let valB = b.children[colIndex] ? b.children[colIndex].innerText.trim() : "";
+
+                if (isNumeric) {
+                    let numA = parseFloat(valA.replace(/[^\d.-]/g, ''));
+                    let numB = parseFloat(valB.replace(/[^\d.-]/g, ''));
+                    if (isNaN(numA)) numA = Infinity;
+                    if (isNaN(numB)) numB = Infinity;
+                    return isAscending ? numA - numB : numB - numA;
+                } else {
+                    return isAscending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                }
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        function updateContainerWidth() {
+            const containerElem = document.querySelector('.container');
+            const activeTab = localStorage.getItem('activeTab') || 'home';
+            if (activeTab === 'editions' && editionViewCols === 2) {
+                containerElem.classList.add('wide-mode');
+            } else {
+                containerElem.classList.remove('wide-mode');
+            }
+        }
+
+        function init() {
+            let savedEdition = localStorage.getItem('activeEdition');
+            if (savedEdition) activeEdition = parseInt(savedEdition);
+            
+            let savedCols = localStorage.getItem('editionCols');
+            if (savedCols) editionViewCols = parseInt(savedCols);
+            
+            renderEditionPickers();
+            
+            if (editionViewCols === 2) {
+                document.getElementById('btn-col-1').classList.remove('active');
+                document.getElementById('btn-col-2').classList.add('active');
+                document.getElementById("edition-tables-container").className = "editions-layout-wrapper cols-2";
+            }
+            
+            renderEditionTable();
+            renderHomeWidget();
+
+            let savedTab = localStorage.getItem('activeTab') || 'home';
+            let btn = document.querySelector(`.nav-btn[onclick*="'${savedTab}'"]`);
+            if (btn) openTab(savedTab, btn);
+            else openTab('home', document.querySelector(".nav-btn"));
+        }
+
+        function openTab(tabName, btn) {
+    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+    document.querySelectorAll(".nav-btn").forEach(nav => nav.classList.remove("active"));
+    document.getElementById(tabName).style.display = "block";
+    if(btn) btn.classList.add("active");
+    
+    localStorage.setItem('activeTab', tabName);
+    updateContainerWidth();
+    
+    if (tabName === 'countries' && !mapRoot) initMap();
+    if (tabName === 'managers') initManagers();
+    if (tabName === 'sorter') initSorter();
+    if (tabName === 'preselections') initPreselections();
+
+    if (tabName === 'editions' && editionMapInstance) {
+        editionMapInstance.resize();
+    }
+    if (tabName === 'countries' && mapRoot) {
+        mapRoot.resize();
+    }
+    if (tabName === 'managers' && managerMapInstance) {
+        managerMapInstance.resize();
+    }
+}
+
+        function renderHomeWidget() {
+            if (!db.editions || db.editions.length === 0) return;
+            let maxEdition = Math.max(...db.editions);
+            let hostId = db.hosts[maxEdition];
+            let hostCountry = db.countries[hostId];
+            let city = db.cities[maxEdition] || "Brak danych";
+            let participantsCount = db.results ? db.results.filter(r => r.edition === maxEdition).length : 0;
+
+            document.getElementById('home-edition-num').innerText = `#${maxEdition}`;
+            if (hostCountry) {
+                document.getElementById('home-edition-host').innerText = hostCountry.name;
+                document.getElementById('home-edition-flag').src = `https://flagcdn.com/w320/${hostCountry.code.toLowerCase()}.png`;
+            }
+            document.getElementById('home-edition-city').innerText = city;
+            document.getElementById('home-edition-count').innerText = participantsCount;
+        }
+
+        // ================= EDYCJE =================
+        function setEditionView(cols, btn) {
+            editionViewCols = cols;
+            document.getElementById('btn-col-1').classList.remove('active');
+            document.getElementById('btn-col-2').classList.remove('active');
+            if(btn) btn.classList.add('active');
+            else document.getElementById(`btn-col-${cols}`).classList.add('active');
+            
+            const container = document.getElementById("edition-tables-container");
+            container.className = `editions-layout-wrapper cols-${cols}`;
+            
+            localStorage.setItem('editionCols', cols);
+            updateContainerWidth();
+            renderEditionTable();
+        }
+
+        function renderEditionPickers() {
+            const select = document.getElementById("edition-select");
+            select.innerHTML = "";
+            if (db.editions.length === 0) {
+                select.innerHTML = "<option>Brak edycji</option>";
+                select.disabled = true;
+                return;
+            }
+            select.disabled = false;
+            
+            db.editions.forEach(ed => {
+                const hostId = db.hosts[ed];
+                const hostFlagCode = hostId && db.countries[hostId] ? db.countries[hostId].code : null;
+                const emoji = getEmojiFlag(hostFlagCode);
+                const hostCity = db.cities && db.cities[ed] ? db.cities[ed] : "";
+                
+                const option = document.createElement("option");
+                option.value = ed;
+                option.text = `Edycja #${ed} ${emoji} ${hostCity}`.trim();
+                if (ed === activeEdition) option.selected = true;
+                select.appendChild(option);
+            });
+        }
+
+        function changeEdition(selectElement) {
+            activeEdition = parseInt(selectElement.value);
+            localStorage.setItem('activeEdition', activeEdition);
+            renderEditionTable();
+        }
+
+        function sortEditionGlobal(key) {
+            if (editionSortState.key === key) {
+                editionSortState.isAsc = !editionSortState.isAsc;
+            } else {
+                editionSortState.key = key;
+                editionSortState.isAsc = true;
+            }
+            renderEditionTable();
+        }
+
+        function getSortIndicator(key) {
+            if (editionSortState.key === key) {
+                return editionSortState.isAsc ? " \u21D3" : " \u21D1";
+            }
+            return "";
+        }
+
+        function renderEditionTable() {
+            const container = document.getElementById("edition-tables-container");
+            container.innerHTML = "";
+            let editionData = db.results.filter(r => r.edition === activeEdition && r.place !== undefined);
+            
+            if(editionData.length === 0) {
+                document.getElementById('edition-summary-container').style.display = "none";
+                return;
+            }
+
+            // Automatyczne wykrywanie: czy edycja ma już uzupełnione miejsca (różne od "-")
+            let hasResults = editionData.some(r => r.place && r.place !== "-");
+
+            editionData.sort((a, b) => {
+                let valA, valB;
+                let currentKey = editionSortState.key;
+                
+                // Jeśli klucz to 'auto', wybieramy 'place' (gdy są wyniki) lub 'ro' (gdy wyników brak)
+                if (currentKey === 'auto') {
+                    currentKey = hasResults ? 'place' : 'ro';
+                }
+
+                switch(currentKey) {
+                    case 'ro': 
+                        valA = (a.ro === "-" || a.ro === undefined) ? 999 : parseFloat(a.ro); 
+                        valB = (b.ro === "-" || b.ro === undefined) ? 999 : parseFloat(b.ro); 
+                        break;
+                    case 'country': 
+                        valA = db.countries[a.countryId]?.name || ""; 
+                        valB = db.countries[b.countryId]?.name || ""; 
+                        break;
+                    case 'artist': 
+                        valA = a.artist || ""; 
+                        valB = b.artist || ""; 
+                        break;
+                    case 'manager': 
+                        valA = a.manager || ""; 
+                        valB = b.manager || ""; 
+                        break;
+                    case 'place': 
+                        valA = (a.place === "-" || a.place === undefined) ? 999 : parseFloat(a.place); 
+                        valB = (b.place === "-" || b.place === undefined) ? 999 : parseFloat(b.place); 
+                        break;
+                    case 'points': 
+                        valA = (a.points === "-" || a.points === undefined) ? -1 : parseFloat(a.points); 
+                        valB = (b.points === "-" || b.points === undefined) ? -1 : parseFloat(b.points); 
+                        break;
+                }
+
+                // Sprawdzamy czy sortujemy numerycznie, uwzględniając dynamiczną zmianę klucza z 'auto'
+                let isNum = ['ro', 'place', 'points'].includes(currentKey);
+                if (isNum) {
+                    return editionSortState.isAsc ? valA - valB : valB - valA;
+                } else {
+                    return editionSortState.isAsc ? String(valA).localeCompare(String(valB)) : String(valB).localeCompare(String(valA));
+                }
+            });
+
+            // Logika wyliczania maksymalnego miejsca do kolorowania czerwonego tła (ignoruje "-")
+            const validPlaces = editionData.map(r => parseFloat(r.place)).filter(p => !isNaN(p));
+            const maxPlace = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
+
+            let chunks = [];
+            let chunkSize = Math.ceil(editionData.length / editionViewCols);
+            for (let i = 0; i < editionData.length; i += chunkSize) chunks.push(editionData.slice(i, i + chunkSize));
+
+            chunks.forEach((chunk, chunkIndex) => {
+                let tableId = `edition-table-part-${chunkIndex}`;
+                let tableHTML = `<div class="table-wrapper"><table id="${tableId}"><thead><tr>
+                    <th onclick="sortEditionGlobal('ro')">RO${getSortIndicator('ro')}</th>
+                    <th onclick="sortEditionGlobal('country')">Kraj${getSortIndicator('country')}</th>
+                    <th onclick="sortEditionGlobal('artist')">Utwór/Wyk.${getSortIndicator('artist')}</th>
+                    ${editionViewCols === 1 ? `<th onclick="sortEditionGlobal('manager')">Menadżer${getSortIndicator('manager')}</th>` : ''}
+                    <th onclick="sortEditionGlobal('place')">Miejsce${getSortIndicator('place')}</th>
+                    <th onclick="sortEditionGlobal('points')">Punkty${getSortIndicator('points')}</th>
+                    <th>Linki</th></tr></thead><tbody>`;
+
+                chunk.forEach(row => {
+                    const cData = db.countries[row.countryId];
+                    let numericPlace = parseFloat(row.place);
+                    let rowClass = numericPlace === 1 ? "row-1st" : numericPlace === 2 ? "row-2nd" : numericPlace === 3 ? "row-3rd" : (numericPlace === maxPlace && maxPlace > 3 ? "row-last" : "");
+                    
+                    let hasSong = row.song && row.song.trim() !== "-";
+                    let audioPlayBtn = hasSong && row.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${row.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
+                    let spotifyLink = hasSong && row.spotify ? `<a href="${row.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
+                    let youtubeLink = hasSong && row.youtube ? `<a href="${row.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
+
+                    tableHTML += `
+                        <tr class="${rowClass}">
+                            <td>${row.ro !== undefined ? row.ro : "-"}</td>
+                            <td class="country-cell">${getFlag(cData.code)} ${cData ? cData.name : row.countryId}</td>
+                            <td style="text-align:left;"><strong>${row.artist||"-"}</strong><br><span style="font-size:11px"><em>${row.song||"-"}</em> ${audioPlayBtn}</span></td>
+                            ${editionViewCols === 1 ? `<td>${row.manager||"-"}</td>` : ''}
+                            <td style="font-weight: bold;">${row.place}</td>
+                            <td class="points-total">${row.points !== undefined ? row.points : "-"}</td>
+                            <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
+                        </tr>`;
+                });
+                tableHTML += `</tbody></table></div>`;
+                container.innerHTML += tableHTML;
+            });
+
+            if (editionViewCols === 2) {
+                setTimeout(() => {
+                    let table1 = document.getElementById('edition-table-part-0');
+                    let table2 = document.getElementById('edition-table-part-1');
+                    
+                    if (table1 && table2) {
+                        let rows1 = table1.querySelectorAll('tbody tr');
+                        let rows2 = table2.querySelectorAll('tbody tr');
+                        let maxRows = Math.max(rows1.length, rows2.length);
+                        
+                        for (let i = 0; i < maxRows; i++) {
+                            let r1 = rows1[i];
+                            let r2 = rows2[i];
+                            
+                            if (r1 && r2) {
+                                r1.style.height = 'auto';
+                                r2.style.height = 'auto';
+                                
+                                let maxH = Math.max(r1.offsetHeight, r2.offsetHeight);
+                                
+                                r1.style.height = maxH + 'px';
+                                r2.style.height = maxH + 'px';
+                            }
+                        }
+                    }
+                }, 10);
+            }
+
+            renderEditionMap();
+        }
+
+        // ================= PRESELEKCJE =================
+        function initPreselections() {
+            const edSelect = document.getElementById("presel-edition-select");
+            edSelect.innerHTML = "";
+            
+            if (!db.preselections || Object.keys(db.preselections).length === 0) {
+                edSelect.innerHTML = "<option>Brak preselekcji</option>";
+                edSelect.disabled = true;
+                return;
+            }
+            
+            let edOptions = Object.keys(db.preselections).map(Number).sort((a,b)=>b-a);
+            edSelect.disabled = false;
+            
+            edOptions.forEach(ed => {
+                const option = document.createElement("option");
+                option.value = ed;
+                option.text = `Edycja #${ed}`;
+                edSelect.appendChild(option);
+            });
+            
+            renderPreselCountries();
+        }
+
+        function renderPreselCountries() {
+            const ed = document.getElementById("presel-edition-select").value;
+            const cSelect = document.getElementById("presel-country-select");
+            const cPicker = document.getElementById("presel-country-picker");
+            const data = db.preselections ? db.preselections[ed] : null;
+            
+            if(!data) return;
+            
+            cSelect.innerHTML = "";
+            Object.keys(data).forEach(countryNameOrId => {
+                let countryName = countryNameOrId;
+                let cCode = null;
+                
+                if (db.countries[countryNameOrId]) {
+                    cCode = db.countries[countryNameOrId].code;
+                    countryName = db.countries[countryNameOrId].name;
+                } else {
+                    let foundKey = Object.keys(db.countries).find(k => db.countries[k].name === countryNameOrId);
+                    if (foundKey) cCode = db.countries[foundKey].code;
+                }
+
+                let emoji = getEmojiFlag(cCode);
+
+                const option = document.createElement("option");
+                option.value = countryNameOrId;
+                option.text = `${emoji} ${countryName}`.trim();
+                cSelect.appendChild(option);
+            });
+            
+            cPicker.style.display = "block";
+            renderPreselContent();
+        }
+
+        function renderPreselContent() {
+            const ed = document.getElementById("presel-edition-select").value;
+            const cName = document.getElementById("presel-country-select").value;
+            const preselData = db.preselections && db.preselections[ed] ? db.preselections[ed][cName] : null;
+            const area = document.getElementById("presel-content-area");
+            
+            if(!preselData) {
+                area.innerHTML = "<p style='text-align:center;'>Wybierz odpowiednie dane</p>";
+                return;
+            }
+
+            let html = `
+                <div style="text-align:center; margin-bottom: 25px;">
+                    <h2 style="color:var(--primary-color); margin-bottom: 5px;">${preselData.name}</h2>
+                    <h4 style="color:var(--text-muted); margin-top: 0;">Menedżer: ${preselData.manager}</h4>
+                </div>
+            `;
+
+            preselData.stages.forEach(stage => {
+                let hasRes = stage.items.some(i => i.res);
+                
+                let maxPct = -1;
+                if(hasRes) {
+                    stage.items.forEach(item => {
+                        if(item.res) {
+                            let match = item.res.match(/(\d+)%/);
+                            if(match) {
+                                let pct = parseInt(match[1]);
+                                if(pct > maxPct) maxPct = pct;
+                            }
+                        }
+                    });
+                }
+
+                html += `
+                    <div class="table-wrapper" style="margin-bottom: 20px;">
+                        <table>
+                            <thead>
+                                <tr><th colspan="${hasRes ? 3 : 2}" style="font-size:14px; background-color: var(--secondary-color); color:#fff;">${stage.name}</th></tr>
+                                <tr>
+                                    <th style="width: 40%">Wykonawca</th>
+                                    <th style="width: 40%">Utwór</th>
+                                    ${hasRes ? '<th style="width: 20%">Wynik</th>' : ''}
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                stage.items.forEach(item => {
+                    let bgStyle = "";
+                    
+                    if (item.place === 1) {
+                        bgStyle = "background-color: rgba(255, 215, 0, 0.15); border-left: 4px solid #ffd700;";
+                    } else if (item.place === 2) {
+                        bgStyle = "background-color: rgba(192, 192, 192, 0.15); border-left: 4px solid #c0c0c0;";
+                    } else if (item.place === 3) {
+                        bgStyle = "background-color: rgba(205, 127, 50, 0.15); border-left: 4px solid #cd7f32;";
+                    } else if (item.place === 4) { 
+                        bgStyle = "background-color: rgba(96, 165, 250, 0.15); border-left: 4px solid #60a5fa;";
+                    } else if (item.place === "last") {
+                        bgStyle = "background-color: rgba(255, 60, 60, 0.15); border-left: 4px solid #ff3c3c;";
+                    } 
+                    else if (item.res) {
+                        let match = item.res.match(/(\d+)%/);
+                        if (match) {
+                            let pct = parseInt(match[1]);
+                            if (pct === maxPct && maxPct > 0) {
+                                bgStyle = "background-color: rgba(255, 215, 0, 0.15); border-left: 4px solid #ffd700;";
+                            } else {
+                                bgStyle = "background-color: rgba(255, 60, 60, 0.15); border-left: 4px solid #ff3c3c;";
+                            }
+                        }
+                    }
+
+                    html += `
+                        <tr style="${bgStyle}">
+                            <td style="font-weight: bold; text-align: left;">${item.a}</td>
+                            <td style="font-style: italic; text-align: left;">${item.t}</td>
+                            ${hasRes ? `<td><span style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px; font-weight:bold;">${item.res || "-"}</span></td>` : ''}
+                        </tr>
+                    `;
+                });
+                html += `</tbody></table></div>`;
+            });
+
+            area.innerHTML = html;
+        }
+
+        // ================= MAPA PAŃSTW =================
+        function renderEditionMap() {
+    let currentEdition = activeEdition;
+    if (!currentEdition) return;
+
+    let editionsSorted = [...db.editions].sort((a,b)=>a-b);
+    let currentIndex = editionsSorted.indexOf(currentEdition);
+    let prevEdition = currentIndex > 0 ? editionsSorted[currentIndex - 1] : null;
+
+    let currentParticipants = db.results.filter(r => r.edition === currentEdition).map(r => r.countryId);
+    let prevParticipants = prevEdition ? db.results.filter(r => r.edition === prevEdition).map(r => r.countryId) : [];
+    let pastParticipants = db.results.filter(r => r.edition < currentEdition).map(r => r.countryId);
+
+    let statuses = {};
+    let lists = { debuts: [], returning: [], participating: [], withdrawing: [], absent: [] };
+
+    Object.keys(db.countries).forEach(cId => {
+        let isCurrent = currentParticipants.includes(cId);
+        let isPrev = prevParticipants.includes(cId);
+        let isPast = pastParticipants.includes(cId);
+
+        if (isCurrent) {
+            if (!isPast) { statuses[cId] = 'debuts'; lists.debuts.push(cId); }
+            else if (!isPrev) { statuses[cId] = 'returning'; lists.returning.push(cId); }
+            else { statuses[cId] = 'participating'; lists.participating.push(cId); }
+        } else {
+            if (isPrev) { statuses[cId] = 'withdrawing'; lists.withdrawing.push(cId); }
+            else if (isPast) { statuses[cId] = 'absent'; lists.absent.push(cId); }
+        }
+    });
+
+    let legendHTML = "";
+    const buildSection = (title, ids, colorHex) => {
+        if (ids.length === 0) return "";
+        ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
+        let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
+        return `
+            <div class="edition-legend-section">
+                <div class="edition-legend-title">
+                    <div class="edition-legend-dot" style="background:${colorHex}"></div>
+                    ${title} (${ids.length})
+                </div>
+                <div class="edition-legend-items">${tags}</div>
+            </div>
+        `;
+    };
+
+    legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
+    legendHTML += buildSection("Powroty", lists.returning, "#facc15");
+    legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
+    legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
+    legendHTML += buildSection("Brak udziału", lists.absent, "#64748b");
+
+    document.getElementById('edition-legend').innerHTML = legendHTML;
+    document.getElementById('edition-summary-container').style.display = "block";
+
+    if (!editionMapInstance) {
+        editionMapInstance = am5.Root.new("edition-map");
+        editionMapInstance.setThemes([am5themes_Animated.new(editionMapInstance)]);
+        let chart = editionMapInstance.container.children.push(am5map.MapChart.new(editionMapInstance, { 
+            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+        }));
+        editionPolySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
+            geoJSON: am5geodata_worldLow, 
+            include: Object.keys(db.countries) 
+        }));
+
+        editionPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+            let cId = target.dataItem && target.dataItem.get("id");
+            return cId && db.countries[cId] ? db.countries[cId].name : text;
+        });
+
+        editionPolySeries.mapPolygons.template.setAll({ 
+            stroke: am5.color(0x24294a), 
+            strokeWidth: 1, 
+            templateField: "polygonSettings"
+        });
+    }
+
+    let mapData = [];
+    Object.keys(db.countries).forEach(cId => {
+        let polyColor = am5.color(0x1a1e36);
+        if (statuses[cId]) {
+            if (statuses[cId] === 'debuts') polyColor = am5.color(0x8b5cf6);
+            else if (statuses[cId] === 'returning') polyColor = am5.color(0xfacc15);
+            else if (statuses[cId] === 'participating') polyColor = am5.color(0x22c55e);
+            else if (statuses[cId] === 'withdrawing') polyColor = am5.color(0xef4444);
+            else if (statuses[cId] === 'absent') polyColor = am5.color(0x64748b);
+        }
+        
+        mapData.push({ 
+            id: cId, 
+            polygonSettings: { fill: polyColor } 
+        });
+    });
+    
+    editionPolySeries.data.setAll(mapData);
+}
+
+        function initMap() {
+            if (mapRoot) { mapRoot.dispose(); }
+            mapRoot = am5.Root.new("mapdiv");
+            mapRoot.setThemes([am5themes_Animated.new(mapRoot)]);
+            let chart = mapRoot.container.children.push(am5map.MapChart.new(mapRoot, {
+                panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator()
+            }));
+
+            let polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(mapRoot, {
+                geoJSON: am5geodata_worldLow, 
+                include: Object.keys(db.countries) 
+            }));
+
+            polygonSeries.mapPolygons.template.setAll({ interactive: true, stroke: am5.color(0x24294a), strokeWidth: 1, fill: am5.color(0x1a1e36) });
+            polygonSeries.mapPolygons.template.states.create("hover", { fill: am5.color(0xff2a5f) });
+            polygonSeries.mapPolygons.template.states.create("active", { fill: am5.color(0xff2a5f) });
+            polygonSeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+                let cId = target.dataItem && target.dataItem.get("id");
+                return cId && db.countries[cId] ? db.countries[cId].name : text;
+            });
+
+            polygonSeries.mapPolygons.template.events.on("click", ev => {
+                let cId = ev.target.dataItem.get("id"); 
+                if (!cId || !db.countries[cId]) return; 
+                polygonSeries.mapPolygons.each(p => p.states.applyAnimate("default"));
+                ev.target.states.applyAnimate("active"); 
+                activeCountryId = cId;
+                renderCountryTable();
+                renderCountryInfobox();
+            });
+
+            const winCounts = {};
+            db.results.forEach(r => { if (r.place === 1) winCounts[r.countryId] = (winCounts[r.countryId] || 0) + 1; });
+            const uniqueWins = [...new Set(Object.values(winCounts))].sort((a,b) => a - b);
+            
+            const winPalette = ['#fde047', '#facc15', '#eab308', '#ca8a04', '#a16207'];
+            const winColorMap = {};
+            uniqueWins.forEach((val, i) => { winColorMap[val] = winPalette[Math.min(i, winPalette.length - 1)]; });
+
+            let legendHTML = `<div class="map-overlay-item"><div class="map-overlay-color" style="background:#4a5596"></div>Udział</div>`;
+            uniqueWins.forEach(val => {
+                legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${winColorMap[val]}"></div>${val} 🏆</div>`;
+            });
+            document.getElementById('country-map-legend').innerHTML = legendHTML;
+
+            polygonSeries.mapPolygons.template.adapters.add("fill", (fill, target) => {
+                let cId = target.dataItem && target.dataItem.get("id");
+                if (cId && db.countries[cId]) {
+                    let wins = winCounts[cId] || 0;
+                    if (wins > 0) return am5.color(winColorMap[wins]);
+                    if (db.results.some(r => r.countryId === cId)) return am5.color(0x4a5596); 
+                }
+                return fill;
+            });
+            chart.appear(1000, 100);
+        }
+
+        function formatConsecutive(nums) {
+            if (!nums || nums.length === 0) return "-";
+            nums.sort((a,b)=>a-b);
+            let ranges = [];
+            let start = nums[0];
+            let end = nums[0];
+            for (let i = 1; i < nums.length; i++) {
+                if (nums[i] === end + 1) {
+                    end = nums[i];
+                } else {
+                    ranges.push(start === end ? `${start}` : `${start} - ${end}`);
+                    start = nums[i];
+                    end = nums[i];
+                }
+            }
+            ranges.push(start === end ? `${start}` : `${start} - ${end}`);
+            return ranges.join(", ");
+        }
+
+        function renderCountryInfobox() {
+            const infobox = document.getElementById("country-infobox");
+            if (!activeCountryId) {
+                infobox.style.display = "none";
+                return;
+            }
+
+            const cData = db.countries[activeCountryId];
+            document.getElementById("info-name").innerText = cData.name;
+            document.getElementById("info-flag").src = `https://flagcdn.com/w320/${cData.code.toLowerCase()}.png`;
+            
+            const results = db.results.filter(r => r.countryId === activeCountryId);
+            if (results.length === 0) {
+                infobox.style.display = "none";
+                return;
+            }
+
+            let participatedEds = results.map(r => r.edition).sort((a,b) => a-b);
+            let firstEd = participatedEds[0];
+            let city = db.cities[firstEd] || "Brak danych";
+            
+            let hostedCount = 0;
+            let hostedEditions = [];
+            Object.entries(db.hosts).forEach(([ed, hostId]) => {
+                if(hostId === activeCountryId) { hostedCount++; hostedEditions.push(ed); }
+            });
+
+            document.getElementById("info-debut").innerHTML = `<a href="#" class="sel-link" style="margin:0;">${firstEd} edycja, ${city}</a>`;
+            document.getElementById("info-apps").innerText = `${participatedEds.length}`;
+            
+            let hostedcounts = hostedCount === 1 ? "raz" : "razy";
+            let hostedText = hostedCount > 0 
+                ? `${hostedCount} ${hostedcounts}, ${hostedEditions.join(', ')} edycja` 
+                : "0 razy";
+            document.getElementById("info-hosted").innerText = hostedText;
+
+            let internalEds = [];
+            let selectionsMap = {};
+
+            participatedEds.forEach(ed => {
+                let preselFound = false;
+                if (db.preselections && db.preselections[ed]) {
+                    if (db.preselections[ed][activeCountryId]) {
+                        preselFound = db.preselections[ed][activeCountryId].name;
+                    } else if (db.preselections[ed][cData.name]) {
+                        preselFound = db.preselections[ed][cData.name].name;
+                    }
+                }
+
+                if (preselFound) {
+                    if (!selectionsMap[preselFound]) selectionsMap[preselFound] = [];
+                    selectionsMap[preselFound].push(ed);
+                } else {
+                    internalEds.push(ed);
+                }
+            });
+
+            document.getElementById("info-internal").innerText = formatConsecutive(internalEds);
+            
+            let selHtml = "";
+            if (Object.keys(selectionsMap).length === 0) {
+                selHtml = "-";
+            } else {
+                for (const [sName, sEds] of Object.entries(selectionsMap)) {
+                    selHtml += `<span class="sel-name">${sName}</span>${formatConsecutive(sEds)}<br>`;
+                }
+            }
+            document.getElementById("info-selections").innerHTML = selHtml;
+
+            infobox.style.display = "block";
+        }
+
+        function renderCountryTable() {
+            const headerTitle = document.getElementById("selected-country-header");
+            const tbody = document.getElementById("country-body");
+            tbody.innerHTML = "";
+            
+            if (!activeCountryId) return;
+
+            const cName = db.countries[activeCountryId].name;
+            headerTitle.style.display = "flex";
+            headerTitle.innerHTML = `${getFlag(activeCountryId, true)} Wyniki szczegółowe: ${cName}`;
+
+            const results = db.results.filter(r => r.countryId === activeCountryId);
+            let participatedEds = results.map(r => r.edition).sort((a,b) => a-b);
+            let maxEd = Math.max(...db.editions);
+            let missing = db.editions.filter(e => e <= maxEd && !participatedEds.includes(e)).sort((a,b)=>a-b);
+            let segments = [];
+            
+            if (missing.length > 0) {
+                let start = missing[0];
+                let prev = missing[0];
+                for (let i = 1; i < missing.length; i++) {
+                    if (missing[i] === prev + 1) {
+                        prev = missing[i];
+                    } else {
+                        segments.push({start, end: prev});
+                        start = missing[i];
+                        prev = missing[i];
+                    }
+                }
+                segments.push({start, end: prev});
+            }
+
+            let combinedRows = [];
+            results.forEach(r => combinedRows.push({type: 'result', edition: r.edition, data: r}));
+            segments.forEach(s => combinedRows.push({type: 'missing', edition: s.start, end: s.end}));
+            combinedRows.sort((a,b) => a.edition - b.edition);
+
+            combinedRows.forEach(row => {
+                if (row.type === 'missing') {
+                    let text = row.edition === row.end ? `Państwo nie brało udziału w edycji ${row.edition}` : `Państwo nie brało udziału w edycjach ${row.edition} - ${row.end}`;
+                    tbody.innerHTML += `<tr><td colspan="7" style="color:var(--text-muted); font-style:italic; font-weight:normal;">${text}</td></tr>`;
+                } else {
+                    let r = row.data;
+                    
+                    // Obliczanie max miejsca DLA DANEJ EDYCJI (żeby sprawdzić, czy państwo było ostatnie)
+                    let editionResults = db.results.filter(res => res.edition === r.edition && res.place !== "-" && res.place !== undefined);
+                    let validPlaces = editionResults.map(res => parseFloat(res.place)).filter(p => !isNaN(p));
+                    let maxPlaceForThisEdition = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
+                    
+                    let numericPlace = parseFloat(r.place);
+                    
+                    // Przydzielanie kolorów, w tym czerwonego (bg-last) dla ostatniego miejsca
+                    let gfClass = numericPlace === 1 ? "bg-1st" 
+                                : numericPlace === 2 ? "bg-2nd" 
+                                : numericPlace === 3 ? "bg-3rd" 
+                                : (numericPlace === maxPlaceForThisEdition && maxPlaceForThisEdition > 3 ? "bg-last" : "");
+                    
+                    let hostFlag = db.hosts[r.edition] ? getFlag(db.countries[db.hosts[r.edition]].code) : "";
+                    let hasSong = r.song && r.song.trim() !== "-";
+                    let audioPlayBtn = hasSong && r.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${r.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
+                    let spotifyLink = hasSong && r.spotify ? `<a href="${r.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
+                    let youtubeLink = hasSong && r.youtube ? `<a href="${r.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
+
+                    // Naprawa błędu z wyświetlaniem punktów "0" (użycie r.points !== undefined)
+                    let pointsToDisplay = (r.points !== undefined && r.points !== "") ? r.points : "-";
+
+                    tbody.innerHTML += `
+                        <tr class="${gfClass}">
+                            <td><span class="edition-cell">${hostFlag} Ed. ${r.edition}</span></td>
+                            <td><strong>${r.artist||"-"}</strong></td>
+                            <td><em>${r.song||"-"}</em> ${audioPlayBtn}</td>
+                            <td>${r.manager||"-"}</td>
+                            <td style="font-weight: bold;">${r.place||"NQ"}</td>
+                            <td class="points-total">${pointsToDisplay}</td>
+                            <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
+                        </tr>`;
+                }
+            });
+        }
+
+        function initManagers() {
+            const select = document.getElementById('manager-select');
+            if (select.options.length === 0) {
+                const managers = [...new Set(db.results.map(r => r.manager).filter(m => m))].sort();
+                select.innerHTML = managers.map(m => `<option value="${m}">${m}</option>`).join('');
+                
+                let savedManager = localStorage.getItem('activeManager');
+                if (savedManager && managers.includes(savedManager)) {
+                    select.value = savedManager;
+                }
+                
+                if(managers.length > 0) renderManagerData();
+            }
+        }
+
+        function renderManagerData() {
+            const manager = document.getElementById('manager-select').value;
+            localStorage.setItem('activeManager', manager);
+            const data = db.results.filter(r => r.manager === manager);
+            
+            const validPlaces = data.filter(r => r.place > 0);
+            document.getElementById('stat-gold').innerText = data.filter(r => r.place === 1).length;
+            document.getElementById('stat-silver').innerText = data.filter(r => r.place === 2).length;
+            document.getElementById('stat-bronze').innerText = data.filter(r => r.place === 3).length;
+            document.getElementById('stat-avg').innerText = validPlaces.length ? (validPlaces.reduce((sum, r) => sum + r.place, 0) / validPlaces.length).toFixed(1) : "-";
+
+            const countryCounts = {};
+            data.forEach(r => { countryCounts[r.countryId] = (countryCounts[r.countryId] || 0) + 1; });
+            document.getElementById('stat-top-countries').innerHTML = Object.entries(countryCounts)
+                .sort((a, b) => b[1] - a[1]).slice(0, 5).map(e => getFlag(e[0], true, "margin:0 2px;")).join("") || "-";
+
+            const tbody = document.getElementById('manager-body');
+            tbody.innerHTML = "";
+            [...data].sort((a,b) => a.edition - b.edition).forEach(row => {
+                let hasSong = row.song && row.song.trim() !== "-";
+                let audioPlayBtn = hasSong && row.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${row.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
+                let spotifyLink = hasSong && row.spotify ? `<a href="${row.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
+                let youtubeLink = hasSong && row.youtube ? `<a href="${row.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
+
+                tbody.innerHTML += `
+                    <tr class="${row.place === 1 ? 'row-1st' : row.place === 2 ? 'row-2nd' : row.place === 3 ? 'row-3rd' : ''}">
+                        <td style="font-weight:bold;">${row.edition}</td>
+                        <td class="country-cell">${getFlag(db.countries[row.countryId].code)} ${db.countries[row.countryId].name}</td>
+                        <td>${row.artist || "-"}</td>
+                        <td><em>${row.song || "-"}</em> ${audioPlayBtn}</td>
+                        <td style="font-weight:bold;">${row.place || "NQ"}</td>
+                        <td class="points-total">${row.points || "-"}</td>
+                        <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
+                    </tr>`;
+            });
+
+            renderManagerMap(countryCounts);
+        }
+
+        const absolutePalette = ['#60a5fa', '#3b82f6', '#2563eb', '#4f46e5', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc', '#d946ef', '#ec4899', '#f43f5e', '#e11d48', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#facc15', '#fde047', '#fef08a'];
+
+        function renderManagerMap(counts) {
+    const activeCounts = Object.values(counts).filter(c => c > 0);
+    const uniqueCounts = [...new Set(activeCounts)].sort((a, b) => a - b);
+    
+    let legendHTML = '';
+    uniqueCounts.forEach(val => {
+        let colorIdx = Math.min(val - 1, absolutePalette.length - 1);
+        legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${absolutePalette[colorIdx]}"></div>${val}</div>`;
+    });
+    document.getElementById('manager-map-legend').innerHTML = legendHTML;
+
+    if (!managerMapInstance) {
+        managerMapInstance = am5.Root.new("manager-map");
+        managerMapInstance.setThemes([am5themes_Animated.new(managerMapInstance)]);
+        let chart = managerMapInstance.container.children.push(am5map.MapChart.new(managerMapInstance, { 
+            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+        }));
+        managerPolySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
+            geoJSON: am5geodata_worldLow, 
+            include: Object.keys(db.countries) 
+        }));
+
+        managerPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+            let cId = target.dataItem && target.dataItem.get("id");
+            return cId && db.countries[cId] ? db.countries[cId].name : text;
+        });
+
+        managerPolySeries.mapPolygons.template.setAll({ 
+            stroke: am5.color(0x24294a), 
+            strokeWidth: 1, 
+            templateField: "polygonSettings"
+        });
+    }
+
+    let mapData = [];
+    Object.keys(db.countries).forEach(cId => {
+        let polyColor = am5.color(0x1a1e36);
+        if (counts[cId]) {
+            let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
+            polyColor = am5.color(absolutePalette[colorIdx]);
+        }
+        mapData.push({ id: cId, polygonSettings: { fill: polyColor } });
+    });
+    managerPolySeries.data.setAll(mapData);
+}
+
+        // ================= SORTER =================
+        let currentSorterMode = 'basic';
+        let sorterEdition = null;
+        let sorterExcluded = null;
+        let sorterObj = null;
+
+        function populateSorterExclude() {
+            const select = document.getElementById("sorter-exclude-select");
+            select.innerHTML = '<option value="">-- Brak wykluczenia --</option>';
+            
+            let items = db.results
+                .filter(r => r.edition === sorterEdition)
+                .sort((a, b) => {
+                    let nameA = db.countries[a.countryId].name;
+                    let nameB = db.countries[b.countryId].name;
+                    return nameA.localeCompare(nameB);
+                });
+            
+            let savedEx = localStorage.getItem(`sorterExcluded_${sorterEdition}`);
+            sorterExcluded = savedEx ? savedEx : "";
+
+            items.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.countryId;
+                opt.text = `Wyklucz: ${db.countries[item.countryId].name} (${item.manager||'?'})`;
+                if(item.countryId === sorterExcluded) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
+
+        function initSorter() {
+            const select = document.getElementById("sorter-edition-select");
+            if (select.options.length > 0) return; 
+
+            let savedSorterEd = localStorage.getItem('sorterEdition');
+            if (savedSorterEd) sorterEdition = parseInt(savedSorterEd);
+            else sorterEdition = db.editions.length > 0 ? db.editions[0] : null;
+
+            db.editions.forEach(ed => {
+                const hostId = db.hosts[ed];
+                const hostFlagCode = hostId && db.countries[hostId] ? db.countries[hostId].code : null;
+                const emoji = getEmojiFlag(hostFlagCode);
+                const hostCity = db.cities && db.cities[ed] ? db.cities[ed] : "";
+                
+                const option = document.createElement("option");
+                option.value = ed;
+                option.text = `Edycja #${ed} ${emoji} ${hostCity}`.trim();
+                if (ed === sorterEdition) option.selected = true;
+                select.appendChild(option);
+            });
+
+            let savedMode = localStorage.getItem('sorterMode');
+            if (savedMode) {
+                document.querySelectorAll('.sorter-controls .picker-btn').forEach(b => b.classList.remove('active'));
+                let btn = document.querySelector(`.sorter-controls .picker-btn[onclick*="'${savedMode}'"]`);
+                if(btn) btn.classList.add('active');
+                currentSorterMode = savedMode;
+            }
+
+            populateSorterExclude();
+            buildSorterWorkspace();
+        }
+
+        function changeSorterEdition(selectElement) {
+            sorterEdition = parseInt(selectElement.value);
+            localStorage.setItem('sorterEdition', sorterEdition);
+            populateSorterExclude();
+            buildSorterWorkspace();
+        }
+
+        function changeExcludedCountry(selectElement) {
+            sorterExcluded = selectElement.value;
+            localStorage.setItem(`sorterExcluded_${sorterEdition}`, sorterExcluded);
+            buildSorterWorkspace();
+        }
+
+        function setSorterMode(mode, btn) {
+            document.querySelectorAll('.sorter-controls .picker-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentSorterMode = mode;
+            localStorage.setItem('sorterMode', mode);
+            buildSorterWorkspace();
+        }
+
+        function buildSorterWorkspace() {
+            const ws = document.getElementById('sorter-workspace');
+            const btnContainer = document.getElementById('sorter-export-controls');
+            btnContainer.innerHTML = "";
+            if (sorterObj) { sorterObj.destroy && sorterObj.destroy(); sorterObj = null; }
+
+            let allItems = db.results.filter(r => r.edition === sorterEdition).sort((a,b) => (a.ro || 99) - (b.ro || 99));
+            if(allItems.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej edycji.</p>"; return; }
+
+            let activeItems = allItems.filter(r => r.countryId !== sorterExcluded);
+            let excludedItem = allItems.find(r => r.countryId === sorterExcluded);
+
+            if (currentSorterMode === 'basic') {
+                btnContainer.innerHTML = `
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                `;
+                renderBasicSorter(ws, activeItems, false, excludedItem);
+            } else if (currentSorterMode === 'tier') {
+                btnContainer.innerHTML = `
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotTier()"><i class="fa-solid fa-camera"></i>  Zapisz jako zdjęcie</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                `;
+                renderTierList(ws, activeItems);
+            } else if (currentSorterMode === '1v1') {
+                btnContainer.innerHTML = "";
+                start1v1Battle(ws, activeItems);
+            }
+        }
+
+        function resetSorterData() {
+            if (confirm("Czy na pewno chcesz zresetować swój układ dla tej edycji? Tej akcji nie można cofnąć.")) {
+                if (currentSorterMode === 'basic') {
+                    localStorage.removeItem(`sorter_basic_${sorterEdition}`);
+                    localStorage.removeItem(`sorter_basic_${sorterEdition}_ranked`);
+                } else if (currentSorterMode === 'tier') {
+                    localStorage.removeItem(`sorter_tier_${sorterEdition}`);
+                    localStorage.removeItem(`sorter_tier_size_${sorterEdition}`); // Czyści zapisany rozmiar
+                }
+                buildSorterWorkspace();
+            }
+        }
+
+        function saveBasicSorter() {
+            if (currentSorterMode !== 'basic') return;
+            const itemIds = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item')).map(el => el.getAttribute('data-id'));
+            const rankedIds = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item.is-ranked')).map(el => el.getAttribute('data-id'));
+            localStorage.setItem(`sorter_basic_${sorterEdition}`, JSON.stringify(itemIds));
+            localStorage.setItem(`sorter_basic_${sorterEdition}_ranked`, JSON.stringify(rankedIds));
+        }
+
+        function autoShrinkText(container = document) {
+            container.querySelectorAll('.sorter-item').forEach(row => {
+                const textContainer = row.querySelector('.sorter-text');
+                if (!textContainer) return;
+                
+                const availableWidth = textContainer.clientWidth;
+                if (availableWidth <= 0) return;
+
+                const artist = row.querySelector('.sorter-artist-name');
+                const song = row.querySelector('.sorter-song-name');
+
+                if (artist) {
+                    let size = 14; 
+                    artist.style.fontSize = size + 'px';
+                    while (artist.scrollWidth > availableWidth && size > 7.5) {
+                        size -= 0.5;
+                        artist.style.fontSize = size + 'px';
+                    }
+                }
+
+                if (song) {
+                    let size = 11; 
+                    song.style.fontSize = size + 'px';
+                    while (song.scrollWidth > availableWidth && size > 7.5) {
+                        size -= 0.5;
+                        song.style.fontSize = size + 'px';
+                    }
+                }
+            });
+        }
+
+        function renderBasicSorter(container, items, isFrom1v1 = false, excludedItem = null) {
+            container.innerHTML = `
+                <div id="sorter-export-area" class="sorter-list"></div>
+                <div id="sorter-excluded-area" class="sorter-list" style="margin-top: 8px;"></div>
+            `;
+            const list = document.getElementById('sorter-export-area');
+            const excludedList = document.getElementById('sorter-excluded-area');
+            
+            let savedOrder = localStorage.getItem(`sorter_basic_${sorterEdition}`);
+            let savedRanked = localStorage.getItem(`sorter_basic_${sorterEdition}_ranked`);
+            let rankedSet = new Set();
+
+            if (isFrom1v1) {
+                rankedSet = new Set(items.map(i => i.countryId));
+            } else if (savedRanked) {
+                try { rankedSet = new Set(JSON.parse(savedRanked)); } catch(e){}
+            }
+
+            if (!isFrom1v1 && savedOrder) {
+                try {
+                    let orderIds = JSON.parse(savedOrder);
+                    items.sort((a, b) => {
+                        let idxA = orderIds.indexOf(a.countryId);
+                        let idxB = orderIds.indexOf(b.countryId);
+                        if(idxA === -1) idxA = 999;
+                        if(idxB === -1) idxB = 999;
+                        return idxA - idxB;
+                    });
+                } catch(e) {}
+            }
+
+            items.forEach((item, index) => {
+                let hasSong = item.song && item.song.trim() !== "-";
+                let audioPlayBtn = hasSong && item.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${item.mp3}')" title="Odtwórz MP3"><i class="fa-solid fa-play"></i></span>` : "";
+                let isRankedClass = rankedSet.has(item.countryId) ? "is-ranked" : "";
+                
+                list.innerHTML += `
+                    <div class="sorter-item ${isRankedClass}" data-id="${item.countryId}">
+                        <div class="sorter-rank">${index + 1}.</div>
+                        <div class="sorter-info">
+                            ${getFlag(db.countries[item.countryId].code, true, "margin:0;")} 
+                            <div class="sorter-text">
+                                <div class="sorter-artist-row">
+                                    <span class="sorter-artist-name" title="${item.artist||"?"}">${item.artist||"?"}</span>
+                                    ${audioPlayBtn}
+                                </div>
+                                <div class="sorter-song-name" title="${item.song||"?"}">${item.song||"?"}</div>
+                            </div>
+                        </div>
+                        <div class="sorter-points">0</div>
+                    </div>`;
+            });
+
+            if (excludedItem) {
+                let hasSong = excludedItem.song && excludedItem.song.trim() !== "-";
+                let audioPlayBtn = hasSong && excludedItem.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${excludedItem.mp3}')" title="Odtwórz MP3"><i class="fa-solid fa-play"></i></span>` : "";
+                
+                excludedList.innerHTML = `
+                    <div class="sorter-item is-excluded" data-id="${excludedItem.countryId}">
+                        <div class="sorter-rank" style="color:var(--text-muted);">XX.</div>
+                        <div class="sorter-info">
+                            ${getFlag(db.countries[excludedItem.countryId].code, true, "margin:0;")} 
+                            <div class="sorter-text">
+                                <div class="sorter-artist-row">
+                                    <span class="sorter-artist-name" title="${excludedItem.artist||"?"}">${excludedItem.artist||"?"}</span>
+                                    ${audioPlayBtn}
+                                </div>
+                                <div class="sorter-song-name" title="${excludedItem.song||"?"}">${excludedItem.song||"?"}</div>
+                            </div>
+                        </div>
+                        <div class="sorter-points visible" style="background:var(--table-header); color:var(--text-muted);">-</div>
+                    </div>`;
+            }
+
+            sorterObj = new Sortable(list, { 
+                animation: 250, 
+                ghostClass: 'sortable-ghost',
+                chosenClass: 'sortable-chosen',
+                onChange: function() { 
+                    updateBasicRanks(); 
+                },
+                onEnd: (evt) => { 
+                    evt.item.classList.add('is-ranked');
+                    updateBasicRanks(); 
+                    saveBasicSorter();
+                } 
+            });
+            updateBasicRanks();
+            autoShrinkText();
+            if (isFrom1v1) saveBasicSorter();
+        }
+
+        const eurovisionPoints = [12, 10, 8, 7, 6, 5, 4, 3, 2, 1];
+        function updateBasicRanks() {
+            const rows = document.querySelectorAll('#sorter-export-area .sorter-item');
+            rows.forEach((row, index) => {
+                row.querySelector('.sorter-rank').innerText = `${index + 1}.`;
+                row.classList.remove("rank-1", "rank-2", "rank-3", "rank-top10", "rank-other");
+                const ptBox = row.querySelector('.sorter-points');
+
+                if (row.classList.contains('is-ranked')) {
+                    if (index < 10) {
+                        ptBox.innerText = eurovisionPoints[index];
+                        ptBox.classList.add('visible'); 
+                        row.classList.add(index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "rank-top10");
+                    } else {
+                        ptBox.classList.remove('visible'); 
+                        row.classList.add("rank-other");
+                    }
+                } else {
+                    ptBox.classList.remove('visible');
+                }
+            });
+            autoShrinkText();
+        }
+
+        let defaultTiers = [
+            { label: 'S', color: '#ff7f7f' }, { label: 'A', color: '#ffbf7f' },
+            { label: 'B', color: '#ffff7f' }, { label: 'C', color: '#7fff7f' }, { label: 'D', color: '#7fbfff' }
+        ];
+
+        function saveTierList() {
+            if (currentSorterMode !== 'tier') return;
+            const tiers = [];
+            document.querySelectorAll('.tier-row').forEach(row => {
+                tiers.push({
+                    label: row.querySelector('.tier-label').innerText,
+                    color: row.querySelector('input[type="color"]').value,
+                    items: Array.from(row.querySelectorAll('.tier-items .tier-flag')).map(el => el.getAttribute('data-id'))
+                });
+            });
+            const bankItems = Array.from(document.querySelectorAll('#tier-bank .tier-flag')).map(el => el.getAttribute('data-id'));
+            
+            localStorage.setItem(`sorter_tier_${sorterEdition}`, JSON.stringify({ tiers, bankItems }));
+        }
+
+        function renderTierList(container, items) {
+            let savedData = localStorage.getItem(`sorter_tier_${sorterEdition}`);
+            let savedSize = localStorage.getItem(`sorter_tier_size_${sorterEdition}`) || "18px";
+            let tiersData = defaultTiers.map(t => ({...t, items: []}));
+            let bankData = items.map(i => i.countryId);
+
+            if (savedData) {
+                try {
+                    let parsed = JSON.parse(savedData);
+                    tiersData = parsed.tiers;
+                    bankData = parsed.bankItems;
+                } catch(e){}
+            }
+
+            const getItemHtml = (cId) => {
+                let item = items.find(i => i.countryId === cId);
+                if(!item) return "";
+                let cCode = db.countries[item.countryId].code.toUpperCase();
+                let hasSong = item.song && item.song.trim() !== "-";
+                let audioPlayBtn = hasSong && item.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${item.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
+                return `<div class="tier-flag" data-id="${cId}" title="${item.artist} - ${item.song}">
+                    ${getFlag(cCode, false, "margin:0;")} 
+                    <span class="tier-code">${cCode}</span>
+                    ${audioPlayBtn}
+                </div>`;
+            };
+
+            container.innerHTML = `
+                <div id="tier-export-area" style="background:var(--bg-color); padding:10px;">
+                    <div id="tier-rows-container">
+                    ${tiersData.map(t => createTierRowHtml(t.label, t.color, t.items.map(getItemHtml).join(''), savedSize)).join('')}
+                    </div>
+                    <div style="text-align:center; margin-top:15px;" data-html2canvas-ignore="true">
+                        <button class="picker-btn" style="margin: 0 5px; display:inline-flex;" onclick="addTierRow()">+ Dodaj Kategorię</button>
+                        <select class="picker-btn" style="margin: 0 5px; padding: 7px 15px; cursor: pointer; outline: none; appearance: auto;" onchange="changeTierFontSize(this.value)">
+                            <option value="8px" ${savedSize === '8px' ? 'selected' : ''}>Rozmiar tekstu: 8px</option>
+                            <option value="10px" ${savedSize === '10px' ? 'selected' : ''}>Rozmiar tekstu: 10px</option>
+                            <option value="12px" ${savedSize === '12px' ? 'selected' : ''}>Rozmiar tekstu: 12px</option>
+                            <option value="14px" ${savedSize === '14px' ? 'selected' : ''}>Rozmiar tekstu: 14px</option>
+                            <option value="16px" ${savedSize === '16px' ? 'selected' : ''}>Rozmiar tekstu: 16px</option>
+                            <option value="18px" ${savedSize === '18px' ? 'selected' : ''}>Rozmiar tekstu: 18px (Domyślny)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tier-bank sortable-tier" id="tier-bank">
+                    ${bankData.map(getItemHtml).join('')}
+                </div>
+            `;
+            
+            document.querySelectorAll('.tier-label').forEach(el => el.addEventListener('blur', saveTierList));
+            document.querySelectorAll('.sortable-tier').forEach(el => new Sortable(el, { group: 'shared', animation: 150, onEnd: saveTierList }));
+        }
+
+
+        function createTierRowHtml(label, color, itemsHtml = "", fontSize = "18px") {
+            return `
+                <div class="tier-row">
+                    <div class="tier-label" style="background:${color}; font-size:${fontSize};" contenteditable="true">${label}</div>
+                    <div class="tier-items sortable-tier">${itemsHtml}</div>
+                    <div class="tier-settings" data-html2canvas-ignore="true">
+                        <input type="color" onchange="this.closest('.tier-row').querySelector('.tier-label').style.background = this.value; saveTierList();" value="${color}">
+                        <button onclick="if(document.querySelectorAll('.tier-row').length>2){ let r=this.closest('.tier-row'); document.getElementById('tier-bank').insertAdjacentHTML('beforeend', r.querySelector('.tier-items').innerHTML); r.remove(); saveTierList(); } else alert('Min. 2 kategorie!');"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>`;
+        }
+
+	function changeTierFontSize(size) {
+            document.querySelectorAll('.tier-label').forEach(el => {
+                el.style.fontSize = size;
+            });
+            localStorage.setItem(`sorter_tier_size_${sorterEdition}`, size);
+        }
+        
+        function addTierRow() {
+            const container = document.getElementById('tier-rows-container');
+            let currentSize = localStorage.getItem(`sorter_tier_size_${sorterEdition}`) || "18px";
+            container.insertAdjacentHTML('beforeend', createTierRowHtml('Nowa', '#cccccc', "", currentSize));
+            const newRow = container.lastElementChild;
+            newRow.querySelector('.tier-label').addEventListener('blur', saveTierList);
+            const sortableDiv = newRow.querySelector('.sortable-tier');
+            new Sortable(sortableDiv, { group: 'shared', animation: 150, onEnd: saveTierList });
+            saveTierList();
+        }
+
+        let battleItems = [], sortedBattle = [], bIdx = 1, bLow = 0, bHigh = 0, bMid = 0;
+        function start1v1Battle(container, items) {
+            battleItems = items.sort(() => Math.random() - 0.5);
+            sortedBattle = [battleItems[0]];
+            bIdx = 1; bLow = 0; bHigh = 0;
+            container.innerHTML = `
+                <div style="background-color: var(--table-row-odd); border: 1px solid rgba(255,255,255,0.05); border-left: 4px solid var(--primary-color); padding: 20px; border-radius: 8px; margin-bottom: 25px; text-align: left; font-size: 13px; line-height: 1.5; color: var(--text-muted); max-width: 650px; margin-left: auto; margin-right: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <strong style="color: var(--text-main); font-size: 15px; display: block; margin-bottom: 8px; text-align: center;"> Jak działa ten algorytm?</strong>
+                    Zamiast zmuszać Cię do porównywania każdej piosenki z każdą, algorytm stosuje tzw. <strong>szukanie binarne</strong>:
+                    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                        <li style="margin-bottom: 6px;">Sorter bierze nową piosenkę i zestawia ją z utworem znajdującym się dokładnie w <strong>środku</strong> Twojego dotychczasowego rankingu. (Nie licząc początkowej bitwy)</li>
+                        <li style="margin-bottom: 6px;">Zależnie od wyboru, segregując nową piosenkę, algorytm wie, że kliknięta jest lepsza od drugiej, więc automatycznie odrzuca całą "gorszą" połowę stawki i szuka dla niej miejsca tylko w tej lepszej połowie.</li>
+                        <li style="margin-bottom: 6px;">Ucięcie jednej z połów odbywa się z każdą bitwą, dzięki temu z każdym Twoim kliknięciem liczba piosenek do sprawdzenia zmniejsza się o połowę. Stąd też może być przypadek że jedna piosenka znajdzie się w mniejszej lub większej ilości bitew ze względu na "bycie w środku".</li>
+                        <li><strong style="color: var(--text-main);">Algorytm się nie myli, ale jeśli uważasz, że coś powinieneś dać w topce wyżej/niżej - możesz edytować stworzoną topkę po zakończeniu rund 1v1.</strong></li>
+                    </ul>
+                </div>
+                <div class="battle-progress" id="battle-prog">Rozpoczynanie...</div>
+                <div class="battle-container" style="margin-top: 20px;">
+                    <div class="battle-card" id="b-left" onclick="battleChoice('left')"></div>
+                    <div class="battle-vs">VS</div>
+                    <div class="battle-card" id="b-right" onclick="battleChoice('right')"></div>
+                </div>`;
+            nextBattleStep();
+        }
+
+        function nextBattleStep() {
+            if (bIdx >= battleItems.length) {
+                currentSorterMode = 'basic';
+                localStorage.setItem('sorterMode', 'basic');
+                
+                const btnContainer = document.getElementById('sorter-export-controls');
+                btnContainer.innerHTML = `
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
+                    <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                `;
+
+                let excludedItem = db.results.find(r => r.edition === sorterEdition && r.countryId === sorterExcluded);
+                renderBasicSorter(document.getElementById('sorter-workspace'), sortedBattle, true, excludedItem);
+                
+                document.querySelectorAll('.sorter-controls .picker-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector(`.sorter-controls .picker-btn[onclick*="'basic'"]`).classList.add('active');
+                return;
+            }
+            bMid = Math.floor((bLow + bHigh) / 2);
+            document.getElementById('battle-prog').innerText = `Pojedynek: Układanie ${bIdx + 1} z ${battleItems.length}`;
+            
+            const renderCard = item => {
+                let hasSong = item.song && item.song.trim() !== "-";
+                let audioPlayBtn = hasSong && item.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${item.mp3}')" style="margin-left:10px;"><i class="fa-solid fa-play"></i></span>` : "";
+                return `${getFlag(db.countries[item.countryId].code, false, "", true)}
+                        <h2 style="margin: 15px 0 5px; color:white;">${item.artist||"?"} ${audioPlayBtn}</h2>
+                        <h4 style="margin: 0; color:var(--text-muted); font-style:italic;">${item.song||"?"}</h4>`;
+            };
+            document.getElementById('b-left').innerHTML = renderCard(battleItems[bIdx]);
+            document.getElementById('b-right').innerHTML = renderCard(sortedBattle[bMid]);
+        }
+
+        function battleChoice(winner) {
+            winner === 'left' ? bHigh = bMid - 1 : bLow = bMid + 1;
+            if (bLow > bHigh) { sortedBattle.splice(bLow, 0, battleItems[bIdx]); bIdx++; bLow = 0; bHigh = sortedBattle.length - 1; }
+            nextBattleStep();
+        }
+
+        function takeScreenshotBasic(mode) {
+            const allRows = Array.from(document.querySelectorAll('#sorter-workspace .sorter-item'));
+            if (allRows.length === 0) return;
+
+            const tempWrapper = document.createElement('div');
+            tempWrapper.style.position = 'absolute';
+            tempWrapper.style.left = '-9999px';
+            tempWrapper.style.top = '0';
+            tempWrapper.style.backgroundColor = '#0b0d17';
+            tempWrapper.style.padding = '20px';
+            tempWrapper.style.borderRadius = '12px';
+            tempWrapper.style.display = 'flex';
+            tempWrapper.style.gap = '20px';
+            document.body.appendChild(tempWrapper);
+
+            let chunks = [];
+            if (mode === 'top10') {
+                chunks = [allRows.slice(0, 10)];
+            } else {
+                for (let i = 0; i < allRows.length; i += 10) {
+                    chunks.push(allRows.slice(i, i + 10));
+                }
+            }
+
+            chunks.forEach(chunk => {
+                const colDiv = document.createElement('div');
+                colDiv.style.display = 'flex';
+                colDiv.style.flexDirection = 'column';
+                colDiv.style.gap = '8px';
+                colDiv.style.width = '350px';
+
+                chunk.forEach(row => {
+                    const clonedRow = row.cloneNode(true);
+                    const audioBtn = clonedRow.querySelector('.audio-play');
+                    if(audioBtn) audioBtn.remove();
+                    colDiv.appendChild(clonedRow);
+                });
+                tempWrapper.appendChild(colDiv);
+            });
+
+            autoShrinkText(tempWrapper);
+
+            html2canvas(tempWrapper, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = mode === 'top10' ? `Wyniki_Top10_Edycja_${sorterEdition}.png` : `Wyniki_Calosc_Edycja_${sorterEdition}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                tempWrapper.remove();
+            }).catch(() => {
+                alert("Błąd zapisu zdjęcia.");
+                tempWrapper.remove();
+            });
+        }
+
+        function takeScreenshotTier() {
+            const target = document.getElementById('tier-export-area');
+            html2canvas(target, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = `Tierlista_Edycja_${sorterEdition}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            }).catch(() => alert("Błąd zapisu zdjęcia."));
+        }
+        setTimeout(init, 200);
+    </script>
+</body>
+</html>
