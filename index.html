@@ -849,9 +849,11 @@
             let editionData = db.results.filter(r => {
                 if (r.edition !== activeEdition) return false;
                 if (activeStage === 'GF') {
-                    // W finale pokazujemy tych, którzy mają zdefiniowane miejsce, lub jeszcze nie wpisano wyników.
-                    // Ale żeby uniknąć NQ w niezagranych edycjach, bierzemy wszystkich, którzy nie są odrzuceni jawnie jako NQ.
-                    return r.place !== undefined && r.place !== "NQ";
+                    // W finale pokazujemy tych, którzy mają wpisane miejsce (nawet z przeszłości)
+                    // ORAZ państwa, które awansowały z urzędu lub w nowych edycjach zanim jest ich ocena (czyli semi to "AQ" lub brakuje półfinału u nich)
+                    let isPlaced = parseFloat(r.place) > 0;
+                    let isAQ = r.semi === "AQ" || r.semi === undefined || r.semi === null;
+                    return isPlaced || isAQ;
                 } else if (activeStage === 'SF1') {
                     return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
                 } else if (activeStage === 'SF2') {
@@ -869,7 +871,7 @@
             let keyRo = activeStage === 'GF' ? 'ro' : 'semiRo';
             let keyPoints = activeStage === 'GF' ? 'points' : 'semiPoints';
 
-            let hasResults = editionData.some(r => r[keyPlace] !== undefined && r[keyPlace] !== "-");
+            let hasResults = editionData.some(r => parseFloat(r[keyPlace]) > 0);
 
             editionData.sort((a, b) => {
                 let valA, valB;
@@ -879,8 +881,8 @@
                     currentKey = hasResults ? 'place' : 'ro';
                 }
 
-                let isAutoA = activeStage !== 'GF' && (a.semi === undefined || a.semi === null);
-                let isAutoB = activeStage !== 'GF' && (b.semi === undefined || b.semi === null);
+                let isAutoA = activeStage !== 'GF' && (a.semi === undefined || a.semi === null || a.semi === "AQ");
+                let isAutoB = activeStage !== 'GF' && (b.semi === undefined || b.semi === null || b.semi === "AQ");
 
                 if (currentKey === 'ro') {
                     valA = isAutoA ? 9999 : ((a[keyRo] === "-" || a[keyRo] === undefined) ? 999 : parseFloat(a[keyRo])); 
@@ -930,7 +932,7 @@
 
                 chunk.forEach(row => {
                     const cData = db.countries[row.countryId];
-                    let isAutoFinalist = activeStage !== 'GF' && (row.semi === undefined || row.semi === null);
+                    let isAutoFinalist = activeStage !== 'GF' && (row.semi === undefined || row.semi === null || row.semi === "AQ");
 
                     let numericPlace = isAutoFinalist ? null : parseFloat(row[keyPlace]);
                     let rowClass = "";
@@ -947,7 +949,7 @@
 
                     let dispRo = isAutoFinalist ? "-" : (row[keyRo] !== undefined ? row[keyRo] : "-");
                     let dispPlace = isAutoFinalist ? "Automatyczny Finalista" : (row[keyPlace] !== undefined && row[keyPlace] !== "-" ? row[keyPlace] : "-");
-                    let dispPoints = isAutoFinalist ? "-" : (row[keyPoints] !== undefined ? row[keyPoints] : "-");
+                    let dispPoints = isAutoFinalist ? "-" : (row[keyPoints] !== undefined && row[keyPoints] !== "-" ? row[keyPoints] : "-");
 
                     tableHTML += `
                         <tr class="${rowClass}">
@@ -1431,7 +1433,10 @@
                 } else {
                     let r = row.data;
                     
-                    let editionResults = db.results.filter(res => res.edition === r.edition && res.place !== "-" && res.place !== undefined);
+                    let isGFPlayed = db.results.some(res => res.edition === r.edition && parseFloat(res.place) > 0);
+                    let isSFPlayed = db.results.some(res => res.edition === r.edition && parseFloat(res.semiPlace) > 0);
+                    
+                    let editionResults = db.results.filter(res => res.edition === r.edition && parseFloat(res.place) > 0);
                     let validPlaces = editionResults.map(res => parseFloat(res.place)).filter(p => !isNaN(p));
                     let maxPlaceForThisEdition = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
                     
@@ -1448,21 +1453,29 @@
                     let spotifyLink = hasSong && r.spotify ? `<a href="${r.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                     let youtubeLink = hasSong && r.youtube ? `<a href="${r.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
 
-                    let pointsToDisplay = (r.points !== undefined && r.points !== "") ? r.points : "-";
-                    let sfPlaceToDisplay = r.semiPlace !== undefined ? r.semiPlace : "-";
-                    let sfPointsToDisplay = r.semiPoints !== undefined ? r.semiPoints : "-";
+                    let dispPlace = "";
+                    if (r.place > 0) dispPlace = r.place;
+                    else if (isGFPlayed) dispPlace = "NQ";
+                    else dispPlace = "-";
+
+                    let dispPoints = (r.points !== undefined && r.points !== "-" && r.points !== "") ? r.points : "-";
                     
-                    let isAuto = r.place !== undefined && r.semi === undefined;
+                    let dispSfPlace = "";
+                    if (r.semiPlace > 0) dispSfPlace = r.semiPlace;
+                    else if (isSFPlayed && r.semi !== "AQ" && r.semi !== undefined) dispSfPlace = "NQ";
+                    else dispSfPlace = "-";
+
+                    let dispSfPoints = (r.semiPoints !== undefined && r.semiPoints !== "-" && r.semiPoints !== "") ? r.semiPoints : "-";
+                    
+                    let isAuto = r.semi === "AQ" || r.semi === undefined;
                     let sfHtml = "";
                     if (r.edition === 1) {
                         sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Brak półfinału</td>`;
                     } else if (isAuto) {
                         sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Automatyczny Finalista</td>`;
                     } else {
-                        sfHtml = `<td style="font-weight: bold;">${sfPlaceToDisplay}</td><td class="points-total">${sfPointsToDisplay}</td>`;
+                        sfHtml = `<td style="font-weight: bold;">${dispSfPlace}</td><td class="points-total">${dispSfPoints}</td>`;
                     }
-
-                    let dispPlace = r.place !== undefined && r.place !== "-" ? r.place : "-";
 
                     tbody.innerHTML += `
                         <tr class="${gfClass}">
@@ -1471,7 +1484,7 @@
                             <td><em>${r.song||"-"}</em> ${audioPlayBtn}</td>
                             <td>${r.manager||"-"}</td>
                             <td style="font-weight: bold;">${dispPlace}</td>
-                            <td class="points-total">${pointsToDisplay}</td>
+                            <td class="points-total">${dispPoints}</td>
                             ${sfHtml}
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                         </tr>`;
@@ -1518,9 +1531,24 @@
                 let spotifyLink = hasSong && row.spotify ? `<a href="${row.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                 let youtubeLink = hasSong && row.youtube ? `<a href="${row.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
 
-                let sfPlaceToDisplay = row.semiPlace !== undefined ? row.semiPlace : "-";
-                let sfPointsToDisplay = row.semiPoints !== undefined ? row.semiPoints : "-";
-                let isAuto = row.place !== undefined && row.semi === undefined;
+                let isGFPlayed = db.results.some(res => res.edition === row.edition && parseFloat(res.place) > 0);
+                let isSFPlayed = db.results.some(res => res.edition === row.edition && parseFloat(res.semiPlace) > 0);
+
+                let dispPlace = "";
+                if (row.place > 0) dispPlace = row.place;
+                else if (isGFPlayed) dispPlace = "NQ";
+                else dispPlace = "-";
+
+                let dispPoints = (row.points !== undefined && row.points !== "-" && row.points !== "") ? row.points : "-";
+                
+                let dispSfPlace = "";
+                if (row.semiPlace > 0) dispSfPlace = row.semiPlace;
+                else if (isSFPlayed && row.semi !== "AQ" && row.semi !== undefined) dispSfPlace = "NQ";
+                else dispSfPlace = "-";
+
+                let dispSfPoints = (row.semiPoints !== undefined && row.semiPoints !== "-" && row.semiPoints !== "") ? row.semiPoints : "-";
+                
+                let isAuto = row.semi === "AQ" || row.semi === undefined;
                 
                 let sfHtml = "";
                 if (row.edition === 1) {
@@ -1528,10 +1556,8 @@
                 } else if (isAuto) {
                     sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Automatyczny Finalista</td>`;
                 } else {
-                    sfHtml = `<td style="font-weight: bold;">${sfPlaceToDisplay}</td><td class="points-total">${sfPointsToDisplay}</td>`;
+                    sfHtml = `<td style="font-weight: bold;">${dispSfPlace}</td><td class="points-total">${dispSfPoints}</td>`;
                 }
-
-                let dispPlace = row.place !== undefined && row.place !== "-" ? row.place : "-";
 
                 tbody.innerHTML += `
                     <tr class="${row.place === 1 ? 'row-1st' : row.place === 2 ? 'row-2nd' : row.place === 3 ? 'row-3rd' : ''}">
@@ -1540,7 +1566,7 @@
                         <td>${row.artist || "-"}</td>
                         <td><em>${row.song || "-"}</em> ${audioPlayBtn}</td>
                         <td style="font-weight:bold;">${dispPlace}</td>
-                        <td class="points-total">${row.points || "-"}</td>
+                        <td class="points-total">${dispPoints}</td>
                         ${sfHtml}
                         <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                     </tr>`;
@@ -1611,7 +1637,7 @@
             let items = db.results
                 .filter(r => {
                     if (r.edition !== sorterEdition) return false;
-                    if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null);
+                    if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null || r.semi === "AQ");
                     if (sorterStage === 'sf1') return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
                     if (sorterStage === 'sf2') return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
                     return true;
@@ -1710,7 +1736,7 @@
 
             let allItems = db.results.filter(r => {
                 if (r.edition !== sorterEdition) return false;
-                if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null);
+                if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null || r.semi === "AQ");
                 if (sorterStage === 'sf1') return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
                 if (sorterStage === 'sf2') return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
                 return true;
