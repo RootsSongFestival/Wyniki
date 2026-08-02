@@ -510,10 +510,10 @@
                             <th class="sortable" onclick="sortTable('country-table', 1, false)">Wykonawca</th>
                             <th class="sortable" onclick="sortTable('country-table', 2, false)">Utwór</th>
                             <th class="sortable" onclick="sortTable('country-table', 3, false)">Menadżer</th>
-                            <th class="sortable" onclick="sortTable('country-table', 4, true)">Miejsce SF</th>
-                            <th class="sortable" onclick="sortTable('country-table', 5, true)">Punkty SF</th>
-                            <th class="sortable" onclick="sortTable('country-table', 6, true)">Miejsce</th>
-                            <th class="sortable" onclick="sortTable('country-table', 7, true)">Punkty</th>
+                            <th class="sortable" onclick="sortTable('country-table', 4, true)">Miejsce</th>
+                            <th class="sortable" onclick="sortTable('country-table', 5, true)">Punkty</th>
+                            <th class="sortable" onclick="sortTable('country-table', 6, true)">Miejsce SF</th>
+                            <th class="sortable" onclick="sortTable('country-table', 7, true)">Punkty SF</th>
                             <th>Linki</th>
                         </tr>
                     </thead>
@@ -563,10 +563,10 @@
                             <th class="sortable" onclick="sortTable('manager-table', 1, false)">Kraj</th>
                             <th class="sortable" onclick="sortTable('manager-table', 2, false)">Wykonawca</th>
                             <th class="sortable" onclick="sortTable('manager-table', 3, false)">Utwór</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 4, true)">Miejsce SF</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 5, true)">Punkty SF</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 6, true)">Miejsce</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 7, true)">Punkty</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 4, true)">Miejsce</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 5, true)">Punkty</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 6, true)">Miejsce SF</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 7, true)">Punkty SF</th>
                             <th>Linki</th>
                         </tr>
                     </thead>
@@ -578,9 +578,15 @@
         <div id="sorter" class="tab-content">
             <div class="picker-container" data-html2canvas-ignore="true">
                 <h3 class="picker-title">Wybierz Edycję i Tryb </h3>
-                <div style="display:flex; gap:15px; flex-wrap:wrap; justify-content:center; max-width:600px; margin:0 auto;">
-                    <select id="sorter-edition-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeSorterEdition(this)"></select>
-                    <select id="sorter-exclude-select" class="picker-select" style="margin:0; flex:1; min-width:200px;" onchange="changeExcludedCountry(this)"></select>
+                <div style="display:flex; gap:15px; flex-wrap:wrap; justify-content:center; max-width:800px; margin:0 auto;">
+                    <select id="sorter-edition-select" class="picker-select" style="margin:0; flex:1; min-width:150px;" onchange="changeSorterEdition(this)"></select>
+                    <select id="sorter-stage-select" class="picker-select" style="margin:0; flex:1; min-width:150px;" onchange="changeSorterStage(this)">
+                        <option value="all">Całość</option>
+                        <option value="gf">Finał</option>
+                        <option value="sf1">1. Półfinał</option>
+                        <option value="sf2">2. Półfinał</option>
+                    </select>
+                    <select id="sorter-exclude-select" class="picker-select" style="margin:0; flex:1; min-width:150px;" onchange="changeExcludedCountry(this)"></select>
                 </div>
                 <div class="sorter-controls" style="margin-top: 15px;">
                     <button class="picker-btn active" onclick="setSorterMode('basic', this)">Topka</button>
@@ -843,7 +849,9 @@
             let editionData = db.results.filter(r => {
                 if (r.edition !== activeEdition) return false;
                 if (activeStage === 'GF') {
-                    return r.place !== undefined && r.place !== "-";
+                    // W finale pokazujemy tych, którzy mają zdefiniowane miejsce, lub jeszcze nie wpisano wyników.
+                    // Ale żeby uniknąć NQ w niezagranych edycjach, bierzemy wszystkich, którzy nie są odrzuceni jawnie jako NQ.
+                    return r.place !== undefined && r.place !== "NQ";
                 } else if (activeStage === 'SF1') {
                     return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
                 } else if (activeStage === 'SF2') {
@@ -938,7 +946,7 @@
                     let youtubeLink = hasSong && row.youtube ? `<a href="${row.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
 
                     let dispRo = isAutoFinalist ? "-" : (row[keyRo] !== undefined ? row[keyRo] : "-");
-                    let dispPlace = isAutoFinalist ? "Automatyczny Finalista" : (row[keyPlace] !== undefined ? row[keyPlace] : "NQ");
+                    let dispPlace = isAutoFinalist ? "Automatyczny Finalista" : (row[keyPlace] !== undefined && row[keyPlace] !== "-" ? row[keyPlace] : "-");
                     let dispPoints = isAutoFinalist ? "-" : (row[keyPoints] !== undefined ? row[keyPoints] : "-");
 
                     tableHTML += `
@@ -1446,11 +1454,15 @@
                     
                     let isAuto = r.place !== undefined && r.semi === undefined;
                     let sfHtml = "";
-                    if (isAuto) {
+                    if (r.edition === 1) {
+                        sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Brak półfinału</td>`;
+                    } else if (isAuto) {
                         sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Automatyczny Finalista</td>`;
                     } else {
                         sfHtml = `<td style="font-weight: bold;">${sfPlaceToDisplay}</td><td class="points-total">${sfPointsToDisplay}</td>`;
                     }
+
+                    let dispPlace = r.place !== undefined && r.place !== "-" ? r.place : "-";
 
                     tbody.innerHTML += `
                         <tr class="${gfClass}">
@@ -1458,9 +1470,9 @@
                             <td><strong>${r.artist||"-"}</strong></td>
                             <td><em>${r.song||"-"}</em> ${audioPlayBtn}</td>
                             <td>${r.manager||"-"}</td>
-                            ${sfHtml}
-                            <td style="font-weight: bold;">${r.place||"NQ"}</td>
+                            <td style="font-weight: bold;">${dispPlace}</td>
                             <td class="points-total">${pointsToDisplay}</td>
+                            ${sfHtml}
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                         </tr>`;
                 }
@@ -1509,7 +1521,17 @@
                 let sfPlaceToDisplay = row.semiPlace !== undefined ? row.semiPlace : "-";
                 let sfPointsToDisplay = row.semiPoints !== undefined ? row.semiPoints : "-";
                 let isAuto = row.place !== undefined && row.semi === undefined;
-                let sfHtml = isAuto ? `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Automatyczny Finalista</td>` : `<td style="font-weight: bold;">${sfPlaceToDisplay}</td><td class="points-total">${sfPointsToDisplay}</td>`;
+                
+                let sfHtml = "";
+                if (row.edition === 1) {
+                    sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Brak półfinału</td>`;
+                } else if (isAuto) {
+                    sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Automatyczny Finalista</td>`;
+                } else {
+                    sfHtml = `<td style="font-weight: bold;">${sfPlaceToDisplay}</td><td class="points-total">${sfPointsToDisplay}</td>`;
+                }
+
+                let dispPlace = row.place !== undefined && row.place !== "-" ? row.place : "-";
 
                 tbody.innerHTML += `
                     <tr class="${row.place === 1 ? 'row-1st' : row.place === 2 ? 'row-2nd' : row.place === 3 ? 'row-3rd' : ''}">
@@ -1517,9 +1539,9 @@
                         <td class="country-cell">${getFlag(db.countries[row.countryId].code)} ${db.countries[row.countryId].name}</td>
                         <td>${row.artist || "-"}</td>
                         <td><em>${row.song || "-"}</em> ${audioPlayBtn}</td>
-                        ${sfHtml}
-                        <td style="font-weight:bold;">${row.place || "NQ"}</td>
+                        <td style="font-weight:bold;">${dispPlace}</td>
                         <td class="points-total">${row.points || "-"}</td>
+                        ${sfHtml}
                         <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                     </tr>`;
             });
@@ -1578,6 +1600,7 @@
         // ================= SORTER =================
         let currentSorterMode = 'basic';
         let sorterEdition = null;
+        let sorterStage = 'all';
         let sorterExcluded = null;
         let sorterObj = null;
 
@@ -1586,14 +1609,20 @@
             select.innerHTML = '<option value="">-- Brak wykluczenia --</option>';
             
             let items = db.results
-                .filter(r => r.edition === sorterEdition)
+                .filter(r => {
+                    if (r.edition !== sorterEdition) return false;
+                    if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null);
+                    if (sorterStage === 'sf1') return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
+                    if (sorterStage === 'sf2') return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
+                    return true;
+                })
                 .sort((a, b) => {
                     let nameA = db.countries[a.countryId].name;
                     let nameB = db.countries[b.countryId].name;
                     return nameA.localeCompare(nameB);
                 });
             
-            let savedEx = localStorage.getItem(`sorterExcluded_${sorterEdition}`);
+            let savedEx = localStorage.getItem(`sorterExcluded_${sorterEdition}_${sorterStage}`);
             sorterExcluded = savedEx ? savedEx : "";
 
             items.forEach(item => {
@@ -1634,6 +1663,13 @@
                 currentSorterMode = savedMode;
             }
 
+            let savedStage = localStorage.getItem('sorterStage');
+            if (savedStage) {
+                sorterStage = savedStage;
+                let stSel = document.getElementById('sorter-stage-select');
+                if(stSel) stSel.value = sorterStage;
+            }
+
             populateSorterExclude();
             buildSorterWorkspace();
         }
@@ -1645,9 +1681,16 @@
             buildSorterWorkspace();
         }
 
+        function changeSorterStage(selectElement) {
+            sorterStage = selectElement.value;
+            localStorage.setItem('sorterStage', sorterStage);
+            populateSorterExclude();
+            buildSorterWorkspace();
+        }
+
         function changeExcludedCountry(selectElement) {
             sorterExcluded = selectElement.value;
-            localStorage.setItem(`sorterExcluded_${sorterEdition}`, sorterExcluded);
+            localStorage.setItem(`sorterExcluded_${sorterEdition}_${sorterStage}`, sorterExcluded);
             buildSorterWorkspace();
         }
 
@@ -1665,8 +1708,19 @@
             btnContainer.innerHTML = "";
             if (sorterObj) { sorterObj.destroy && sorterObj.destroy(); sorterObj = null; }
 
-            let allItems = db.results.filter(r => r.edition === sorterEdition).sort((a,b) => (a.ro || a.semiRo || 99) - (b.ro || b.semiRo || 99));
-            if(allItems.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej edycji.</p>"; return; }
+            let allItems = db.results.filter(r => {
+                if (r.edition !== sorterEdition) return false;
+                if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null);
+                if (sorterStage === 'sf1') return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
+                if (sorterStage === 'sf2') return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
+                return true;
+            }).sort((a,b) => {
+                let roA = sorterStage === 'gf' ? a.ro : (a.semiRo || a.ro);
+                let roB = sorterStage === 'gf' ? b.ro : (b.semiRo || b.ro);
+                return (roA || 99) - (roB || 99);
+            });
+
+            if(allItems.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej edycji / tym etapie.</p>"; return; }
 
             let activeItems = allItems.filter(r => r.countryId !== sorterExcluded);
             let excludedItem = allItems.find(r => r.countryId === sorterExcluded);
@@ -1691,12 +1745,12 @@
         }
 
         function resetSorterData() {
-            if (confirm("Czy na pewno chcesz zresetować swój układ dla tej edycji? Tej akcji nie można cofnąć.")) {
+            if (confirm("Czy na pewno chcesz zresetować swój układ dla tego etapu? Tej akcji nie można cofnąć.")) {
                 if (currentSorterMode === 'basic') {
-                    localStorage.removeItem(`sorter_basic_${sorterEdition}`);
-                    localStorage.removeItem(`sorter_basic_${sorterEdition}_ranked`);
+                    localStorage.removeItem(`sorter_basic_${sorterEdition}_${sorterStage}`);
+                    localStorage.removeItem(`sorter_basic_${sorterEdition}_${sorterStage}_ranked`);
                 } else if (currentSorterMode === 'tier') {
-                    localStorage.removeItem(`sorter_tier_${sorterEdition}`);
+                    localStorage.removeItem(`sorter_tier_${sorterEdition}_${sorterStage}`);
                     localStorage.removeItem(`sorter_tier_size_${sorterEdition}`); 
                 }
                 buildSorterWorkspace();
@@ -1707,8 +1761,8 @@
             if (currentSorterMode !== 'basic') return;
             const itemIds = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item')).map(el => el.getAttribute('data-id'));
             const rankedIds = Array.from(document.querySelectorAll('#sorter-export-area .sorter-item.is-ranked')).map(el => el.getAttribute('data-id'));
-            localStorage.setItem(`sorter_basic_${sorterEdition}`, JSON.stringify(itemIds));
-            localStorage.setItem(`sorter_basic_${sorterEdition}_ranked`, JSON.stringify(rankedIds));
+            localStorage.setItem(`sorter_basic_${sorterEdition}_${sorterStage}`, JSON.stringify(itemIds));
+            localStorage.setItem(`sorter_basic_${sorterEdition}_${sorterStage}_ranked`, JSON.stringify(rankedIds));
         }
 
         function autoShrinkText(container = document) {
@@ -1750,8 +1804,8 @@
             const list = document.getElementById('sorter-export-area');
             const excludedList = document.getElementById('sorter-excluded-area');
             
-            let savedOrder = localStorage.getItem(`sorter_basic_${sorterEdition}`);
-            let savedRanked = localStorage.getItem(`sorter_basic_${sorterEdition}_ranked`);
+            let savedOrder = localStorage.getItem(`sorter_basic_${sorterEdition}_${sorterStage}`);
+            let savedRanked = localStorage.getItem(`sorter_basic_${sorterEdition}_${sorterStage}_ranked`);
             let rankedSet = new Set();
 
             if (isFrom1v1) {
@@ -1875,11 +1929,11 @@
             });
             const bankItems = Array.from(document.querySelectorAll('#tier-bank .tier-flag')).map(el => el.getAttribute('data-id'));
             
-            localStorage.setItem(`sorter_tier_${sorterEdition}`, JSON.stringify({ tiers, bankItems }));
+            localStorage.setItem(`sorter_tier_${sorterEdition}_${sorterStage}`, JSON.stringify({ tiers, bankItems }));
         }
 
         function renderTierList(container, items) {
-            let savedData = localStorage.getItem(`sorter_tier_${sorterEdition}`);
+            let savedData = localStorage.getItem(`sorter_tier_${sorterEdition}_${sorterStage}`);
             let savedSize = localStorage.getItem(`sorter_tier_size_${sorterEdition}`) || "18px";
             let tiersData = defaultTiers.map(t => ({...t, items: []}));
             let bankData = items.map(i => i.countryId);
@@ -2070,7 +2124,7 @@
 
             html2canvas(tempWrapper, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = mode === 'top10' ? `Wyniki_Top10_Edycja_${sorterEdition}.png` : `Wyniki_Calosc_Edycja_${sorterEdition}.png`;
+                link.download = mode === 'top10' ? `Wyniki_Top10_Edycja_${sorterEdition}_${sorterStage}.png` : `Wyniki_Calosc_Edycja_${sorterEdition}_${sorterStage}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
                 tempWrapper.remove();
@@ -2084,7 +2138,7 @@
             const target = document.getElementById('tier-export-area');
             html2canvas(target, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = `Tierlista_Edycja_${sorterEdition}.png`;
+                link.download = `Tierlista_Edycja_${sorterEdition}_${sorterStage}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
             }).catch(() => alert("Błąd zapisu zdjęcia."));
