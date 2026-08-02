@@ -171,6 +171,7 @@
         tr.row-2nd, .bg-2nd { background-color: var(--color-2nd) !important; }
         tr.row-3rd, .bg-3rd { background-color: var(--color-3rd) !important; }
         tr.row-last, .bg-last { background-color: var(--color-last) !important; }
+        tr.row-auto-finalist { background-color: rgba(255, 255, 255, 0.03) !important; color: var(--text-muted); font-style: italic; }
 
         .country-cell { text-align: left; font-weight: bold; white-space: nowrap; }
         .points-total { font-weight: bold; color: var(--text-main); }
@@ -244,7 +245,7 @@
         .sorter-item.is-ranked.rank-top10 { border-left-color: #8b5cf6; background-color: rgba(139, 92, 246, 0.1); }
         .sorter-item.is-ranked.rank-top10 .sorter-points { display: block; background: #8b5cf6; color: #fff; }
         .sorter-item.is-ranked.rank-other { border-left-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
-	.sorter-item.is-excluded { 
+	    .sorter-item.is-excluded { 
             background-color: rgba(128, 128, 128, 0.1); border-left-color: #808080; cursor: default; }
 
         .tier-row { display: flex; margin-bottom: 5px; min-height: 80px; background: var(--table-row-odd); border-radius: 6px; overflow: hidden; position: relative; }
@@ -401,14 +402,14 @@
                     </div>
 
                     <div class="home-card">
-   					 <h2 class="rules-title">Zasady Konkursu</h2>
-   					 <ul class="rules-list">
+					 <h2 class="rules-title">Zasady Konkursu</h2>
+					 <ul class="rules-list">
     				    <li>W tym konkursie borrowingi nie istnieją.</li>
       				  <li>Piosenka wysłana na konkurs nie może przekraczać 30 milionów wyświetleń na platformie YouTube, oraz nie może być wydana przed dniem 31 grudnia 2014 (wyjątek - edycje tematyczne).</li>
     				    <li>Artysta wysłany na konkurs może mieć korzenie maksymalnie do rodziców.</li>
         				<li>Zakazane są tzw. ruchańce (piosenki pojawiające się na każdym możliwym fanconteście) - Zakazane jest też wysyłanie tzw. worldchart artists, artystów z Eurowizji, Junior Eurowizji, Interwizji, oraz overused artists. Utwór nie może brać udziału w max. 3 lub więcej contestach. Dopuszczone są także piosenki “odkryte” przez hoda/piosenki, których tzw. rv zostały stworzone przez hodów.</li>
         				<li>Zakazane jest wysyłanie piosenek wygenerowanych przez AI, coverów, troll songów, utworów o charakterze rasistowskim, ksenofobicznym, seksistowskim, homofobicznym. Ponadto zakazane jest wysyłanie piosenek które uczestniczyły w Eurowizji, Junior Eurowizji, Interwizji oraz w ich preselekcjach oraz w preselekcjach do Roots Song Festival.</li>
-       					 <li>Menadżer jest zobligowany do wysłania piosenki w wyznaczonym terminie, oraz zagłosowania. Brak głosu jest równoznaczny z warnem oraz każdorazowym odjęciem -50% punktów z televotingu. Po trzecim warnie, menadżer zostaje zbanowany z udziału w konkursie.</li>
+        				 <li>Menadżer jest zobligowany do wysłania piosenki w wyznaczonym terminie, oraz zagłosowania. Brak głosu jest równoznaczny z warnem oraz każdorazowym odjęciem -50% punktów z televotingu. Po trzecim warnie, menadżer zostaje zbanowany z udziału w konkursie.</li>
     				</ul>
 				</div>
                 </div>
@@ -448,6 +449,11 @@
             </div>
 
             <div class="picker-container" style="padding: 10px;">
+                <div class="stage-selector" style="display: flex; gap: 10px; margin-bottom: 15px; justify-content: center; flex-wrap: wrap;" id="stage-selector">
+                    <button class="picker-btn active" id="btn-gf" onclick="setEditionStage('GF', this)">Finał</button>
+                    <button class="picker-btn" id="btn-sf1" onclick="setEditionStage('SF1', this)" style="display: none;">1. Półfinał</button>
+                    <button class="picker-btn" id="btn-sf2" onclick="setEditionStage('SF2', this)" style="display: none;">2. Półfinał</button>
+                </div>
                 <div class="sorter-controls" style="margin: 0; width: 100%; gap: 10px;">
                     <button class="picker-btn active" id="btn-col-1" onclick="setEditionView(1, this)">1 Kolumna</button>
                     <button class="picker-btn" id="btn-col-2" onclick="setEditionView(2, this)">2 Kolumny</button>
@@ -504,13 +510,15 @@
                             <th class="sortable" onclick="sortTable('country-table', 1, false)">Wykonawca</th>
                             <th class="sortable" onclick="sortTable('country-table', 2, false)">Utwór</th>
                             <th class="sortable" onclick="sortTable('country-table', 3, false)">Menadżer</th>
-                            <th class="sortable" onclick="sortTable('country-table', 4, true)">Miejsce</th>
-                            <th class="sortable" onclick="sortTable('country-table', 5, true)">Punkty</th>
+                            <th class="sortable" onclick="sortTable('country-table', 4, true)">Miejsce SF</th>
+                            <th class="sortable" onclick="sortTable('country-table', 5, true)">Punkty SF</th>
+                            <th class="sortable" onclick="sortTable('country-table', 6, true)">Miejsce</th>
+                            <th class="sortable" onclick="sortTable('country-table', 7, true)">Punkty</th>
                             <th>Linki</th>
                         </tr>
                     </thead>
                     <tbody id="country-body">
-                        <tr><td colspan="7" style="color:var(--text-muted); font-style:italic;">Wybierz państwo z mapy powyżej, aby zobaczyć jego wyniki.</td></tr>
+                        <tr><td colspan="9" style="color:var(--text-muted); font-style:italic;">Wybierz państwo z mapy powyżej, aby zobaczyć jego wyniki.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -555,8 +563,10 @@
                             <th class="sortable" onclick="sortTable('manager-table', 1, false)">Kraj</th>
                             <th class="sortable" onclick="sortTable('manager-table', 2, false)">Wykonawca</th>
                             <th class="sortable" onclick="sortTable('manager-table', 3, false)">Utwór</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 4, true)">Miejsce</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 5, true)">Punkty</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 4, true)">Miejsce SF</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 5, true)">Punkty SF</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 6, true)">Miejsce</th>
+                            <th class="sortable" onclick="sortTable('manager-table', 7, true)">Punkty</th>
                             <th>Linki</th>
                         </tr>
                     </thead>
@@ -608,6 +618,7 @@
         let editionMapInstance = null;
 		let editionPolySeries = null;
         let activeEdition = db.editions.length > 0 ? db.editions[0] : null;
+        let activeStage = 'GF'; // Stage selector state
         let activeCountryId = null;
         let managerMapInstance;
 		let managerPolySeries = null;
@@ -692,36 +703,36 @@
         }
 
         function openTab(tabName, btn) {
-    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
-    document.querySelectorAll(".nav-btn").forEach(nav => nav.classList.remove("active"));
-    document.getElementById(tabName).style.display = "block";
-    if(btn) btn.classList.add("active");
-    
-    localStorage.setItem('activeTab', tabName);
-    updateContainerWidth();
-    
-    if (tabName === 'countries' && !mapRoot) initMap();
-    if (tabName === 'managers') initManagers();
-    if (tabName === 'sorter') initSorter();
-    if (tabName === 'preselections') initPreselections();
+            document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+            document.querySelectorAll(".nav-btn").forEach(nav => nav.classList.remove("active"));
+            document.getElementById(tabName).style.display = "block";
+            if(btn) btn.classList.add("active");
+            
+            localStorage.setItem('activeTab', tabName);
+            updateContainerWidth();
+            
+            if (tabName === 'countries' && !mapRoot) initMap();
+            if (tabName === 'managers') initManagers();
+            if (tabName === 'sorter') initSorter();
+            if (tabName === 'preselections') initPreselections();
 
-    if (tabName === 'editions' && editionMapInstance) {
-        editionMapInstance.resize();
-    }
-    if (tabName === 'countries' && mapRoot) {
-        mapRoot.resize();
-    }
-    if (tabName === 'managers' && managerMapInstance) {
-        managerMapInstance.resize();
-    }
-}
+            if (tabName === 'editions' && editionMapInstance) {
+                editionMapInstance.resize();
+            }
+            if (tabName === 'countries' && mapRoot) {
+                mapRoot.resize();
+            }
+            if (tabName === 'managers' && managerMapInstance) {
+                managerMapInstance.resize();
+            }
+        }
 
         function renderHomeWidget() {
             if (!db.editions || db.editions.length === 0) return;
             let maxEdition = Math.max(...db.editions);
             let hostId = db.hosts[maxEdition];
             let hostCountry = db.countries[hostId];
-            let city = db.cities[maxEdition] || "Brak danych";
+            let city = db.cities && db.cities[maxEdition] ? db.cities[maxEdition] : "Brak danych";
             let participantsCount = db.results ? db.results.filter(r => r.edition === maxEdition).length : 0;
 
             document.getElementById('home-edition-num').innerText = `#${maxEdition}`;
@@ -734,6 +745,33 @@
         }
 
         // ================= EDYCJE =================
+        function updateStageSelectors() {
+            if (!db.results) return;
+            const hasSF1 = db.results.some(r => r.edition === activeEdition && (r.semi === 1 || r.votingSemi === 1));
+            const hasSF2 = db.results.some(r => r.edition === activeEdition && (r.semi === 2 || r.votingSemi === 2));
+
+            const sf1Btn = document.getElementById('btn-sf1');
+            const sf2Btn = document.getElementById('btn-sf2');
+
+            if(sf1Btn) sf1Btn.style.display = hasSF1 ? "inline-flex" : "none";
+            if(sf2Btn) sf2Btn.style.display = hasSF2 ? "inline-flex" : "none";
+
+            if (!hasSF1 && !hasSF2 && activeStage !== 'GF') {
+                setEditionStage('GF', document.getElementById('btn-gf'));
+            } else if (!hasSF1 && activeStage === 'SF1') {
+                setEditionStage('GF', document.getElementById('btn-gf'));
+            } else if (!hasSF2 && activeStage === 'SF2') {
+                setEditionStage('GF', document.getElementById('btn-gf'));
+            }
+        }
+
+        function setEditionStage(stage, btn) {
+            activeStage = stage;
+            document.querySelectorAll('#stage-selector .picker-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderEditionTable();
+        }
+
         function setEditionView(cols, btn) {
             editionViewCols = cols;
             document.getElementById('btn-col-1').classList.remove('active');
@@ -771,11 +809,13 @@
                 if (ed === activeEdition) option.selected = true;
                 select.appendChild(option);
             });
+            updateStageSelectors();
         }
 
         function changeEdition(selectElement) {
             activeEdition = parseInt(selectElement.value);
             localStorage.setItem('activeEdition', activeEdition);
+            updateStageSelectors();
             renderEditionTable();
         }
 
@@ -799,53 +839,61 @@
         function renderEditionTable() {
             const container = document.getElementById("edition-tables-container");
             container.innerHTML = "";
-            let editionData = db.results.filter(r => r.edition === activeEdition && r.place !== undefined);
+            
+            let editionData = db.results.filter(r => {
+                if (r.edition !== activeEdition) return false;
+                if (activeStage === 'GF') {
+                    return r.place !== undefined && r.place !== "-";
+                } else if (activeStage === 'SF1') {
+                    return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
+                } else if (activeStage === 'SF2') {
+                    return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
+                }
+                return false;
+            });
             
             if(editionData.length === 0) {
                 document.getElementById('edition-summary-container').style.display = "none";
                 return;
             }
 
-            // Automatyczne wykrywanie: czy edycja ma już uzupełnione miejsca (różne od "-")
-            let hasResults = editionData.some(r => r.place && r.place !== "-");
+            let keyPlace = activeStage === 'GF' ? 'place' : 'semiPlace';
+            let keyRo = activeStage === 'GF' ? 'ro' : 'semiRo';
+            let keyPoints = activeStage === 'GF' ? 'points' : 'semiPoints';
+
+            let hasResults = editionData.some(r => r[keyPlace] !== undefined && r[keyPlace] !== "-");
 
             editionData.sort((a, b) => {
                 let valA, valB;
                 let currentKey = editionSortState.key;
                 
-                // Jeśli klucz to 'auto', wybieramy 'place' (gdy są wyniki) lub 'ro' (gdy wyników brak)
                 if (currentKey === 'auto') {
                     currentKey = hasResults ? 'place' : 'ro';
                 }
 
-                switch(currentKey) {
-                    case 'ro': 
-                        valA = (a.ro === "-" || a.ro === undefined) ? 999 : parseFloat(a.ro); 
-                        valB = (b.ro === "-" || b.ro === undefined) ? 999 : parseFloat(b.ro); 
-                        break;
-                    case 'country': 
-                        valA = db.countries[a.countryId]?.name || ""; 
-                        valB = db.countries[b.countryId]?.name || ""; 
-                        break;
-                    case 'artist': 
-                        valA = a.artist || ""; 
-                        valB = b.artist || ""; 
-                        break;
-                    case 'manager': 
-                        valA = a.manager || ""; 
-                        valB = b.manager || ""; 
-                        break;
-                    case 'place': 
-                        valA = (a.place === "-" || a.place === undefined) ? 999 : parseFloat(a.place); 
-                        valB = (b.place === "-" || b.place === undefined) ? 999 : parseFloat(b.place); 
-                        break;
-                    case 'points': 
-                        valA = (a.points === "-" || a.points === undefined) ? -1 : parseFloat(a.points); 
-                        valB = (b.points === "-" || b.points === undefined) ? -1 : parseFloat(b.points); 
-                        break;
+                let isAutoA = activeStage !== 'GF' && (a.semi === undefined || a.semi === null);
+                let isAutoB = activeStage !== 'GF' && (b.semi === undefined || b.semi === null);
+
+                if (currentKey === 'ro') {
+                    valA = isAutoA ? 9999 : ((a[keyRo] === "-" || a[keyRo] === undefined) ? 999 : parseFloat(a[keyRo])); 
+                    valB = isAutoB ? 9999 : ((b[keyRo] === "-" || b[keyRo] === undefined) ? 999 : parseFloat(b[keyRo])); 
+                } else if (currentKey === 'country') {
+                    valA = db.countries[a.countryId]?.name || "";
+                    valB = db.countries[b.countryId]?.name || "";
+                } else if (currentKey === 'artist') {
+                    valA = a.artist || "";
+                    valB = b.artist || "";
+                } else if (currentKey === 'manager') {
+                    valA = a.manager || "";
+                    valB = b.manager || "";
+                } else if (currentKey === 'place') {
+                    valA = isAutoA ? 9999 : ((a[keyPlace] === "-" || a[keyPlace] === undefined) ? 999 : parseFloat(a[keyPlace])); 
+                    valB = isAutoB ? 9999 : ((b[keyPlace] === "-" || b[keyPlace] === undefined) ? 999 : parseFloat(b[keyPlace])); 
+                } else if (currentKey === 'points') {
+                    valA = isAutoA ? -9999 : ((a[keyPoints] === "-" || a[keyPoints] === undefined) ? -1 : parseFloat(a[keyPoints])); 
+                    valB = isAutoB ? -9999 : ((b[keyPoints] === "-" || b[keyPoints] === undefined) ? -1 : parseFloat(b[keyPoints])); 
                 }
 
-                // Sprawdzamy czy sortujemy numerycznie, uwzględniając dynamiczną zmianę klucza z 'auto'
                 let isNum = ['ro', 'place', 'points'].includes(currentKey);
                 if (isNum) {
                     return editionSortState.isAsc ? valA - valB : valB - valA;
@@ -854,8 +902,7 @@
                 }
             });
 
-            // Logika wyliczania maksymalnego miejsca do kolorowania czerwonego tła (ignoruje "-")
-            const validPlaces = editionData.map(r => parseFloat(r.place)).filter(p => !isNaN(p));
+            const validPlaces = editionData.map(r => parseFloat(r[keyPlace])).filter(p => !isNaN(p));
             const maxPlace = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
 
             let chunks = [];
@@ -875,22 +922,33 @@
 
                 chunk.forEach(row => {
                     const cData = db.countries[row.countryId];
-                    let numericPlace = parseFloat(row.place);
-                    let rowClass = numericPlace === 1 ? "row-1st" : numericPlace === 2 ? "row-2nd" : numericPlace === 3 ? "row-3rd" : (numericPlace === maxPlace && maxPlace > 3 ? "row-last" : "");
+                    let isAutoFinalist = activeStage !== 'GF' && (row.semi === undefined || row.semi === null);
+
+                    let numericPlace = isAutoFinalist ? null : parseFloat(row[keyPlace]);
+                    let rowClass = "";
+                    if (isAutoFinalist) {
+                        rowClass = "row-auto-finalist";
+                    } else {
+                        rowClass = numericPlace === 1 ? "row-1st" : numericPlace === 2 ? "row-2nd" : numericPlace === 3 ? "row-3rd" : (numericPlace === maxPlace && maxPlace > 3 ? "row-last" : "");
+                    }
                     
                     let hasSong = row.song && row.song.trim() !== "-";
                     let audioPlayBtn = hasSong && row.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${row.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
                     let spotifyLink = hasSong && row.spotify ? `<a href="${row.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                     let youtubeLink = hasSong && row.youtube ? `<a href="${row.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
 
+                    let dispRo = isAutoFinalist ? "-" : (row[keyRo] !== undefined ? row[keyRo] : "-");
+                    let dispPlace = isAutoFinalist ? "Automatyczny Finalista" : (row[keyPlace] !== undefined ? row[keyPlace] : "NQ");
+                    let dispPoints = isAutoFinalist ? "-" : (row[keyPoints] !== undefined ? row[keyPoints] : "-");
+
                     tableHTML += `
                         <tr class="${rowClass}">
-                            <td>${row.ro !== undefined ? row.ro : "-"}</td>
+                            <td>${dispRo}</td>
                             <td class="country-cell">${getFlag(cData.code)} ${cData ? cData.name : row.countryId}</td>
                             <td style="text-align:left;"><strong>${row.artist||"-"}</strong><br><span style="font-size:11px"><em>${row.song||"-"}</em> ${audioPlayBtn}</span></td>
                             ${editionViewCols === 1 ? `<td>${row.manager||"-"}</td>` : ''}
-                            <td style="font-weight: bold;">${row.place}</td>
-                            <td class="points-total">${row.points !== undefined ? row.points : "-"}</td>
+                            <td style="font-weight: bold;">${dispPlace}</td>
+                            <td class="points-total">${dispPoints}</td>
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                         </tr>`;
                 });
@@ -1076,102 +1134,102 @@
 
         // ================= MAPA PAŃSTW =================
         function renderEditionMap() {
-    let currentEdition = activeEdition;
-    if (!currentEdition) return;
+            let currentEdition = activeEdition;
+            if (!currentEdition) return;
 
-    let editionsSorted = [...db.editions].sort((a,b)=>a-b);
-    let currentIndex = editionsSorted.indexOf(currentEdition);
-    let prevEdition = currentIndex > 0 ? editionsSorted[currentIndex - 1] : null;
+            let editionsSorted = [...db.editions].sort((a,b)=>a-b);
+            let currentIndex = editionsSorted.indexOf(currentEdition);
+            let prevEdition = currentIndex > 0 ? editionsSorted[currentIndex - 1] : null;
 
-    let currentParticipants = db.results.filter(r => r.edition === currentEdition).map(r => r.countryId);
-    let prevParticipants = prevEdition ? db.results.filter(r => r.edition === prevEdition).map(r => r.countryId) : [];
-    let pastParticipants = db.results.filter(r => r.edition < currentEdition).map(r => r.countryId);
+            let currentParticipants = db.results.filter(r => r.edition === currentEdition).map(r => r.countryId);
+            let prevParticipants = prevEdition ? db.results.filter(r => r.edition === prevEdition).map(r => r.countryId) : [];
+            let pastParticipants = db.results.filter(r => r.edition < currentEdition).map(r => r.countryId);
 
-    let statuses = {};
-    let lists = { debuts: [], returning: [], participating: [], withdrawing: [], absent: [] };
+            let statuses = {};
+            let lists = { debuts: [], returning: [], participating: [], withdrawing: [], absent: [] };
 
-    Object.keys(db.countries).forEach(cId => {
-        let isCurrent = currentParticipants.includes(cId);
-        let isPrev = prevParticipants.includes(cId);
-        let isPast = pastParticipants.includes(cId);
+            Object.keys(db.countries).forEach(cId => {
+                let isCurrent = currentParticipants.includes(cId);
+                let isPrev = prevParticipants.includes(cId);
+                let isPast = pastParticipants.includes(cId);
 
-        if (isCurrent) {
-            if (!isPast) { statuses[cId] = 'debuts'; lists.debuts.push(cId); }
-            else if (!isPrev) { statuses[cId] = 'returning'; lists.returning.push(cId); }
-            else { statuses[cId] = 'participating'; lists.participating.push(cId); }
-        } else {
-            if (isPrev) { statuses[cId] = 'withdrawing'; lists.withdrawing.push(cId); }
-            else if (isPast) { statuses[cId] = 'absent'; lists.absent.push(cId); }
+                if (isCurrent) {
+                    if (!isPast) { statuses[cId] = 'debuts'; lists.debuts.push(cId); }
+                    else if (!isPrev) { statuses[cId] = 'returning'; lists.returning.push(cId); }
+                    else { statuses[cId] = 'participating'; lists.participating.push(cId); }
+                } else {
+                    if (isPrev) { statuses[cId] = 'withdrawing'; lists.withdrawing.push(cId); }
+                    else if (isPast) { statuses[cId] = 'absent'; lists.absent.push(cId); }
+                }
+            });
+
+            let legendHTML = "";
+            const buildSection = (title, ids, colorHex) => {
+                if (ids.length === 0) return "";
+                ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
+                let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
+                return `
+                    <div class="edition-legend-section">
+                        <div class="edition-legend-title">
+                            <div class="edition-legend-dot" style="background:${colorHex}"></div>
+                            ${title} (${ids.length})
+                        </div>
+                        <div class="edition-legend-items">${tags}</div>
+                    </div>
+                `;
+            };
+
+            legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
+            legendHTML += buildSection("Powroty", lists.returning, "#facc15");
+            legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
+            legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
+            legendHTML += buildSection("Brak udziału", lists.absent, "#64748b");
+
+            document.getElementById('edition-legend').innerHTML = legendHTML;
+            document.getElementById('edition-summary-container').style.display = "block";
+
+            if (!editionMapInstance) {
+                editionMapInstance = am5.Root.new("edition-map");
+                editionMapInstance.setThemes([am5themes_Animated.new(editionMapInstance)]);
+                let chart = editionMapInstance.container.children.push(am5map.MapChart.new(editionMapInstance, { 
+                    panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+                }));
+                editionPolySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
+                    geoJSON: am5geodata_worldLow, 
+                    include: Object.keys(db.countries) 
+                }));
+
+                editionPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+                    let cId = target.dataItem && target.dataItem.get("id");
+                    return cId && db.countries[cId] ? db.countries[cId].name : text;
+                });
+
+                editionPolySeries.mapPolygons.template.setAll({ 
+                    stroke: am5.color(0x24294a), 
+                    strokeWidth: 1, 
+                    templateField: "polygonSettings"
+                });
+            }
+
+            let mapData = [];
+            Object.keys(db.countries).forEach(cId => {
+                let polyColor = am5.color(0x1a1e36);
+                if (statuses[cId]) {
+                    if (statuses[cId] === 'debuts') polyColor = am5.color(0x8b5cf6);
+                    else if (statuses[cId] === 'returning') polyColor = am5.color(0xfacc15);
+                    else if (statuses[cId] === 'participating') polyColor = am5.color(0x22c55e);
+                    else if (statuses[cId] === 'withdrawing') polyColor = am5.color(0xef4444);
+                    else if (statuses[cId] === 'absent') polyColor = am5.color(0x64748b);
+                }
+                
+                mapData.push({ 
+                    id: cId, 
+                    polygonSettings: { fill: polyColor } 
+                });
+            });
+            
+            editionPolySeries.data.setAll(mapData);
         }
-    });
-
-    let legendHTML = "";
-    const buildSection = (title, ids, colorHex) => {
-        if (ids.length === 0) return "";
-        ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
-        let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
-        return `
-            <div class="edition-legend-section">
-                <div class="edition-legend-title">
-                    <div class="edition-legend-dot" style="background:${colorHex}"></div>
-                    ${title} (${ids.length})
-                </div>
-                <div class="edition-legend-items">${tags}</div>
-            </div>
-        `;
-    };
-
-    legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
-    legendHTML += buildSection("Powroty", lists.returning, "#facc15");
-    legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
-    legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
-    legendHTML += buildSection("Brak udziału", lists.absent, "#64748b");
-
-    document.getElementById('edition-legend').innerHTML = legendHTML;
-    document.getElementById('edition-summary-container').style.display = "block";
-
-    if (!editionMapInstance) {
-        editionMapInstance = am5.Root.new("edition-map");
-        editionMapInstance.setThemes([am5themes_Animated.new(editionMapInstance)]);
-        let chart = editionMapInstance.container.children.push(am5map.MapChart.new(editionMapInstance, { 
-            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
-        }));
-        editionPolySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
-            geoJSON: am5geodata_worldLow, 
-            include: Object.keys(db.countries) 
-        }));
-
-        editionPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
-            let cId = target.dataItem && target.dataItem.get("id");
-            return cId && db.countries[cId] ? db.countries[cId].name : text;
-        });
-
-        editionPolySeries.mapPolygons.template.setAll({ 
-            stroke: am5.color(0x24294a), 
-            strokeWidth: 1, 
-            templateField: "polygonSettings"
-        });
-    }
-
-    let mapData = [];
-    Object.keys(db.countries).forEach(cId => {
-        let polyColor = am5.color(0x1a1e36);
-        if (statuses[cId]) {
-            if (statuses[cId] === 'debuts') polyColor = am5.color(0x8b5cf6);
-            else if (statuses[cId] === 'returning') polyColor = am5.color(0xfacc15);
-            else if (statuses[cId] === 'participating') polyColor = am5.color(0x22c55e);
-            else if (statuses[cId] === 'withdrawing') polyColor = am5.color(0xef4444);
-            else if (statuses[cId] === 'absent') polyColor = am5.color(0x64748b);
-        }
-        
-        mapData.push({ 
-            id: cId, 
-            polygonSettings: { fill: polyColor } 
-        });
-    });
-    
-    editionPolySeries.data.setAll(mapData);
-}
 
         function initMap() {
             if (mapRoot) { mapRoot.dispose(); }
@@ -1268,7 +1326,7 @@
 
             let participatedEds = results.map(r => r.edition).sort((a,b) => a-b);
             let firstEd = participatedEds[0];
-            let city = db.cities[firstEd] || "Brak danych";
+            let city = db.cities && db.cities[firstEd] ? db.cities[firstEd] : "Brak danych";
             
             let hostedCount = 0;
             let hostedEditions = [];
@@ -1361,18 +1419,16 @@
             combinedRows.forEach(row => {
                 if (row.type === 'missing') {
                     let text = row.edition === row.end ? `Państwo nie brało udziału w edycji ${row.edition}` : `Państwo nie brało udziału w edycjach ${row.edition} - ${row.end}`;
-                    tbody.innerHTML += `<tr><td colspan="7" style="color:var(--text-muted); font-style:italic; font-weight:normal;">${text}</td></tr>`;
+                    tbody.innerHTML += `<tr><td colspan="9" style="color:var(--text-muted); font-style:italic; font-weight:normal;">${text}</td></tr>`;
                 } else {
                     let r = row.data;
                     
-                    // Obliczanie max miejsca DLA DANEJ EDYCJI (żeby sprawdzić, czy państwo było ostatnie)
                     let editionResults = db.results.filter(res => res.edition === r.edition && res.place !== "-" && res.place !== undefined);
                     let validPlaces = editionResults.map(res => parseFloat(res.place)).filter(p => !isNaN(p));
                     let maxPlaceForThisEdition = validPlaces.length > 0 ? Math.max(...validPlaces) : 0;
                     
                     let numericPlace = parseFloat(r.place);
                     
-                    // Przydzielanie kolorów, w tym czerwonego (bg-last) dla ostatniego miejsca
                     let gfClass = numericPlace === 1 ? "bg-1st" 
                                 : numericPlace === 2 ? "bg-2nd" 
                                 : numericPlace === 3 ? "bg-3rd" 
@@ -1384,8 +1440,17 @@
                     let spotifyLink = hasSong && r.spotify ? `<a href="${r.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                     let youtubeLink = hasSong && r.youtube ? `<a href="${r.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
 
-                    // Naprawa błędu z wyświetlaniem punktów "0" (użycie r.points !== undefined)
                     let pointsToDisplay = (r.points !== undefined && r.points !== "") ? r.points : "-";
+                    let sfPlaceToDisplay = r.semiPlace !== undefined ? r.semiPlace : "-";
+                    let sfPointsToDisplay = r.semiPoints !== undefined ? r.semiPoints : "-";
+                    
+                    let isAuto = r.place !== undefined && r.semi === undefined;
+                    let sfHtml = "";
+                    if (isAuto) {
+                        sfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Automatyczny Finalista</td>`;
+                    } else {
+                        sfHtml = `<td style="font-weight: bold;">${sfPlaceToDisplay}</td><td class="points-total">${sfPointsToDisplay}</td>`;
+                    }
 
                     tbody.innerHTML += `
                         <tr class="${gfClass}">
@@ -1393,6 +1458,7 @@
                             <td><strong>${r.artist||"-"}</strong></td>
                             <td><em>${r.song||"-"}</em> ${audioPlayBtn}</td>
                             <td>${r.manager||"-"}</td>
+                            ${sfHtml}
                             <td style="font-weight: bold;">${r.place||"NQ"}</td>
                             <td class="points-total">${pointsToDisplay}</td>
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
@@ -1440,12 +1506,18 @@
                 let spotifyLink = hasSong && row.spotify ? `<a href="${row.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                 let youtubeLink = hasSong && row.youtube ? `<a href="${row.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
 
+                let sfPlaceToDisplay = row.semiPlace !== undefined ? row.semiPlace : "-";
+                let sfPointsToDisplay = row.semiPoints !== undefined ? row.semiPoints : "-";
+                let isAuto = row.place !== undefined && row.semi === undefined;
+                let sfHtml = isAuto ? `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Automatyczny Finalista</td>` : `<td style="font-weight: bold;">${sfPlaceToDisplay}</td><td class="points-total">${sfPointsToDisplay}</td>`;
+
                 tbody.innerHTML += `
                     <tr class="${row.place === 1 ? 'row-1st' : row.place === 2 ? 'row-2nd' : row.place === 3 ? 'row-3rd' : ''}">
                         <td style="font-weight:bold;">${row.edition}</td>
                         <td class="country-cell">${getFlag(db.countries[row.countryId].code)} ${db.countries[row.countryId].name}</td>
                         <td>${row.artist || "-"}</td>
                         <td><em>${row.song || "-"}</em> ${audioPlayBtn}</td>
+                        ${sfHtml}
                         <td style="font-weight:bold;">${row.place || "NQ"}</td>
                         <td class="points-total">${row.points || "-"}</td>
                         <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
@@ -1458,50 +1530,50 @@
         const absolutePalette = ['#60a5fa', '#3b82f6', '#2563eb', '#4f46e5', '#6366f1', '#8b5cf6', '#a855f7', '#c084fc', '#d946ef', '#ec4899', '#f43f5e', '#e11d48', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#facc15', '#fde047', '#fef08a'];
 
         function renderManagerMap(counts) {
-    const activeCounts = Object.values(counts).filter(c => c > 0);
-    const uniqueCounts = [...new Set(activeCounts)].sort((a, b) => a - b);
-    
-    let legendHTML = '';
-    uniqueCounts.forEach(val => {
-        let colorIdx = Math.min(val - 1, absolutePalette.length - 1);
-        legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${absolutePalette[colorIdx]}"></div>${val}</div>`;
-    });
-    document.getElementById('manager-map-legend').innerHTML = legendHTML;
+            const activeCounts = Object.values(counts).filter(c => c > 0);
+            const uniqueCounts = [...new Set(activeCounts)].sort((a, b) => a - b);
+            
+            let legendHTML = '';
+            uniqueCounts.forEach(val => {
+                let colorIdx = Math.min(val - 1, absolutePalette.length - 1);
+                legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${absolutePalette[colorIdx]}"></div>${val}</div>`;
+            });
+            document.getElementById('manager-map-legend').innerHTML = legendHTML;
 
-    if (!managerMapInstance) {
-        managerMapInstance = am5.Root.new("manager-map");
-        managerMapInstance.setThemes([am5themes_Animated.new(managerMapInstance)]);
-        let chart = managerMapInstance.container.children.push(am5map.MapChart.new(managerMapInstance, { 
-            panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
-        }));
-        managerPolySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
-            geoJSON: am5geodata_worldLow, 
-            include: Object.keys(db.countries) 
-        }));
+            if (!managerMapInstance) {
+                managerMapInstance = am5.Root.new("manager-map");
+                managerMapInstance.setThemes([am5themes_Animated.new(managerMapInstance)]);
+                let chart = managerMapInstance.container.children.push(am5map.MapChart.new(managerMapInstance, { 
+                    panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
+                }));
+                managerPolySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
+                    geoJSON: am5geodata_worldLow, 
+                    include: Object.keys(db.countries) 
+                }));
 
-        managerPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
-            let cId = target.dataItem && target.dataItem.get("id");
-            return cId && db.countries[cId] ? db.countries[cId].name : text;
-        });
+                managerPolySeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+                    let cId = target.dataItem && target.dataItem.get("id");
+                    return cId && db.countries[cId] ? db.countries[cId].name : text;
+                });
 
-        managerPolySeries.mapPolygons.template.setAll({ 
-            stroke: am5.color(0x24294a), 
-            strokeWidth: 1, 
-            templateField: "polygonSettings"
-        });
-    }
+                managerPolySeries.mapPolygons.template.setAll({ 
+                    stroke: am5.color(0x24294a), 
+                    strokeWidth: 1, 
+                    templateField: "polygonSettings"
+                });
+            }
 
-    let mapData = [];
-    Object.keys(db.countries).forEach(cId => {
-        let polyColor = am5.color(0x1a1e36);
-        if (counts[cId]) {
-            let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
-            polyColor = am5.color(absolutePalette[colorIdx]);
+            let mapData = [];
+            Object.keys(db.countries).forEach(cId => {
+                let polyColor = am5.color(0x1a1e36);
+                if (counts[cId]) {
+                    let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
+                    polyColor = am5.color(absolutePalette[colorIdx]);
+                }
+                mapData.push({ id: cId, polygonSettings: { fill: polyColor } });
+            });
+            managerPolySeries.data.setAll(mapData);
         }
-        mapData.push({ id: cId, polygonSettings: { fill: polyColor } });
-    });
-    managerPolySeries.data.setAll(mapData);
-}
 
         // ================= SORTER =================
         let currentSorterMode = 'basic';
@@ -1593,7 +1665,7 @@
             btnContainer.innerHTML = "";
             if (sorterObj) { sorterObj.destroy && sorterObj.destroy(); sorterObj = null; }
 
-            let allItems = db.results.filter(r => r.edition === sorterEdition).sort((a,b) => (a.ro || 99) - (b.ro || 99));
+            let allItems = db.results.filter(r => r.edition === sorterEdition).sort((a,b) => (a.ro || a.semiRo || 99) - (b.ro || b.semiRo || 99));
             if(allItems.length === 0) { ws.innerHTML = "<p style='text-align:center;'>Brak piosenek w tej edycji.</p>"; return; }
 
             let activeItems = allItems.filter(r => r.countryId !== sorterExcluded);
@@ -1625,7 +1697,7 @@
                     localStorage.removeItem(`sorter_basic_${sorterEdition}_ranked`);
                 } else if (currentSorterMode === 'tier') {
                     localStorage.removeItem(`sorter_tier_${sorterEdition}`);
-                    localStorage.removeItem(`sorter_tier_size_${sorterEdition}`); // Czyści zapisany rozmiar
+                    localStorage.removeItem(`sorter_tier_size_${sorterEdition}`); 
                 }
                 buildSorterWorkspace();
             }
