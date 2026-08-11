@@ -850,23 +850,22 @@
 
         function renderEditionTable() {
             const container = document.getElementById("edition-tables-container");
-            container.innerHTML = "";
-            
-            let editionData = db.results.filter(r => {
-                if (r.edition !== activeEdition) return false;
-                if (activeStage === 'GF') {
-                    // W finale pokazujemy tych, którzy mają wpisane miejsce (nawet z przeszłości)
-                    // ORAZ państwa, które awansowały z urzędu lub w nowych edycjach zanim jest ich ocena (czyli semi to "AQ" lub brakuje półfinału u nich)
-                    let isPlaced = parseFloat(r.place) > 0;
-                    let isAQ = r.semi === "AQ" || r.semi === undefined || r.semi === null;
-                    return isPlaced || isAQ;
-                } else if (activeStage === 'SF1') {
-                    return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
-                } else if (activeStage === 'SF2') {
-                    return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
-                }
-                return false;
-            });
+    container.innerHTML = "";
+    
+    let editionData = db.results.filter(r => {
+        if (r.edition !== activeEdition) return false;
+        if (activeStage === 'GF') {
+            let isPlaced = parseFloat(r.place) > 0;
+            let isAQ = r.semi === "AQ" || r.semi === undefined || r.semi === null;
+            let hasGFRo = r.ro !== "-" && r.ro !== undefined && r.ro !== null; // <--- dodany warunek na posiadanie RO w finale
+            return isPlaced || isAQ || hasGFRo;
+        } else if (activeStage === 'SF1') {
+            return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
+        } else if (activeStage === 'SF2') {
+            return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
+        }
+        return false;
+    });
             
             if(editionData.length === 0) {
                 document.getElementById('edition-summary-container').style.display = "none";
@@ -1643,7 +1642,7 @@
             let items = db.results
                 .filter(r => {
                     if (r.edition !== sorterEdition) return false;
-                    if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null || r.semi === "AQ");
+                    if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null || r.semi === "AQ") || (r.ro !== "-" && r.ro !== undefined && r.ro !== null);
                     if (sorterStage === 'sf1') return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
                     if (sorterStage === 'sf2') return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
                     return true;
@@ -1742,7 +1741,7 @@
 
             let allItems = db.results.filter(r => {
                 if (r.edition !== sorterEdition) return false;
-                if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null || r.semi === "AQ");
+                if (sorterStage === 'gf') return (r.place !== undefined && r.place !== "-") || (r.semi === undefined || r.semi === null || r.semi === "AQ") || (r.ro !== "-" && r.ro !== undefined && r.ro !== null);
                 if (sorterStage === 'sf1') return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
                 if (sorterStage === 'sf2') return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
                 return true;
