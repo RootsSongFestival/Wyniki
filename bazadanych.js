@@ -75,13 +75,15 @@ const db = {
         { edition: 2, semi: 1, semiRo: 14, ro: 17, countryId: "CH", artist: "Serena Belle", song: "Sisyphean", manager: "Misza", semiPlace: 5, semiPoints: 131, place: 9, points: 126, youtube: "https://youtu.be/P-iRhfBI1GM?is=NcsMQkq8lwLcY5MN", spotify: "https://open.spotify.com/track/4Qh3dCxXOesmpZMcQoCvh7?si=rGvBSaXrRjO71T1jHHVjQQ&utm_source=copy-link", mp3: "edycja2/CH2.mp3", artistLink: "-" },
         { edition: 2, semi: 1, semiRo: 16, ro: 23, countryId: "SO", artist: "Hassan Maikal, Asla Jo", song: "Ota musta kii", manager: "Jelegor", semiPlace: 3, semiPoints: 145, place: 11, points: 117, youtube: "https://youtu.be/80-Jcyo5pVY?is=Pjesn4OTSeGPxNkP", spotify: "https://open.spotify.com/track/7b2EXARgqqX9xq3SdwKp9W?si=5fc694c2320e4e8e", mp3: "edycja2/SO2.mp3", artistLink: "-" },
 
-        { edition: 3, semi: AQ, semiRo: -, ro: -, countryId: "SE", artist: "-", song: "-", manager: "Michel", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 3, semi: AQ, semiRo: -, ro: -, countryId: "SY", artist: "-", song: "-", manager: "Dravee", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 3, semi: AQ, semiRo: -, ro: -, countryId: "UA", artist: "-", song: "-", manager: "Sajmonn", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 3, semi: AQ, semiRo: -, ro: -, countryId: "NO", artist: "-", song: "-", manager: "Dotek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 3, semi: AQ, semiRo: -, ro: -, countryId: "ES", artist: "-", song: "-", manager: "Pablitek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 3, semi: AQ, semiRo: -, ro: -, countryId: "US", artist: "-", song: "-", manager: "Oscypek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 3, semi: AQ, semiRo: -, ro: -, countryId: "DE", artist: "-", song: "-", manager: "Royal", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "SE", artist: "-", song: "-", manager: "Michel", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "SY", artist: "-", song: "-", manager: "Dravee", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "UA", artist: "-", song: "-", manager: "Sajmonn", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "NO", artist: "-", song: "-", manager: "Dotek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "ES", artist: "-", song: "-", manager: "Pablitek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "US", artist: "-", song: "-", manager: "Oscypek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "DE", artist: "-", song: "-", manager: "Royal", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+         { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "CN", artist: "-", song: "-", manager: "Shigaś", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+         { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "PL", artist: "-", song: "-", manager: "Jarek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
     ],
     
     countries: {
