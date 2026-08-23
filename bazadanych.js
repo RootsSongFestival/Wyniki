@@ -103,7 +103,6 @@ const db = {
         { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "ZM", artist: "-", song: "-", manager: "Jelegor", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
          { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "TM", artist: "-", song: "-", manager: "Ziemniorek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
          { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "AU", artist: "-", song: "-", manager: "B00B", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "AU", artist: "-", song: "-", manager: "B00B", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
         { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "CM", artist: "-", song: "-", manager: "Alexis", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
         { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "IE", artist: "-", song: "-", manager: "Slimitch", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
     ],
