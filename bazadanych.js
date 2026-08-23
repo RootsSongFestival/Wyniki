@@ -1,7 +1,7 @@
 const db = {
-    editions: [1, 2], 
-    hosts: { 1: "PL", 2: "RU"}, 
-    cities: { 1: "Gdańsk", 2: "Jekaterynburg" }, 
+    editions: [1, 2, 3], 
+    hosts: { 1: "PL", 2: "RU", 3: "SE"}, 
+    cities: { 1: "Gdańsk", 2: "Jekaterynburg", 3: "Malmö" }, 
     
     results: [
         // Edition 1
