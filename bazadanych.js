@@ -84,6 +84,14 @@ const db = {
         { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "DE", artist: "-", song: "-", manager: "Royal", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
          { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "CN", artist: "-", song: "-", manager: "Shigaś", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
          { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "PL", artist: "-", song: "-", manager: "Jarek", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "AT", artist: "-", song: "-", manager: "Solarkis", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "UZ", artist: "-", song: "-", manager: "Grzesia", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "LY", artist: "-", song: "-", manager: "Laxero", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "TR", artist: "-", song: "-", manager: "Native", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "CA", artist: "-", song: "-", manager: "Kornik", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "IT", artist: "-", song: "-", manager: "Kidos", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "FI", artist: "-", song: "-", manager: "Fox", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: -, ro: -, countryId: "FR", artist: "-", song: "-", manager: "Vacu", semiPlace: -, semiPoints: -, place: -, points: -, youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
     ],
     
     countries: {
