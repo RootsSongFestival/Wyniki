@@ -106,6 +106,7 @@ const db = {
         { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "CM", artist: "-", song: "-", manager: "Alexis", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
         { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "IE", artist: "-", song: "-", manager: "Slimitch", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
         { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "EE", artist: "-", song: "-", manager: "Heks", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 3, semi: "AQ", semiRo: "-", ro: "-", countryId: "RS", artist: "-", song: "-", manager: "Urban", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
     ],
     
     countries: {
