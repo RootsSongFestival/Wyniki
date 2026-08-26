@@ -112,6 +112,7 @@ const db = {
 { edition: 3, semi: 2, semiRo: "-", ro: "-", countryId: "HU", artist: "-", song: "-", manager: "Modern", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
 { edition: 3, semi: 2, semiRo: "-", ro: "-", countryId: "IE", artist: "-", song: "-", manager: "Slimitch", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
 { edition: 3, semi: 2, semiRo: "-", ro: "-", countryId: "MD", artist: "-", song: "-", manager: "Tomak", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+{ edition: 3, semi: "2", semiRo: "-", ro: "-", countryId: "PH", artist: "-", song: "-", manager: "Bejba", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
 { edition: 3, semi: 2, semiRo: "-", ro: "-", countryId: "IT", artist: "-", song: "-", manager: "Kidos", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
 { edition: 3, semi: 2, semiRo: "-", ro: "-", countryId: "DE", artist: "-", song: "-", manager: "Royal", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
 { edition: 3, semi: 2, semiRo: "-", ro: "-", countryId: "NO", artist: "-", song: "-", manager: "Dotek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
