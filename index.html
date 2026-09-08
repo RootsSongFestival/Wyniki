@@ -35,6 +35,39 @@
             --color-last: rgba(255, 60, 60, 0.3);
         }
 
+        /* ================= MOTYW SEZONOWY ================= */
+        body.theme-seasonal {
+            --bg-color: #041012;         
+            --nav-bg: #091b22;
+            --primary-color: #00FFFF;    
+            --secondary-color: #7FB5B5;  
+            --text-main: #ffffff;
+            --text-muted: #B4CECF;
+            --table-header: #102f38;
+            --table-row-odd: #0a1f25;
+            --table-row-even: #0e2830;
+            --table-hover: #153c48;
+        }
+
+        .theme-switch-wrapper {
+            display: flex; align-items: center; gap: 10px;
+            color: var(--text-muted); font-size: 12px; font-weight: bold; text-transform: uppercase;
+        }
+        .theme-switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
+        .theme-switch .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--table-header); transition: .4s; border-radius: 20px;
+            border: 1px solid var(--text-muted);
+        }
+        .theme-switch .slider:before {
+            position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px;
+            background-color: var(--text-main); transition: .4s; border-radius: 50%;
+        }
+        .theme-switch input:checked + .slider { background-color: var(--primary-color); border-color: var(--primary-color); }
+        .theme-switch input:checked + .slider:before { transform: translateX(20px); background-color: #000; }
+        /* ================================================= */
+
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; }
 
         /* NAVBAR Z LOGO */
@@ -119,12 +152,6 @@
         .map-overlay-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: bold; color: #fff; }
         .map-overlay-color { width: 16px; height: 16px; border-radius: 3px; }
         
-        .edition-legend-section { margin-bottom: 10px; }
-        .edition-legend-title { font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
-        .edition-legend-dot { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 3px rgba(0,0,0,0.5); }
-        .edition-legend-items { display: flex; flex-wrap: wrap; gap: 8px; }
-        .edition-legend-tag { background: var(--table-row-odd); border: 1px solid rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; display: flex; align-items: center; color: var(--text-main); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-
         .container { max-width: 1050px; margin: 20px auto; padding: 0 15px; padding-bottom: 50px; transition: max-width 0.3s ease; }
         .container.wide-mode { max-width: 85%; }
 
@@ -192,7 +219,6 @@
         .manager-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 25px; background-color: var(--table-row-odd); padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .stat-box { flex: 1; min-width: 200px; text-align: center; background-color: var(--table-row-even); padding: 15px; border-radius: 6px; }
         .stat-value { font-size: 24px; font-weight: bold; color: var(--primary-color); margin-top: 10px; }
-        #manager-select { width: 100%; padding: 10px; background-color: var(--table-header); color: white; border: 1px solid var(--secondary-color); border-radius: 5px; font-size: 16px; margin-bottom: 15px; outline: none; }
         
         .sorter-controls { display: flex; gap: 15px; margin: 15px auto 25px auto; width: 80%; flex-wrap: wrap; justify-content: center; }
         .sorter-controls .picker-btn { flex: 1; min-width: 150px; }
@@ -245,7 +271,7 @@
         .sorter-item.is-ranked.rank-top10 { border-left-color: #8b5cf6; background-color: rgba(139, 92, 246, 0.1); }
         .sorter-item.is-ranked.rank-top10 .sorter-points { display: block; background: #8b5cf6; color: #fff; }
         .sorter-item.is-ranked.rank-other { border-left-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
-	    .sorter-item.is-excluded { 
+        .sorter-item.is-excluded { 
             background-color: rgba(128, 128, 128, 0.1); border-left-color: #808080; cursor: default; }
 
         .tier-row { display: flex; margin-bottom: 5px; min-height: 80px; background: var(--table-row-odd); border-radius: 6px; overflow: hidden; position: relative; }
@@ -284,7 +310,7 @@
             font-family: 'Segoe UI', Tahoma, sans-serif;
             font-size: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            max-width: 320px;
+            max-width: 380px;
             margin-left: auto;
         }
         .infobox-header {
@@ -366,6 +392,184 @@
             .countries-right { position: static; }
             .infobox { margin: 0 auto; max-width: 100%; }
         }
+
+        /* ================= NOWE STYLE - REVAMP ================= */
+        
+        /* 1. Nowoczesny pasek przewijania */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--secondary-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
+
+        /* 2. Układ Master-Detail (Lewy panel + Prawa treść) np. dla Menadżerów */
+        .master-detail-layout { display: flex; gap: 25px; align-items: flex-start; }
+        
+        .sidebar-menu { 
+            width: 250px; 
+            flex-shrink: 0; 
+            background: var(--table-row-odd); 
+            border-radius: 8px; 
+            padding: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            border: 1px solid rgba(255,255,255,0.05);
+            position: sticky; 
+            top: 80px; 
+            max-height: calc(100vh - 100px); 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content { flex-grow: 1; min-width: 0; }
+
+        /* Wyszukiwarka i lista w Sidebarze */
+        .sidebar-search { 
+            width: 100%; 
+            padding: 10px 15px; 
+            background: var(--table-header); 
+            border: 1px solid var(--secondary-color); 
+            color: white; 
+            border-radius: 6px; 
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .sidebar-search:focus { border-color: var(--primary-color); }
+        
+        .sidebar-list-container {
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding-right: 5px;
+        }
+        
+        .sidebar-item { 
+            padding: 10px 15px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            color: var(--text-muted);
+            border-left: 3px solid transparent;
+        }
+        .sidebar-item:hover { 
+            background: var(--table-hover); 
+            color: var(--text-main); 
+        }
+        .sidebar-item.active { 
+            background: rgba(255, 42, 95, 0.1); 
+            color: var(--primary-color); 
+            font-weight: bold;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        /* 3. Grid wyboru dla Preselekcji (Kafelki zamiast selecta) */
+        .picker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .grid-item-btn {
+            background: var(--table-header);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+        .grid-item-btn:hover { background: var(--table-hover); color: var(--text-main); transform: translateY(-2px); }
+        .grid-item-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+        /* Responsywność dla nowego layoutu */
+        @media (max-width: 768px) {
+            .master-detail-layout { flex-direction: column; }
+            .sidebar-menu { width: 100%; position: static; max-height: 300px; }
+        }
+
+        /* ================= REVAMP EDYCJI (AKORDEON + SIDEBAR) ================= */
+        .edition-summary-layout {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+        }
+        
+        .edition-map-wrapper {
+            flex: 1;
+            min-width: 0;
+            position: relative;
+        }
+        
+        .edition-legend-wrapper {
+            width: 320px;
+            flex-shrink: 0;
+            background: var(--bg-color);
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 450px;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .edition-legend-section { 
+            background: var(--table-row-even); 
+            border-radius: 6px; 
+            margin-bottom: 8px; 
+            border: 1px solid rgba(255,255,255,0.02);
+            overflow: hidden; 
+        }
+        
+        .edition-legend-header { 
+            padding: 12px 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            cursor: pointer; 
+            font-size: 12px; 
+            font-weight: bold; 
+            color: var(--text-main); 
+            user-select: none; 
+            transition: background 0.2s; 
+        }
+        .edition-legend-header:hover { background: var(--table-hover); }
+        
+        .edition-legend-items { 
+            background: var(--table-row-odd); 
+            padding: 5px 10px; 
+            display: flex;
+            flex-direction: column; 
+            gap: 2px; 
+        }
+        
+        .edition-legend-tag { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            padding: 8px 10px; 
+            border-radius: 6px; 
+            background: transparent; 
+            border: none; 
+            box-shadow: none; 
+            font-size: 13px; 
+            font-weight: normal; 
+            color: var(--text-muted); 
+            transition: all 0.2s;
+        }
+        .edition-legend-tag:hover { 
+            background: rgba(255,255,255,0.05); 
+            color: var(--text-main); 
+        }
+
+        @media (max-width: 900px) {
+            .edition-summary-layout { flex-direction: column; }
+            .edition-legend-wrapper { width: 100%; max-height: 300px; }
+        }
     </style>
 </head>
 <body>
@@ -384,7 +588,15 @@
             <button class="nav-btn" onclick="openTab('managers', this)">Menadżerowie</button>
             <button class="nav-btn" onclick="openTab('sorter', this)">Sorter</button>
         </div>
-        <div class="nav-spacer"></div>
+        <div class="nav-spacer" style="display:flex; justify-content:flex-end; align-items:center; padding-right: 15px;">
+            <div class="theme-switch-wrapper">
+                <span style="color: var(--primary-color);">Motyw Sezonowy</span>
+                <label class="theme-switch" title="Przełącz motyw (Klasyczny / Sezonowy)">
+                    <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -432,17 +644,11 @@
                     <div class="home-card" style="max-width: 320px; margin-left: auto; box-sizing: border-box; padding: 15px; text-align: center;">
                         <h3 class="rules-title" style="font-size: 15px; margin-bottom: 15px;">Obejrzyj najnowszy recap</h3>
                         <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 15px;">
-                            <iframe src="https://www.youtube.com/embed/opCRcTgpZRI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/Z2wpvzeA1gk?si=5KB4t0wLWoQOtZ9C" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
 						<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-						    <iframe src="https://www.youtube.com/embed/pospu4IEH0Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						    <iframe src="https://www.youtube.com/embed/L8TwmTn6FHk"" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
-                        <a href="https://open.spotify.com/playlist/57oD8H557CBaKW3gSRxn1u?si=CtX0TfdxSB6L7kVbYO36BQ" target="_blank" class="picker-btn" style="width: 100%; margin-top: 15px; background-color: #1DB954; color: #fff; border-color: #1DB954; display: flex; justify-content: center; gap: 10px; font-weight: bold; box-sizing: border-box; text-decoration: none;">
-                            <i class="fa-brands fa-spotify" style="font-size: 18px;"></i> Playlista obecnej edycji - 1SF
-                        </a>
-						<a href="https://open.spotify.com/playlist/6shs5fZ50naXbT0Bdtkzyn?si=w9JFg4edSauFNeugT0BVKw" target="_blank" class="picker-btn" style="width: 100%; margin-top: 15px; background-color: #1DB954; color: #fff; border-color: #1DB954; display: flex; justify-content: center; gap: 10px; font-weight: bold; box-sizing: border-box; text-decoration: none;">
-                            <i class="fa-brands fa-spotify" style="font-size: 18px;"></i> Playlista obecnej edycji - 2SF
-                        </a>
                     </div>
                 </div>
             </div>
@@ -467,9 +673,13 @@
             </div>
             
             <div id="edition-summary-container" class="picker-container" style="display:none; text-align:left;">
-                <div id="edition-legend" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;"></div>
-                <div class="map-container" style="margin-bottom: 0;">
-                    <div id="edition-map"></div>
+                <div class="edition-summary-layout">
+                    <div class="edition-map-wrapper map-container" style="margin-bottom: 0;">
+                        <div id="edition-map"></div>
+                    </div>
+                    <div class="edition-legend-wrapper" id="edition-legend">
+                        <!-- Legenda generowana przez JS -->
+                    </div>
                 </div>
             </div>
 
@@ -530,54 +740,72 @@
             </div>
         </div>
 
+        <!-- ZAKŁADKA PRESELEKCJE -->
         <div id="preselections" class="tab-content">
             <div class="picker-container">
                 <h3 class="picker-title">Wybierz Edycję</h3>
                 <select id="presel-edition-select" class="picker-select" onchange="renderPreselCountries()"></select>
             </div>
+            
+            <!-- Zamiast listy rozwijanej - siatka przycisków -->
             <div class="picker-container" id="presel-country-picker" style="display: none;">
                 <h3 class="picker-title">Wybierz Kraj</h3>
-                <select id="presel-country-select" class="picker-select" onchange="renderPreselContent()"></select>
+                <div id="presel-country-grid" class="picker-grid"></div>
             </div>
+            
             <div id="presel-content-area"></div>
         </div>
 
+        <!-- ZAKŁADKA MENADŻEROWIE -->
         <div id="managers" class="tab-content">
-            <h3 class="picker-title">Wybierz Menadżera</h3>
-            <select id="manager-select" class="picker-select" style="margin-bottom:25px;" onchange="renderManagerData()"></select>
+            <div class="master-detail-layout">
+                <!-- Lewy panel (Lista z wyszukiwarką) -->
+                <div class="sidebar-menu">
+                    <input type="text" id="manager-search" class="sidebar-search" placeholder="Szukaj menadżera..." onkeyup="filterManagers()">
+                    <div id="manager-sidebar-list" class="sidebar-list-container">
+                        <!-- Lista generowana przez JS -->
+                    </div>
+                </div>
+                
+                <!-- Prawy panel (Dane statystyczne i mapy) -->
+                <div class="main-content" id="manager-main-content" style="display: none;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                        <h2 id="manager-title-display" style="color:var(--primary-color); margin:0;">Wybierz menadżera</h2>
+                    </div>
 
-            <div class="manager-stats" id="manager-stats">
-                <div class="stat-box">Złoto 🥇 <div class="stat-value" id="stat-gold">0</div></div>
-                <div class="stat-box">Srebro 🥈 <div class="stat-value" id="stat-silver">0</div></div>
-                <div class="stat-box">Brąz 🥉 <div class="stat-value" id="stat-bronze">0</div></div>
-                <div class="stat-box">Średnie miejsce <div class="stat-value" id="stat-avg">-</div></div>
-                <div class="stat-box">Top Państwa <div class="stat-value" id="stat-top-countries" style="font-size: 20px;">-</div></div>
-            </div>
+                    <div class="manager-stats" id="manager-stats">
+                        <div class="stat-box">Złoto 🥇 <div class="stat-value" id="stat-gold">0</div></div>
+                        <div class="stat-box">Srebro 🥈 <div class="stat-value" id="stat-silver">0</div></div>
+                        <div class="stat-box">Brąz 🥉 <div class="stat-value" id="stat-bronze">0</div></div>
+                        <div class="stat-box">Średnie miejsce <div class="stat-value" id="stat-avg">-</div></div>
+                        <div class="stat-box">Top Państwa <div class="stat-value" id="stat-top-countries" style="font-size: 20px;">-</div></div>
+                    </div>
 
-            <h3 class="picker-title">Mapa Rezerwowanych Państw</h3>
-            
-            <div class="map-container">
-                <div id="manager-map"></div>
-                <div id="manager-map-legend" class="map-overlay-legend"></div>
-            </div>
+                    <h3 class="picker-title" style="text-align: left;">Mapa Rezerwowanych Państw</h3>
+                    <div class="map-container">
+                        <div id="manager-map"></div>
+                        <div id="manager-map-legend" class="map-overlay-legend"></div>
+                    </div>
 
-            <div class="table-wrapper">
-                <table id="manager-table">
-                    <thead>
-                        <tr>
-                            <th class="sortable" onclick="sortTable('manager-table', 0, true)">Edycja</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 1, false)">Kraj</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 2, false)">Wykonawca</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 3, false)">Utwór</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 4, true)">Miejsce</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 5, true)">Punkty</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 6, true)">Miejsce SF</th>
-                            <th class="sortable" onclick="sortTable('manager-table', 7, true)">Punkty SF</th>
-                            <th>Linki</th>
-                        </tr>
-                    </thead>
-                    <tbody id="manager-body"></tbody>
-                </table>
+                    <div class="table-wrapper">
+                        <table id="manager-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortTable('manager-table', 0, true)">Edycja</th>
+                                    <th class="sortable" onclick="sortTable('manager-table', 1, false)">Kraj</th>
+                                    <th class="sortable" onclick="sortTable('manager-table', 2, false)">Wykonawca</th>
+                                    <th class="sortable" onclick="sortTable('manager-table', 3, false)">Utwór</th>
+                                    <th class="sortable" onclick="sortTable('manager-table', 4, true)">Msc</th>
+                                    <th class="sortable" onclick="sortTable('manager-table', 5, true)">Pkt</th>
+                                    <th class="sortable" onclick="sortTable('manager-table', 6, true)">Msc SF</th>
+                                    <th class="sortable" onclick="sortTable('manager-table', 7, true)">Pkt SF</th>
+                                    <th>Linki</th>
+                                </tr>
+                            </thead>
+                            <tbody id="manager-body"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -610,6 +838,28 @@
     </div>
 
     <script>
+        // GLOBALS
+        let mapRoot;
+        let editionMapInstance = null;
+        let editionPolySeries = null;
+        let activeEdition = db.editions.length > 0 ? db.editions[0] : null;
+        let activeStage = 'GF'; // Stage selector state
+        let activeCountryId = null;
+        let managerMapInstance;
+        let managerPolySeries = null;
+        let editionViewCols = 1;
+        let editionSortState = { key: 'auto', isAsc: true };
+        let allManagersList = []; // Przechowuje listę do wyszukiwania
+
+        function toggleTheme() {
+            if (document.getElementById('theme-toggle').checked) {
+                localStorage.setItem('theme', 'seasonal');
+            } else {
+                localStorage.setItem('theme', 'classic');
+            }
+            location.reload(); 
+        }
+
         function playAudio(url) {
             let player = document.getElementById('global-audio-player');
             
@@ -625,17 +875,6 @@
                 player.play();
             }
         }
-
-        let mapRoot;
-        let editionMapInstance = null;
-		let editionPolySeries = null;
-        let activeEdition = db.editions.length > 0 ? db.editions[0] : null;
-        let activeStage = 'GF'; // Stage selector state
-        let activeCountryId = null;
-        let managerMapInstance;
-		let managerPolySeries = null;
-        let editionViewCols = 1;
-        let editionSortState = { key: 'auto', isAsc: true };
 
         function getEmojiFlag(countryCode) {
             if (!countryCode) return "";
@@ -691,6 +930,12 @@
         }
 
         function init() {
+            if (localStorage.getItem('theme') === 'seasonal') {
+                document.body.classList.add('theme-seasonal');
+                let toggle = document.getElementById('theme-toggle');
+                if (toggle) toggle.checked = true;
+            }
+
             let savedEdition = localStorage.getItem('activeEdition');
             if (savedEdition) activeEdition = parseInt(savedEdition);
             
@@ -850,22 +1095,22 @@
 
         function renderEditionTable() {
             const container = document.getElementById("edition-tables-container");
-    container.innerHTML = "";
-    
-    let editionData = db.results.filter(r => {
-        if (r.edition !== activeEdition) return false;
-        if (activeStage === 'GF') {
-            let isPlaced = parseFloat(r.place) > 0;
-            let isAQ = r.semi === "AQ" || r.semi === undefined || r.semi === null;
-            let hasGFRo = r.ro !== "-" && r.ro !== undefined && r.ro !== null; // <--- dodany warunek na posiadanie RO w finale
-            return isPlaced || isAQ || hasGFRo;
-        } else if (activeStage === 'SF1') {
-            return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
-        } else if (activeStage === 'SF2') {
-            return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
-        }
-        return false;
-    });
+            container.innerHTML = "";
+            
+            let editionData = db.results.filter(r => {
+                if (r.edition !== activeEdition) return false;
+                if (activeStage === 'GF') {
+                    let isPlaced = parseFloat(r.place) > 0;
+                    let isAQ = r.semi === "AQ" || r.semi === undefined || r.semi === null;
+                    let hasGFRo = r.ro !== "-" && r.ro !== undefined && r.ro !== null; 
+                    return isPlaced || isAQ || hasGFRo;
+                } else if (activeStage === 'SF1') {
+                    return r.semi === 1 || (r.votingSemi === 1 && (r.semi === undefined || r.semi === null));
+                } else if (activeStage === 'SF2') {
+                    return r.semi === 2 || (r.votingSemi === 2 && (r.semi === undefined || r.semi === null));
+                }
+                return false;
+            });
             
             if(editionData.length === 0) {
                 document.getElementById('edition-summary-container').style.display = "none";
@@ -1028,14 +1273,16 @@
 
         function renderPreselCountries() {
             const ed = document.getElementById("presel-edition-select").value;
-            const cSelect = document.getElementById("presel-country-select");
+            const grid = document.getElementById("presel-country-grid"); 
             const cPicker = document.getElementById("presel-country-picker");
             const data = db.preselections ? db.preselections[ed] : null;
             
             if(!data) return;
             
-            cSelect.innerHTML = "";
-            Object.keys(data).forEach(countryNameOrId => {
+            grid.innerHTML = "";
+            let firstCountry = null;
+
+            Object.keys(data).forEach((countryNameOrId, index) => {
                 let countryName = countryNameOrId;
                 let cCode = null;
                 
@@ -1047,26 +1294,36 @@
                     if (foundKey) cCode = db.countries[foundKey].code;
                 }
 
-                let emoji = getEmojiFlag(cCode);
+                if (index === 0) firstCountry = countryNameOrId;
 
-                const option = document.createElement("option");
-                option.value = countryNameOrId;
-                option.text = `${emoji} ${countryName}`.trim();
-                cSelect.appendChild(option);
+                const btn = document.createElement("button");
+                btn.className = "grid-item-btn";
+                btn.innerHTML = `${getFlag(cCode, false, "margin:0;")} <span>${countryName}</span>`;
+                btn.onclick = () => {
+                    document.querySelectorAll('.grid-item-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderPreselContent(countryNameOrId);
+                };
+                grid.appendChild(btn);
             });
             
             cPicker.style.display = "block";
-            renderPreselContent();
+            if(firstCountry) {
+                grid.firstChild.classList.add('active');
+                renderPreselContent(firstCountry);
+            } else {
+                document.getElementById("presel-content-area").innerHTML = "";
+            }
         }
 
-        function renderPreselContent() {
+        function renderPreselContent(selectedCountryName) {
             const ed = document.getElementById("presel-edition-select").value;
-            const cName = document.getElementById("presel-country-select").value;
+            const cName = selectedCountryName; 
             const preselData = db.preselections && db.preselections[ed] ? db.preselections[ed][cName] : null;
             const area = document.getElementById("presel-content-area");
             
             if(!preselData) {
-                area.innerHTML = "<p style='text-align:center;'>Wybierz odpowiednie dane</p>";
+                area.innerHTML = "<p style='text-align:center;'>Wybierz odpowiednie dane z kafelków powyżej</p>";
                 return;
             }
 
@@ -1179,26 +1436,41 @@
             });
 
             let legendHTML = "";
-            const buildSection = (title, ids, colorHex) => {
+            const buildSection = (title, ids, colorHex, isOpen = false) => {
                 if (ids.length === 0) return "";
                 ids.sort((a,b) => db.countries[a].name.localeCompare(db.countries[b].name));
-                let tags = ids.map(id => `<div class="edition-legend-tag">${getFlag(db.countries[id].code)} ${db.countries[id].name}</div>`).join('');
+                
+                let tags = ids.map(id => `<div class="edition-legend-tag" style="border-left: 3px solid ${colorHex};">${getFlag(db.countries[id].code)} <span style="color: #fff;">${db.countries[id].name}</span></div>`).join('');
+                
                 return `
-                    <div class="edition-legend-section">
-                        <div class="edition-legend-title">
-                            <div class="edition-legend-dot" style="background:${colorHex}"></div>
-                            ${title} (${ids.length})
+                    <div class="edition-legend-section" style="border-left: 4px solid ${colorHex};">
+                        <div class="edition-legend-header" onclick="
+                            let content = this.nextElementSibling;
+                            let icon = this.querySelector('i');
+                            if (content.style.display === 'flex') {
+                                content.style.display = 'none';
+                                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                            } else {
+                                content.style.display = 'flex';
+                                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                            }
+                        ">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div class="edition-legend-dot" style="background:${colorHex}; box-shadow: 0 0 5px ${colorHex};"></div>
+                                <span style="color:${colorHex};">${title}</span> <span style="color: var(--text-muted);">(${ids.length})</span>
+                            </div>
+                            <i class="fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}" style="color: var(--text-muted); font-size: 11px;"></i>
                         </div>
-                        <div class="edition-legend-items">${tags}</div>
+                        <div class="edition-legend-items" style="display: ${isOpen ? 'flex' : 'none'};">${tags}</div>
                     </div>
                 `;
             };
 
-            legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6");
-            legendHTML += buildSection("Powroty", lists.returning, "#facc15");
-            legendHTML += buildSection("Uczestniczące", lists.participating, "#22c55e");
-            legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444");
-            legendHTML += buildSection("Byli uczestnicy", lists.absent, "#64748b");
+            legendHTML += buildSection("Debiuty", lists.debuts, "#8b5cf6", false);
+            legendHTML += buildSection("Powroty", lists.returning, "#facc15", false);
+            legendHTML += buildSection("Kontynuujący udział", lists.participating, "#22c55e", false);
+            legendHTML += buildSection("Wycofujące się", lists.withdrawing, "#ef4444", false);
+            legendHTML += buildSection("Byli uczestnicy", lists.absent, "#64748b", false);
 
             document.getElementById('edition-legend').innerHTML = legendHTML;
             document.getElementById('edition-summary-container').style.display = "block";
@@ -1219,8 +1491,9 @@
                     return cId && db.countries[cId] ? db.countries[cId].name : text;
                 });
 
+                let thm = document.body.classList.contains('theme-seasonal');
                 editionPolySeries.mapPolygons.template.setAll({ 
-                    stroke: am5.color(0x24294a), 
+                    stroke: am5.color(thm ? 0x102f38 : 0x24294a), 
                     strokeWidth: 1, 
                     templateField: "polygonSettings"
                 });
@@ -1228,7 +1501,9 @@
 
             let mapData = [];
             Object.keys(db.countries).forEach(cId => {
-                let polyColor = am5.color(0x1a1e36);
+                let thm = document.body.classList.contains('theme-seasonal');
+                let polyColor = am5.color(thm ? 0x0e2830 : 0x1a1e36);
+                
                 if (statuses[cId]) {
                     if (statuses[cId] === 'debuts') polyColor = am5.color(0x8b5cf6);
                     else if (statuses[cId] === 'returning') polyColor = am5.color(0xfacc15);
@@ -1259,9 +1534,10 @@
                 include: Object.keys(db.countries) 
             }));
 
-            polygonSeries.mapPolygons.template.setAll({ interactive: true, stroke: am5.color(0x24294a), strokeWidth: 1, fill: am5.color(0x1a1e36) });
-            polygonSeries.mapPolygons.template.states.create("hover", { fill: am5.color(0xff2a5f) });
-            polygonSeries.mapPolygons.template.states.create("active", { fill: am5.color(0xff2a5f) });
+            let thm = document.body.classList.contains('theme-seasonal');
+            polygonSeries.mapPolygons.template.setAll({ interactive: true, stroke: am5.color(thm ? 0x102f38 : 0x24294a), strokeWidth: 1, fill: am5.color(thm ? 0x0e2830 : 0x1a1e36) });
+            polygonSeries.mapPolygons.template.states.create("hover", { fill: am5.color(thm ? 0x00FFFF : 0xff2a5f) });
+            polygonSeries.mapPolygons.template.states.create("active", { fill: am5.color(thm ? 0x00FFFF : 0xff2a5f) });
             polygonSeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
                 let cId = target.dataItem && target.dataItem.get("id");
                 return cId && db.countries[cId] ? db.countries[cId].name : text;
@@ -1285,7 +1561,7 @@
             const winColorMap = {};
             uniqueWins.forEach((val, i) => { winColorMap[val] = winPalette[Math.min(i, winPalette.length - 1)]; });
 
-            let legendHTML = `<div class="map-overlay-item"><div class="map-overlay-color" style="background:#4a5596"></div>Udział</div>`;
+            let legendHTML = `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${thm ? '#7FB5B5' : '#4a5596'}"></div>Udział</div>`;
             uniqueWins.forEach(val => {
                 legendHTML += `<div class="map-overlay-item"><div class="map-overlay-color" style="background:${winColorMap[val]}"></div>${val} 🏆</div>`;
             });
@@ -1296,7 +1572,7 @@
                 if (cId && db.countries[cId]) {
                     let wins = winCounts[cId] || 0;
                     if (wins > 0) return am5.color(winColorMap[wins]);
-                    if (db.results.some(r => r.countryId === cId)) return am5.color(0x4a5596); 
+                    if (db.results.some(r => r.countryId === cId)) return am5.color(thm ? 0x7FB5B5 : 0x4a5596); 
                 }
                 return fill;
             });
@@ -1458,12 +1734,15 @@
                     let spotifyLink = hasSong && r.spotify ? `<a href="${r.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
                     let youtubeLink = hasSong && r.youtube ? `<a href="${r.youtube}" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>` : "";
 
-                    let dispPlace = "";
-                    if (r.place > 0) dispPlace = r.place;
-                    else if (isGFPlayed) dispPlace = "NQ";
-                    else dispPlace = "-";
-
-                    let dispPoints = (r.points !== undefined && r.points !== "-" && r.points !== "") ? r.points : "-";
+                    let gfHtml = "";
+                    if (r.place > 0) {
+                        let dispPoints = (r.points !== undefined && r.points !== "-" && r.points !== "") ? r.points : "-";
+                        gfHtml = `<td style="font-weight: bold;">${r.place}</td><td class="points-total">${dispPoints}</td>`;
+                    } else if (isGFPlayed) {
+                        gfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Niezakwalifikowany</td>`;
+                    } else {
+                        gfHtml = `<td style="font-weight: bold;">-</td><td class="points-total">-</td>`;
+                    }
                     
                     let dispSfPlace = "";
                     if (r.semiPlace > 0) dispSfPlace = r.semiPlace;
@@ -1488,8 +1767,7 @@
                             <td><strong>${r.artist||"-"}</strong></td>
                             <td><em>${r.song||"-"}</em> ${audioPlayBtn}</td>
                             <td>${r.manager||"-"}</td>
-                            <td style="font-weight: bold;">${dispPlace}</td>
-                            <td class="points-total">${dispPoints}</td>
+                            ${gfHtml}
                             ${sfHtml}
                             <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                         </tr>`;
@@ -1497,31 +1775,83 @@
             });
         }
 
+        // ================= MENADŻEROWIE =================
+        function getOverallPlace(row) {
+            let place = parseFloat(row.place);
+            if (!isNaN(place) && place > 0) return place; 
+            
+            let semiPlace = parseFloat(row.semiPlace);
+            if (!isNaN(semiPlace) && semiPlace > 0) {
+                let allNQs = db.results.filter(r => r.edition === row.edition && parseFloat(r.semiPlace) > 0 && (isNaN(parseFloat(r.place)) || parseFloat(r.place) <= 0));
+                allNQs.sort((a, b) => {
+                    let ptsA = parseFloat(a.semiPoints) || 0;
+                    let ptsB = parseFloat(b.semiPoints) || 0;
+                    return ptsB - ptsA;
+                });
+                let nqRank = allNQs.findIndex(r => r.countryId === row.countryId);
+                let finalistsCount = db.results.filter(r => r.edition === row.edition && parseFloat(r.place) > 0).length;
+                return finalistsCount + nqRank + 1; 
+            }
+            return null;
+        }
+
         function initManagers() {
-            const select = document.getElementById('manager-select');
-            if (select.options.length === 0) {
-                const managers = [...new Set(db.results.map(r => r.manager).filter(m => m))].sort();
-                select.innerHTML = managers.map(m => `<option value="${m}">${m}</option>`).join('');
-                
-                let savedManager = localStorage.getItem('activeManager');
-                if (savedManager && managers.includes(savedManager)) {
-                    select.value = savedManager;
-                }
-                
-                if(managers.length > 0) renderManagerData();
+            const listContainer = document.getElementById('manager-sidebar-list');
+            allManagersList = [...new Set(db.results.map(r => r.manager).filter(m => m))].sort();
+            
+            renderManagerSidebar(allManagersList);
+            
+            let savedManager = localStorage.getItem('activeManager');
+            if (savedManager && allManagersList.includes(savedManager)) {
+                selectManager(savedManager);
+            } else if (allManagersList.length > 0) {
+                selectManager(allManagersList[0]);
             }
         }
 
-        function renderManagerData() {
-            const manager = document.getElementById('manager-select').value;
-            localStorage.setItem('activeManager', manager);
-            const data = db.results.filter(r => r.manager === manager);
+        function renderManagerSidebar(managersArray) {
+            const listContainer = document.getElementById('manager-sidebar-list');
+            listContainer.innerHTML = managersArray.map(m => 
+                `<div class="sidebar-item" id="sidebar-mgr-${m.replace(/\s+/g, '-')}" onclick="selectManager('${m}')">${m}</div>`
+            ).join('');
             
-            const validPlaces = data.filter(r => r.place > 0);
-            document.getElementById('stat-gold').innerText = data.filter(r => r.place === 1).length;
-            document.getElementById('stat-silver').innerText = data.filter(r => r.place === 2).length;
-            document.getElementById('stat-bronze').innerText = data.filter(r => r.place === 3).length;
-            document.getElementById('stat-avg').innerText = validPlaces.length ? (validPlaces.reduce((sum, r) => sum + r.place, 0) / validPlaces.length).toFixed(1) : "-";
+            // Przywróć aktywne tło
+            let current = localStorage.getItem('activeManager');
+            if(current) {
+                let activeEl = document.getElementById(`sidebar-mgr-${current.replace(/\s+/g, '-')}`);
+                if(activeEl) activeEl.classList.add('active');
+            }
+        }
+
+        function filterManagers() {
+            let input = document.getElementById('manager-search').value.toLowerCase();
+            let filtered = allManagersList.filter(m => m.toLowerCase().includes(input));
+            renderManagerSidebar(filtered);
+        }
+
+        function selectManager(managerName) {
+            document.querySelectorAll('#manager-sidebar-list .sidebar-item').forEach(el => el.classList.remove('active'));
+            let activeEl = document.getElementById(`sidebar-mgr-${managerName.replace(/\s+/g, '-')}`);
+            if(activeEl) activeEl.classList.add('active');
+
+            localStorage.setItem('activeManager', managerName);
+            document.getElementById('manager-main-content').style.display = "block";
+            document.getElementById('manager-title-display').innerText = `Wyniki: ${managerName}`;
+            
+            renderManagerData(managerName);
+        }
+
+        function renderManagerData(manager) {
+            const data = db.results.filter(r => r.manager === manager);
+            const dataWithOverall = data.map(r => ({ ...r, overallPlace: getOverallPlace(r) }));
+            const validPlaces = dataWithOverall.filter(r => r.overallPlace !== null);
+            
+            document.getElementById('stat-gold').innerText = data.filter(r => parseFloat(r.place) === 1).length;
+            document.getElementById('stat-silver').innerText = data.filter(r => parseFloat(r.place) === 2).length;
+            document.getElementById('stat-bronze').innerText = data.filter(r => parseFloat(r.place) === 3).length;
+            
+            let sumPlaces = validPlaces.reduce((sum, r) => sum + r.overallPlace, 0);
+            document.getElementById('stat-avg').innerText = validPlaces.length ? (sumPlaces / validPlaces.length).toFixed(1) : "-";
 
             const countryCounts = {};
             data.forEach(r => { countryCounts[r.countryId] = (countryCounts[r.countryId] || 0) + 1; });
@@ -1530,7 +1860,7 @@
 
             const tbody = document.getElementById('manager-body');
             tbody.innerHTML = "";
-            [...data].sort((a,b) => a.edition - b.edition).forEach(row => {
+            [...dataWithOverall].sort((a,b) => a.edition - b.edition).forEach(row => {
                 let hasSong = row.song && row.song.trim() !== "-";
                 let audioPlayBtn = hasSong && row.mp3 ? `<span class="social-icon audio-play" onclick="event.stopPropagation(); playAudio('${row.mp3}')"><i class="fa-solid fa-play"></i></span>` : "";
                 let spotifyLink = hasSong && row.spotify ? `<a href="${row.spotify}" target="_blank" class="social-icon spotify"><i class="fa-brands fa-spotify"></i></a>` : "";
@@ -1539,12 +1869,15 @@
                 let isGFPlayed = db.results.some(res => res.edition === row.edition && parseFloat(res.place) > 0);
                 let isSFPlayed = db.results.some(res => res.edition === row.edition && parseFloat(res.semiPlace) > 0);
 
-                let dispPlace = "";
-                if (row.place > 0) dispPlace = row.place;
-                else if (isGFPlayed) dispPlace = "NQ";
-                else dispPlace = "-";
-
-                let dispPoints = (row.points !== undefined && row.points !== "-" && row.points !== "") ? row.points : "-";
+                let gfHtml = "";
+                if (row.place > 0) {
+                    let dispPoints = (row.points !== undefined && row.points !== "-" && row.points !== "") ? row.points : "-";
+                    gfHtml = `<td style="font-weight: bold;">${row.place}</td><td class="points-total">${dispPoints}</td>`;
+                } else if (isGFPlayed) {
+                    gfHtml = `<td colspan="2" style="font-size:11px; color:var(--text-muted); font-style:italic;">Niezakwalifikowany</td>`;
+                } else {
+                    gfHtml = `<td style="font-weight: bold;">-</td><td class="points-total">-</td>`;
+                }
                 
                 let dispSfPlace = "";
                 if (row.semiPlace > 0) dispSfPlace = row.semiPlace;
@@ -1570,13 +1903,15 @@
                         <td class="country-cell">${getFlag(db.countries[row.countryId].code)} ${db.countries[row.countryId].name}</td>
                         <td>${row.artist || "-"}</td>
                         <td><em>${row.song || "-"}</em> ${audioPlayBtn}</td>
-                        <td style="font-weight:bold;">${dispPlace}</td>
-                        <td class="points-total">${dispPoints}</td>
+                        ${gfHtml}
                         ${sfHtml}
                         <td><div class="social-links">${spotifyLink}${youtubeLink}</div></td>
                     </tr>`;
             });
 
+            if (managerMapInstance) {
+                setTimeout(() => { managerMapInstance.resize(); }, 50);
+            }
             renderManagerMap(countryCounts);
         }
 
@@ -1609,8 +1944,9 @@
                     return cId && db.countries[cId] ? db.countries[cId].name : text;
                 });
 
+                let thm = document.body.classList.contains('theme-seasonal');
                 managerPolySeries.mapPolygons.template.setAll({ 
-                    stroke: am5.color(0x24294a), 
+                    stroke: am5.color(thm ? 0x102f38 : 0x24294a), 
                     strokeWidth: 1, 
                     templateField: "polygonSettings"
                 });
@@ -1618,7 +1954,9 @@
 
             let mapData = [];
             Object.keys(db.countries).forEach(cId => {
-                let polyColor = am5.color(0x1a1e36);
+                let thm = document.body.classList.contains('theme-seasonal');
+                let polyColor = am5.color(thm ? 0x0e2830 : 0x1a1e36);
+                
                 if (counts[cId]) {
                     let colorIdx = Math.min(counts[cId] - 1, absolutePalette.length - 1);
                     polyColor = am5.color(absolutePalette[colorIdx]);
@@ -1760,13 +2098,13 @@
                 btnContainer.innerHTML = `
                     <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
                     <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: var(--primary-color); border-color: var(--primary-color);" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
                 `;
                 renderBasicSorter(ws, activeItems, false, excludedItem);
             } else if (currentSorterMode === 'tier') {
                 btnContainer.innerHTML = `
                     <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotTier()"><i class="fa-solid fa-camera"></i>  Zapisz jako zdjęcie</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: var(--primary-color); border-color: var(--primary-color);" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
                 `;
                 renderTierList(ws, activeItems);
             } else if (currentSorterMode === '1v1') {
@@ -2029,7 +2367,7 @@
                 </div>`;
         }
 
-	function changeTierFontSize(size) {
+	    function changeTierFontSize(size) {
             document.querySelectorAll('.tier-label').forEach(el => {
                 el.style.fontSize = size;
             });
@@ -2081,7 +2419,7 @@
                 btnContainer.innerHTML = `
                     <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('top10')"><i class="fa-solid fa-camera"></i>  Zapisz Top 10</button>
                     <button class="picker-btn active" style="margin: 0 5px;" onclick="takeScreenshotBasic('all')"><i class="fa-solid fa-camera"></i>  Zapisz Całość</button>
-                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: #ff2a5f; border-color: #ff2a5f;" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
+                    <button class="picker-btn" style="margin: 0 5px; background-color: var(--table-header); color: var(--primary-color); border-color: var(--primary-color);" onclick="resetSorterData()"><i class="fa-solid fa-rotate-right"></i>  Resetuj</button>
                 `;
 
                 let excludedItem = db.results.find(r => r.edition === sorterEdition && r.countryId === sorterExcluded);
@@ -2119,7 +2457,10 @@
             tempWrapper.style.position = 'absolute';
             tempWrapper.style.left = '-9999px';
             tempWrapper.style.top = '0';
-            tempWrapper.style.backgroundColor = '#0b0d17';
+            
+            let thm = document.body.classList.contains('theme-seasonal');
+            tempWrapper.style.backgroundColor = thm ? '#041012' : '#0b0d17';
+            
             tempWrapper.style.padding = '20px';
             tempWrapper.style.borderRadius = '12px';
             tempWrapper.style.display = 'flex';
@@ -2153,7 +2494,7 @@
 
             autoShrinkText(tempWrapper);
 
-            html2canvas(tempWrapper, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
+            html2canvas(tempWrapper, { backgroundColor: thm ? '#041012' : '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
                 let link = document.createElement('a');
                 link.download = mode === 'top10' ? `Wyniki_Top10_Edycja_${sorterEdition}_${sorterStage}.png` : `Wyniki_Calosc_Edycja_${sorterEdition}_${sorterStage}.png`;
                 link.href = canvas.toDataURL();
@@ -2167,13 +2508,15 @@
 
         function takeScreenshotTier() {
             const target = document.getElementById('tier-export-area');
-            html2canvas(target, { backgroundColor: '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
+            let thm = document.body.classList.contains('theme-seasonal');
+            html2canvas(target, { backgroundColor: thm ? '#041012' : '#0b0d17', useCORS: true, allowTaint: true }).then(canvas => {
                 let link = document.createElement('a');
                 link.download = `Tierlista_Edycja_${sorterEdition}_${sorterStage}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
             }).catch(() => alert("Błąd zapisu zdjęcia."));
         }
+        
         setTimeout(init, 200);
     </script>
 </body>
