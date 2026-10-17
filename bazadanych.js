@@ -1,7 +1,7 @@
 const db = {
     editions: [1, 2, 3, 4], 
     hosts: { 1: "PL", 2: "RU", 3: "SE", 4: "IT"}, 
-    cities: { 1: "Gdańsk", 2: "Jekaterynburg", 3: "Malmö", 4: "???" }, 
+    cities: { 1: "Gdańsk", 2: "Jekaterynburg", 3: "Malmö", 4: "Mediolan" }, 
     
     results: [
         // Edition 1
@@ -148,7 +148,8 @@ const db = {
         { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "WS", artist: "-", song: "-", manager: "Toniak", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
         { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "DK", artist: "-", song: "-", manager: "MikeNow", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
         { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "LV", artist: "-", song: "-", manager: "Mort", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
-        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "UA", artist: "-", song: "-", manager: "Pablitek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" }
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "UA", artist: "-", song: "-", manager: "Pablitek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "CN", artist: "-", song: "-", manager: "B00B", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" }
     ],
     
     countries: {
