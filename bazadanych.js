@@ -77,7 +77,7 @@ const db = {
 
         // --- 3 EDYCJA ---
         { edition: 3, semi: 1, semiRo: "6", ro: "11", countryId: "SY", artist: "Jim Yosef", song: "Bleeding Rose", manager: "Dravee", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "https://youtu.be/qaovaa_AgW4", spotify: "https://open.spotify.com/track/6IQn3XfP26BwAtXkp3mVtP?si=a42f16b3b57541d7", mp3: "edycja3/SY3.mp3", artistLink: "-" },
-        { edition: 3, semi: 1, semiRo: "2", ro: "-", countryId: "TM", artist: "Durdy Durdyyev", song: "Yenede", manager: "Ziemniorek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "https://youtu.be/mnTCWIsHACo?is=rIi531EmtSig-qV2", spotify: "https://open.spotify.com/track/6ZQ2duchyXbhyivLL7CozO?si=GeeiNj71TJGJ7YUTqzaaVg&utm_source=copy-link", mp3: "edycja3/TM3.mp3", artistLink: "-" },
+        { edition: 3, semi: 1, semiRo: "2", ro: "18", countryId: "TM", artist: "Durdy Durdyyev", song: "Yenede", manager: "Ziemniorek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "https://youtu.be/mnTCWIsHACo?is=rIi531EmtSig-qV2", spotify: "https://open.spotify.com/track/6ZQ2duchyXbhyivLL7CozO?si=GeeiNj71TJGJ7YUTqzaaVg&utm_source=copy-link", mp3: "edycja3/TM3.mp3", artistLink: "-" },
         { edition: 3, semi: 1, semiRo: "14", ro: "-", countryId: "MN", artist: "Ahuna, De Eight, Maexst", song: "Hereggui", manager: "Vroblo", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "https://youtu.be/TFIg73SKH0U", spotify: "https://open.spotify.com/track/7pIoxVYnOxjxVdgdnKGBhk?si=a51fcdf1fea249da", mp3: "edycja3/MN3.mp3", artistLink: "-" },
         { edition: 3, semi: 1, semiRo: "10", ro: "-", countryId: "US", artist: "Haiden Henderson", song: "NSFW", manager: "Oscypek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "https://youtu.be/Jc5JjUkJmx8?is=LGDvMlJaDbdeb5vZ", spotify: "https://open.spotify.com/track/5PkQJUjEmdoGdpYTbCv1QC?si=82d0d0d35cd442a2", mp3: "edycja3/US3.mp3", artistLink: "-" },
         { edition: 3, semi: 1, semiRo: "13", ro: "5", countryId: "GT", artist: "Happykid, Pardopardo", song: "Perdido", manager: "Toniak", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "https://youtu.be/t0iydd0FjlY?si=1lZMGDtnKjkYWDMj", spotify: "https://open.spotify.com/track/67jfNQ8ntPHnhxDv31iWRL?si=27170548903141f2", mp3: "edycja3/GT3.mp3", artistLink: "-" },
@@ -179,7 +179,7 @@ const db = {
         "LK": { name: "Sri Lanka", code: "lk" }, "SY": { name: "Syria", code: "sy" }, "TJ": { name: "Tadżykistan", code: "tj" },
         "TH": { name: "Tajlandia", code: "th" }, "TL": { name: "Timor Wschodni", code: "tl" }, "TR": { name: "Turcja", code: "tr" },
         "TM": { name: "Turkmenistan", code: "tm" }, "UZ": { name: "Uzbekistan", code: "uz" }, "VN": { name: "Wietnam", code: "vn" },
-        "AE": { name: "Zjednoczone Emiraty Arabskie", code: "ae" }, "TW": { name: "Tajwan", code: "tw" }, "HK": { name: "Hong Kong", code: "hk" },
+        "AE": { name: "Zjednoczone Emiraty Arabskie", code: "ae" }, "TW": { name: "Tajwan", code: "tw" }, "HK": { name: "Hongkong", code: "hk" },
         "MO": { name: "Makau", code: "mo" },
         
         "AL": { name: "Albania", code: "al" }, "AD": { name: "Andora", code: "ad" }, "AT": { name: "Austria", code: "at" },
@@ -196,7 +196,20 @@ const db = {
         "SM": { name: "San Marino", code: "sm" }, "RS": { name: "Serbia", code: "rs" }, "SK": { name: "Słowacja", code: "sk" },
         "SI": { name: "Słowenia", code: "si" }, "CH": { name: "Szwajcaria", code: "ch" }, "SE": { name: "Szwecja", code: "se" }, 
         "UA": { name: "Ukraina", code: "ua" }, "HU": { name: "Węgry", code: "hu" }, "GB": { name: "Wielka Brytania", code: "gb" }, 
-        "IT": { name: "Włochy", code: "it" }
+        "IT": { name: "Włochy", code: "it" },
+        
+        // Terytoria dodatkowe
+        "FO": { name: "Wyspy Owcze", code: "fo" },
+        "CW": { name: "Curaçao", code: "cw" },
+        "PF": { name: "Polinezja Francuska", code: "pf" },
+        "GP": { name: "Gwadelupa", code: "gp" },
+        "MQ": { name: "Martynika", code: "mq" },
+        "GI": { name: "Gibraltar", code: "gi" },
+        "GL": { name: "Grenlandia", code: "gl" },
+        "GF": { name: "Gujana Francuska", code: "gf" },
+        "EH": { name: "Sahara Zachodnia", code: "eh" },
+        "AW": { name: "Aruba", code: "aw" },
+        "PR": { name: "Portoryko", code: "pr" }
     },
 
     preselections: {
