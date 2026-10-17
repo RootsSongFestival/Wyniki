@@ -1,7 +1,7 @@
 const db = {
-    editions: [1, 2, 3], 
-    hosts: { 1: "PL", 2: "RU", 3: "SE"}, 
-    cities: { 1: "Gdańsk", 2: "Jekaterynburg", 3: "Malmö" }, 
+    editions: [1, 2, 3, 4], 
+    hosts: { 1: "PL", 2: "RU", 3: "SE", 4: "IT"}, 
+    cities: { 1: "Gdańsk", 2: "Jekaterynburg", 3: "Malmö", 4: "???" }, 
     
     results: [
         // Edition 1
@@ -76,7 +76,7 @@ const db = {
         { edition: 2, semi: 1, semiRo: 16, ro: 23, countryId: "SO", artist: "Hassan Maikal, Asla Jo", song: "Ota musta kii", manager: "Jelegor", semiPlace: 3, semiPoints: 145, place: 11, points: 117, youtube: "https://youtu.be/80-Jcyo5pVY?is=Pjesn4OTSeGPxNkP", spotify: "https://open.spotify.com/track/7b2EXARgqqX9xq3SdwKp9W?si=5fc694c2320e4e8e", mp3: "edycja2/SO2.mp3", artistLink: "-" },
 
         // --- 3 EDYCJA ---
-        { edition: 3, semi: 1, semiRo: "6", ro: "11", countryId: "IQ", artist: "Jim Yosef", song: "Bleeding Rose", manager: "Dravee", semiPlace: 3, semiPoints: 154, place: 2, points: 152, youtube: "https://youtu.be/qaovaa_AgW4", spotify: "https://open.spotify.com/track/6IQn3XfP26BwAtXkp3mVtP?si=a42f16b3b57541d7", mp3: "edycja3/SY3.mp3", artistLink: "-" },
+        { edition: 3, semi: 1, semiRo: "6", ro: "11", countryId: "IQ", artist: "Jim Yosef", song: "Bleeding Rose", manager: "Dravee", semiPlace: 3, semiPoints: 154, place: 2, points: 152, youtube: "https://youtu.be/qaovaa_AgW4", spotify: "https://open.spotify.com/track/6IQn3XfP26BwAtXkp3mVtP?si=a42f16b3b57541d7", mp3: "edycja3/IQ3.mp3", artistLink: "-" },
         { edition: 3, semi: 1, semiRo: "2", ro: "-", countryId: "TM", artist: "Durdy Durdyyev", song: "Yenede", manager: "Ziemniorek", semiPlace: 18, semiPoints: 36, place: "-", points: "-", youtube: "https://youtu.be/mnTCWIsHACo?is=rIi531EmtSig-qV2", spotify: "https://open.spotify.com/track/6ZQ2duchyXbhyivLL7CozO?si=GeeiNj71TJGJ7YUTqzaaVg&utm_source=copy-link", mp3: "edycja3/TM3.mp3", artistLink: "-" },
         { edition: 3, semi: 1, semiRo: "14", ro: "-", countryId: "MN", artist: "Ahuna, De Eight, Maexst", song: "Hereggui", manager: "Vroblo", semiPlace: 14, semiPoints: 71, place: "-", points: "-", youtube: "https://youtu.be/TFIg73SKH0U", spotify: "https://open.spotify.com/track/7pIoxVYnOxjxVdgdnKGBhk?si=a51fcdf1fea249da", mp3: "edycja3/MN3.mp3", artistLink: "-" },
         { edition: 3, semi: 1, semiRo: "10", ro: "-", countryId: "US", artist: "Haiden Henderson", song: "NSFW", manager: "Oscypek", semiPlace: 17, semiPoints: 38, place: "-", points: "-", youtube: "https://youtu.be/Jc5JjUkJmx8?is=LGDvMlJaDbdeb5vZ", spotify: "https://open.spotify.com/track/5PkQJUjEmdoGdpYTbCv1QC?si=82d0d0d35cd442a2", mp3: "edycja3/US3.mp3", artistLink: "-" },
@@ -118,7 +118,37 @@ const db = {
         { edition: 3, semi: 2, semiRo: "6", ro: "25", countryId: "PH", artist: "Lu Marzan", song: "Asterisk", manager: "Bejba", semiPlace: 3, semiPoints: 148, place: 7, points: 132, youtube: "https://youtu.be/RQM2OSIV-lA?si=4IdvQe_nW0YmI3Bs", spotify: "https://open.spotify.com/track/4BhNsMLajv5Dq9G56IMPpq?si=ccbe0d0a90244fc0", mp3: "edycja3/PH3.mp3", artistLink: "-" },
         { edition: 3, semi: 2, semiRo: "10", ro: "26", countryId: "IT", artist: "Ibla", song: "Sikelìa", manager: "Kidos", semiPlace: 1, semiPoints: 158, place: 1, points: 192, youtube: "https://youtu.be/Aw5eimCP-7o?is=2WfRVBhjsGLNd63Q", spotify: "https://open.spotify.com/track/5rXbJDNoZ0Y7sUFrABv8Ka?si=ffcc0c23df3d4579", mp3: "edycja3/IT3.mp3", artistLink: "-" },
         { edition: 3, semi: 2, semiRo: "4", ro: "-", countryId: "DE", artist: "Herbst", song: "Wieder Verliebt", manager: "Royal", semiPlace: 14, semiPoints: 61, place: "-", points: "-", youtube: "https://www.youtube.com/watch?v=_9JVrFkWupQ", spotify: "https://open.spotify.com/track/1UARTJfVBhFKlcVN1XDxD8?si=7e38bcf936914cf2", mp3: "edycja3/DE3.mp3", artistLink: "-" },
-        { edition: 3, semi: 2, semiRo: "8", ro: "12", countryId: "NO", artist: "Manne, Inger Márjá, Arctic Philharmonic", song: "Dárbbašan du", manager: "Dotek", semiPlace: 10, semiPoints: 90, place: 18, points: 96, youtube: "https://youtu.be/qIdpuch3YLo?si=fM7GbUv_YP58NCTd", spotify: "https://open.spotify.com/track/6hYzF0u3k8RXxYwNIapbTi?si=03ca70a189f04bc7", mp3: "edycja3/NO3.mp3", artistLink: "-" }
+        { edition: 3, semi: 2, semiRo: "8", ro: "12", countryId: "NO", artist: "Manne, Inger Márjá, Arctic Philharmonic", song: "Dárbbašan du", manager: "Dotek", semiPlace: 10, semiPoints: 90, place: 18, points: 96, youtube: "https://youtu.be/qIdpuch3YLo?si=fM7GbUv_YP58NCTd", spotify: "https://open.spotify.com/track/6hYzF0u3k8RXxYwNIapbTi?si=03ca70a189f04bc7", mp3: "edycja3/NO3.mp3", artistLink: "-" },
+
+        // --- 4 EDYCJA ---
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "IT", artist: "-", song: "-", manager: "Kidos", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "US", artist: "-", song: "-", manager: "Solarkis", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "PL", artist: "-", song: "-", manager: "Fox", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "ZA", artist: "-", song: "-", manager: "Oscypek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "ER", artist: "-", song: "-", manager: "Micheł", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "DE", artist: "-", song: "-", manager: "Dangap", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "HU", artist: "-", song: "-", manager: "Heks", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "GB", artist: "-", song: "-", manager: "Shigaś", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "GL", artist: "-", song: "-", manager: "Vroblo", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "BT", artist: "-", song: "-", manager: "Laxero", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "NZ", artist: "-", song: "-", manager: "Auroræ", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "NO", artist: "-", song: "-", manager: "Dotek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "KG", artist: "-", song: "-", manager: "Jaruś", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "HR", artist: "-", song: "-", manager: "Tokito", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "PH", artist: "-", song: "-", manager: "Ant", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "AT", artist: "-", song: "-", manager: "Modern", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "RU", artist: "-", song: "-", manager: "Lynn", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "IE", artist: "-", song: "-", manager: "Alexis", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "AU", artist: "-", song: "-", manager: "Native", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "LB", artist: "-", song: "-", manager: "Dravee", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "NL", artist: "-", song: "-", manager: "Misza", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "CV", artist: "-", song: "-", manager: "Ziemniorek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "CR", artist: "-", song: "-", manager: "Beza", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "DM", artist: "-", song: "-", manager: "Kornik", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "WS", artist: "-", song: "-", manager: "Toniak", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "DK", artist: "-", song: "-", manager: "MikeNow", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "LV", artist: "-", song: "-", manager: "Mort", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" },
+        { edition: 4, semi: "-", semiRo: "-", ro: "-", countryId: "UA", artist: "-", song: "-", manager: "Pablitek", semiPlace: "-", semiPoints: "-", place: "-", points: "-", youtube: "-", spotify: "-", mp3: "-", artistLink: "-" }
     ],
     
     countries: {
@@ -180,6 +210,7 @@ const db = {
         "TH": { name: "Tajlandia", code: "th" }, "TL": { name: "Timor Wschodni", code: "tl" }, "TR": { name: "Turcja", code: "tr" },
         "TM": { name: "Turkmenistan", code: "tm" }, "UZ": { name: "Uzbekistan", code: "uz" }, "VN": { name: "Wietnam", code: "vn" },
         "AE": { name: "Zjednoczone Emiraty Arabskie", code: "ae" }, "TW": { name: "Tajwan", code: "tw" }, "HK": { name: "Hongkong", code: "hk" },
+        "MO": { name: "Makau", code: "mo" },
         
         "AL": { name: "Albania", code: "al" }, "AD": { name: "Andora", code: "ad" }, "AT": { name: "Austria", code: "at" },
         "BE": { name: "Belgia", code: "be" }, "BY": { name: "Białoruś", code: "by" }, "BA": { name: "Bośnia i Hercegowina", code: "ba" },
@@ -203,6 +234,7 @@ const db = {
         "PF": { name: "Polinezja Francuska", code: "pf" },
         "GP": { name: "Gwadelupa", code: "gp" },
         "MQ": { name: "Martynika", code: "mq" },
+        "GI": { name: "Gibraltar", code: "gi" },
         "GL": { name: "Grenlandia", code: "gl" },
         "GF": { name: "Gujana Francuska", code: "gf" },
         "EH": { name: "Sahara Zachodnia", code: "eh" },
