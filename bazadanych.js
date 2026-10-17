@@ -180,7 +180,6 @@ const db = {
         "TH": { name: "Tajlandia", code: "th" }, "TL": { name: "Timor Wschodni", code: "tl" }, "TR": { name: "Turcja", code: "tr" },
         "TM": { name: "Turkmenistan", code: "tm" }, "UZ": { name: "Uzbekistan", code: "uz" }, "VN": { name: "Wietnam", code: "vn" },
         "AE": { name: "Zjednoczone Emiraty Arabskie", code: "ae" }, "TW": { name: "Tajwan", code: "tw" }, "HK": { name: "Hongkong", code: "hk" },
-        "MO": { name: "Makau", code: "mo" },
         
         "AL": { name: "Albania", code: "al" }, "AD": { name: "Andora", code: "ad" }, "AT": { name: "Austria", code: "at" },
         "BE": { name: "Belgia", code: "be" }, "BY": { name: "Białoruś", code: "by" }, "BA": { name: "Bośnia i Hercegowina", code: "ba" },
@@ -204,7 +203,6 @@ const db = {
         "PF": { name: "Polinezja Francuska", code: "pf" },
         "GP": { name: "Gwadelupa", code: "gp" },
         "MQ": { name: "Martynika", code: "mq" },
-        "GI": { name: "Gibraltar", code: "gi" },
         "GL": { name: "Grenlandia", code: "gl" },
         "GF": { name: "Gujana Francuska", code: "gf" },
         "EH": { name: "Sahara Zachodnia", code: "eh" },
