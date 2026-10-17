@@ -1482,7 +1482,7 @@
                     panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
                 }));
                 editionPolySeries = chart.series.push(am5map.MapPolygonSeries.new(editionMapInstance, { 
-                    geoJSON: am5geodata_worldLow, 
+                    geoJSON: am5geodata_worldHigh, 
                     include: Object.keys(db.countries) 
                 }));
 
@@ -1530,7 +1530,7 @@
             }));
 
             let polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(mapRoot, {
-                geoJSON: am5geodata_worldLow, 
+                geoJSON: am5geodata_worldHigh, 
                 include: Object.keys(db.countries) 
             }));
 
@@ -1935,7 +1935,7 @@
                     panX: "translateX", panY: "translateY", wheelY: "zoom", projection: am5map.geoMercator() 
                 }));
                 managerPolySeries = chart.series.push(am5map.MapPolygonSeries.new(managerMapInstance, { 
-                    geoJSON: am5geodata_worldLow, 
+                    geoJSON: am5geodata_worldHigh, 
                     include: Object.keys(db.countries) 
                 }));
 
